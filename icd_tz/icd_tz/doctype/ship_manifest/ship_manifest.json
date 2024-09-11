@@ -1,0 +1,162 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-19 11:45:24.758478",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "manifest",
+  "vessel_information_section",
+  "mrn",
+  "vessel_name",
+  "tpa_uid",
+  "voyage",
+  "column_break_0ml7u",
+  "arrival_date",
+  "departure_date",
+  "call_sign",
+  "containers_section_section",
+  "containers",
+  "section_break_xni6w",
+  "hbicontainers",
+  "section_break_y3pib",
+  "table_wyqi",
+  "section_break_sm463",
+  "amended_from",
+  "housebi"
+ ],
+ "fields": [
+  {
+   "fieldname": "manifest",
+   "fieldtype": "Attach",
+   "in_list_view": 1,
+   "label": "Upload Manifest",
+   "reqd": 1
+  },
+  {
+   "fieldname": "vessel_information_section",
+   "fieldtype": "Section Break",
+   "label": "Vessel Information "
+  },
+  {
+   "fieldname": "mrn",
+   "fieldtype": "Data",
+   "label": "MRN"
+  },
+  {
+   "fieldname": "vessel_name",
+   "fieldtype": "Data",
+   "label": "Vessel Name"
+  },
+  {
+   "fieldname": "tpa_uid",
+   "fieldtype": "Data",
+   "label": "TPA UID"
+  },
+  {
+   "fieldname": "voyage",
+   "fieldtype": "Data",
+   "label": "Voyage"
+  },
+  {
+   "fieldname": "column_break_0ml7u",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "arrival_date",
+   "fieldtype": "Date",
+   "label": "Arrival date"
+  },
+  {
+   "fieldname": "departure_date",
+   "fieldtype": "Date",
+   "label": "Departure date"
+  },
+  {
+   "fieldname": "call_sign",
+   "fieldtype": "Data",
+   "label": "Call Sign"
+  },
+  {
+   "fieldname": "containers_section_section",
+   "fieldtype": "Tab Break",
+   "label": "Containers section"
+  },
+  {
+   "fieldname": "containers",
+   "fieldtype": "Table",
+   "label": "Containers",
+   "options": "Containers Detail"
+  },
+  {
+   "fieldname": "section_break_xni6w",
+   "fieldtype": "Tab Break",
+   "label": "HBIContainers"
+  },
+  {
+   "fieldname": "hbicontainers",
+   "fieldtype": "Table",
+   "label": "HBIContainers",
+   "options": "HBIContainer"
+  },
+  {
+   "fieldname": "section_break_y3pib",
+   "fieldtype": "Tab Break",
+   "label": "MasterBI"
+  },
+  {
+   "fieldname": "table_wyqi",
+   "fieldtype": "Table",
+   "label": "MasterBI",
+   "options": "MasterBI"
+  },
+  {
+   "fieldname": "section_break_sm463",
+   "fieldtype": "Tab Break",
+   "label": "HouseBI"
+  },
+  {
+   "fieldname": "housebi",
+   "fieldtype": "Table",
+   "label": "HouseBI",
+   "options": "HouseBI"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Ship Manifest",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-07-19 11:56:05.535579",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Ship Manifest",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

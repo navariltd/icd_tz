@@ -1,0 +1,188 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "autoname": "format:{container_number}",
+  "creation": "2024-06-26 09:58:36.857547",
+  "default_view": "List",
+  "doctype": "DocType",
+  "editable_grid": 1,
+  "engine": "InnoDB",
+  "field_order": [
+    "container_details_section",
+    "container_number",
+    "size_m",
+    "volume_cbm",
+    "weight_kg",
+    "column_break_sohs",
+    "document_control_number",
+    "seal_no_1",
+    "seal_no_2",
+    "ownership_details_section",
+    "cargo_details_section",
+    "cargo_description",
+    "shipper",
+    "column_break_jhhs",
+    "port_of_origin",
+    "port_of_destination",
+    "customs_status",
+    "movement_details_section",
+    "current_location",
+    "status",
+    "arrival_date",
+    "column_break_qkrn",
+    "departure_date",
+    "last_inspection_date",
+    "next_inspection_date"
+  ],
+  "fields": [
+    {
+      "fieldname": "container_details_section",
+      "fieldtype": "Section Break",
+      "label": "Container Details"
+    },
+    {
+      "fieldname": "container_number",
+      "fieldtype": "Data",
+      "label": "Container Number"
+    },
+    {
+      "fieldname": "size_m",
+      "fieldtype": "Int",
+      "label": "Size (M)"
+    },
+    {
+      "fieldname": "volume_cbm",
+      "fieldtype": "Int",
+      "label": "Volume (CBM)"
+    },
+    {
+      "fieldname": "weight_kg",
+      "fieldtype": "Data",
+      "label": "Weight (Kg)"
+    },
+    {
+      "fieldname": "column_break_sohs",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "document_control_number",
+      "fieldtype": "Data",
+      "label": "Document Control Number"
+    },
+    {
+      "fieldname": "seal_no_1",
+      "fieldtype": "Data",
+      "label": "Seal No. 1"
+    },
+    {
+      "fieldname": "seal_no_2",
+      "fieldtype": "Data",
+      "label": "Seal No. 2"
+    },
+    {
+      "fieldname": "ownership_details_section",
+      "fieldtype": "Section Break",
+      "label": "Ownership Details"
+    },
+    {
+      "fieldname": "cargo_details_section",
+      "fieldtype": "Section Break",
+      "label": "Cargo Details"
+    },
+    {
+      "fieldname": "cargo_description",
+      "fieldtype": "Text",
+      "label": "Cargo Description"
+    },
+    {
+      "fieldname": "shipper",
+      "fieldtype": "Data",
+      "label": "Shipper"
+    },
+    {
+      "fieldname": "column_break_jhhs",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "port_of_origin",
+      "fieldtype": "Data",
+      "label": "Port of Origin"
+    },
+    {
+      "fieldname": "port_of_destination",
+      "fieldtype": "Data",
+      "label": "Port of Destination"
+    },
+    {
+      "fieldname": "customs_status",
+      "fieldtype": "Select",
+      "label": "Customs Status",
+      "options": "Cleared\nPending\nHold"
+    },
+    {
+      "fieldname": "movement_details_section",
+      "fieldtype": "Section Break",
+      "label": "Movement Details"
+    },
+    {
+      "fieldname": "current_location",
+      "fieldtype": "Data",
+      "label": "Current Location"
+    },
+    {
+      "fieldname": "status",
+      "fieldtype": "Select",
+      "label": "Status",
+      "options": "In Transit\nAt Port\nDelivered\nOn Hold"
+    },
+    {
+      "fieldname": "arrival_date",
+      "fieldtype": "Date",
+      "label": "Arrival Date"
+    },
+    {
+      "fieldname": "column_break_qkrn",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "departure_date",
+      "fieldtype": "Date",
+      "label": "Departure Date"
+    },
+    {
+      "fieldname": "last_inspection_date",
+      "fieldtype": "Date",
+      "label": "Last Inspection Date"
+    },
+    {
+      "fieldname": "next_inspection_date",
+      "fieldtype": "Date",
+      "label": "Next Inspection Date"
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2024-07-10 09:07:51.392384",
+  "modified_by": "Administrator",
+  "module": "Icd Tz",
+  "name": "Container",
+  "naming_rule": "Expression",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": []
+}

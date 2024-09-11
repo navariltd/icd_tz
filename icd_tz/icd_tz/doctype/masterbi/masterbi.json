@@ -1,0 +1,261 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-19 11:41:59.838256",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "m_bl_no",
+  "cargo_classification",
+  "bl_type",
+  "place_of_destination",
+  "place_of_delivery",
+  "oil_type",
+  "port_of_loading",
+  "number_of_package",
+  "package_unit",
+  "gross_weight",
+  "gross_weight_unit",
+  "gross_volume",
+  "gross_volume_unit",
+  "invoice_value",
+  "invoice_currency",
+  "freight_charge",
+  "freight_currency",
+  "imdg_code",
+  "packing_type",
+  "shipping_agent_code",
+  "shipping_agent_name",
+  "forwarder_code",
+  "forwarder_name",
+  "forwarder_tel",
+  "exporter_name",
+  "exporter_tel",
+  "exporter_address",
+  "exporter_tin",
+  "cosignee_name",
+  "cosignee_tel",
+  "cosignee_address",
+  "cosignee_tin",
+  "notify_name",
+  "notify_tel",
+  "notify_address",
+  "notify_tin",
+  "shipping_mark",
+  "net_weight",
+  "net_weight_unit"
+ ],
+ "fields": [
+  {
+   "fieldname": "m_bl_no",
+   "fieldtype": "Data",
+   "label": "M B/L No"
+  },
+  {
+   "fieldname": "cargo_classification",
+   "fieldtype": "Data",
+   "label": "Cargo Classification"
+  },
+  {
+   "fieldname": "bl_type",
+   "fieldtype": "Data",
+   "label": "B/L Type"
+  },
+  {
+   "fieldname": "place_of_destination",
+   "fieldtype": "Data",
+   "label": "Place of Destination"
+  },
+  {
+   "fieldname": "place_of_delivery",
+   "fieldtype": "Data",
+   "label": "Place of Delivery"
+  },
+  {
+   "fieldname": "oil_type",
+   "fieldtype": "Data",
+   "label": "Oil Type"
+  },
+  {
+   "fieldname": "port_of_loading",
+   "fieldtype": "Data",
+   "label": "Port of Loading"
+  },
+  {
+   "fieldname": "number_of_package",
+   "fieldtype": "Data",
+   "label": "Number of Package"
+  },
+  {
+   "fieldname": "package_unit",
+   "fieldtype": "Data",
+   "label": "Package Unit",
+   "length": 1000,
+   "max_height": "1000px"
+  },
+  {
+   "fieldname": "gross_weight",
+   "fieldtype": "Data",
+   "label": "Gross Weight"
+  },
+  {
+   "fieldname": "gross_weight_unit",
+   "fieldtype": "Data",
+   "label": "Gross Weight Unit"
+  },
+  {
+   "fieldname": "gross_volume",
+   "fieldtype": "Data",
+   "label": "Gross Volume"
+  },
+  {
+   "fieldname": "gross_volume_unit",
+   "fieldtype": "Data",
+   "label": "Gross Volume Unit"
+  },
+  {
+   "fieldname": "invoice_value",
+   "fieldtype": "Data",
+   "label": "Invoice Value"
+  },
+  {
+   "fieldname": "invoice_currency",
+   "fieldtype": "Data",
+   "label": "Invoice Currency"
+  },
+  {
+   "fieldname": "freight_charge",
+   "fieldtype": "Data",
+   "label": "Freight Charge"
+  },
+  {
+   "fieldname": "freight_currency",
+   "fieldtype": "Data",
+   "label": "Freight Currency"
+  },
+  {
+   "fieldname": "imdg_code",
+   "fieldtype": "Data",
+   "label": "IMDG Code"
+  },
+  {
+   "fieldname": "packing_type",
+   "fieldtype": "Data",
+   "label": "Packing Type"
+  },
+  {
+   "fieldname": "shipping_agent_code",
+   "fieldtype": "Data",
+   "label": "Shipping Agent Code"
+  },
+  {
+   "fieldname": "shipping_agent_name",
+   "fieldtype": "Data",
+   "label": "Shipping Agent Name"
+  },
+  {
+   "fieldname": "forwarder_code",
+   "fieldtype": "Data",
+   "label": "Forwarder Code"
+  },
+  {
+   "fieldname": "forwarder_name",
+   "fieldtype": "Data",
+   "label": "Forwarder Name"
+  },
+  {
+   "fieldname": "forwarder_tel",
+   "fieldtype": "Data",
+   "label": "Forwarder Tel"
+  },
+  {
+   "fieldname": "exporter_name",
+   "fieldtype": "Data",
+   "label": "Exporter Name"
+  },
+  {
+   "fieldname": "exporter_tel",
+   "fieldtype": "Data",
+   "label": "Exporter Tel"
+  },
+  {
+   "fieldname": "exporter_address",
+   "fieldtype": "Data",
+   "label": "Exporter Address"
+  },
+  {
+   "fieldname": "exporter_tin",
+   "fieldtype": "Data",
+   "label": "Exporter TIN"
+  },
+  {
+   "fieldname": "cosignee_name",
+   "fieldtype": "Data",
+   "label": "Cosignee Name"
+  },
+  {
+   "fieldname": "cosignee_tel",
+   "fieldtype": "Data",
+   "label": "Cosignee Tel"
+  },
+  {
+   "fieldname": "cosignee_address",
+   "fieldtype": "Data",
+   "label": "Cosignee Address"
+  },
+  {
+   "fieldname": "cosignee_tin",
+   "fieldtype": "Data",
+   "label": "Cosignee Tin"
+  },
+  {
+   "fieldname": "notify_name",
+   "fieldtype": "Data",
+   "label": "Notify Name"
+  },
+  {
+   "fieldname": "notify_tel",
+   "fieldtype": "Data",
+   "label": "Notify Tel"
+  },
+  {
+   "fieldname": "notify_address",
+   "fieldtype": "Data",
+   "label": "Notify Address"
+  },
+  {
+   "fieldname": "notify_tin",
+   "fieldtype": "Data",
+   "label": "Notify Tin"
+  },
+  {
+   "fieldname": "shipping_mark",
+   "fieldtype": "Data",
+   "label": "Shipping Mark"
+  },
+  {
+   "fieldname": "net_weight",
+   "fieldtype": "Data",
+   "label": "Net Weight"
+  },
+  {
+   "fieldname": "net_weight_unit",
+   "fieldtype": "Data",
+   "label": "Net Weight Unit"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-07-24 01:15:25.372554",
+ "modified_by": "Administrator",
+ "module": "ICD TZ",
+ "name": "MasterBI",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

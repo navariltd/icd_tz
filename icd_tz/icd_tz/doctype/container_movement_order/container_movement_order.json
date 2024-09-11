@@ -1,0 +1,268 @@
+{
+ "actions": [],
+ "allow_events_in_timeline": 1,
+ "allow_import": 1,
+ "allow_rename": 1,
+ "creation": "2024-07-09 11:40:46.380139",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "details_tab",
+  "company_details_section",
+  "company_name",
+  "tin_number",
+  "vat_number",
+  "column_break_zsmn",
+  "address",
+  "shipment_details_section",
+  "vessel_name",
+  "movement_date",
+  "ship_dc_date",
+  "received_date",
+  "column_break_bvub",
+  "ship",
+  "rot_no",
+  "sline",
+  "column_break_1",
+  "voyage_no",
+  "port",
+  "transport_details_section",
+  "transporter",
+  "column_break_xoba",
+  "driver",
+  "truck_name",
+  "container_details_tab",
+  "container_id",
+  "serial_number",
+  "size",
+  "column_break_wyva",
+  "container_number",
+  "vessel",
+  "transfer_sequence_number",
+  "signatures_and_time_tab",
+  "driver_signature",
+  "driver_time",
+  "column_break_fziv",
+  "gate_no_signature",
+  "gate_no_time"
+ ],
+ "fields": [
+  {
+   "fieldname": "details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "company_details_section",
+   "fieldtype": "Section Break",
+   "label": "Company Details"
+  },
+  {
+   "fieldname": "company_name",
+   "fieldtype": "Link",
+   "label": "Company Name",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Text",
+   "label": "Address"
+  },
+  {
+   "fieldname": "vat_number",
+   "fieldtype": "Data",
+   "label": "VAT Number"
+  },
+  {
+   "fieldname": "tin_number",
+   "fieldtype": "Data",
+   "label": "TIN Number"
+  },
+  {
+   "fieldname": "shipment_details_section",
+   "fieldtype": "Section Break",
+   "label": "Shipment Details"
+  },
+  {
+   "fieldname": "rot_no",
+   "fieldtype": "Data",
+   "label": "Rot No"
+  },
+  {
+   "fieldname": "voyage_no",
+   "fieldtype": "Data",
+   "label": "Voyage No"
+  },
+  {
+   "fieldname": "ship_dc_date",
+   "fieldtype": "Date",
+   "label": "Ship D/C Date"
+  },
+  {
+   "fieldname": "ship",
+   "fieldtype": "Data",
+   "label": "Ship"
+  },
+  {
+   "fieldname": "received_date",
+   "fieldtype": "Date",
+   "label": "Received Date"
+  },
+  {
+   "fieldname": "sline",
+   "fieldtype": "Data",
+   "label": "SLine"
+  },
+  {
+   "fieldname": "port",
+   "fieldtype": "Data",
+   "label": "Port"
+  },
+  {
+   "fieldname": "vessel_name",
+   "fieldtype": "Data",
+   "label": "Vessel Name"
+  },
+  {
+   "fieldname": "movement_date",
+   "fieldtype": "Date",
+   "label": "Movement Date"
+  },
+  {
+   "fieldname": "transport_details_section",
+   "fieldtype": "Section Break",
+   "label": "Transport Details"
+  },
+  {
+   "fieldname": "transporter",
+   "fieldtype": "Link",
+   "label": "Transporter",
+   "options": "Transporter"
+  },
+  {
+   "fieldname": "driver",
+   "fieldtype": "Link",
+   "label": "Driver",
+   "options": "Driver"
+  },
+  {
+   "fieldname": "truck_name",
+   "fieldtype": "Data",
+   "label": "Truck Name"
+  },
+  {
+   "fieldname": "container_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Container Details"
+  },
+  {
+   "fieldname": "serial_number",
+   "fieldtype": "Data",
+   "label": "Serial Number"
+  },
+  {
+   "fieldname": "container_number",
+   "fieldtype": "Data",
+   "label": "Container Number"
+  },
+  {
+   "fieldname": "size",
+   "fieldtype": "Select",
+   "label": "Size (FT)",
+   "options": "20\n40\n45"
+  },
+  {
+   "fieldname": "port",
+   "fieldtype": "Data",
+   "label": "Port"
+  },
+  {
+   "fieldname": "vessel",
+   "fieldtype": "Data",
+   "label": "Vessel"
+  },
+  {
+   "fieldname": "transfer_sequence_number",
+   "fieldtype": "Data",
+   "label": "Transfer Sequence Number"
+  },
+  {
+   "fieldname": "signatures_and_time_tab",
+   "fieldtype": "Tab Break",
+   "label": "Signatures and Time"
+  },
+  {
+   "fieldname": "driver_signature",
+   "fieldtype": "Signature",
+   "label": "Driver Signature"
+  },
+  {
+   "fieldname": "driver_time",
+   "fieldtype": "Time",
+   "label": "Driver Time"
+  },
+  {
+   "fieldname": "gate_no_signature",
+   "fieldtype": "Signature",
+   "label": "Gate No Signature"
+  },
+  {
+   "fieldname": "gate_no_time",
+   "fieldtype": "Time",
+   "label": "Gate No Time"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zsmn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_bvub",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_xoba",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_fziv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "container_id",
+   "fieldtype": "Data",
+   "label": "Container ID"
+  },
+  {
+   "fieldname": "column_break_wyva",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-09 17:14:51.275319",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Container Movement Order",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

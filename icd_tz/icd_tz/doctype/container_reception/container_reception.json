@@ -1,0 +1,251 @@
+{
+ "actions": [],
+ "allow_events_in_timeline": 1,
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format:{movement_order_number}",
+ "creation": "2024-06-26 09:42:10.321625",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "details_tab",
+  "movement_order",
+  "ship_name",
+  "ship_id_date",
+  "received_date",
+  "voyage_no",
+  "column_break_azrq",
+  "port",
+  "carry_in_date",
+  "port_time_out",
+  "container_particulars_tab",
+  "container_no",
+  "size",
+  "cbm",
+  "truck_name",
+  "weight",
+  "weight_unit",
+  "column_break_twjr",
+  "seal_no_1",
+  "seal_no_2",
+  "dcn",
+  "section_break_fvbx",
+  "top",
+  "bottom",
+  "column_break_iath",
+  "front",
+  "rear",
+  "column_break_woyo",
+  "right_side",
+  "left_side",
+  "personnel_and_security_tab",
+  "clerk",
+  "column_break_kepu",
+  "security_officer"
+ ],
+ "fields": [
+  {
+   "fieldname": "details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "ship_id_date",
+   "fieldtype": "Date",
+   "label": "Ship I/D Date"
+  },
+  {
+   "fieldname": "received_date",
+   "fieldtype": "Date",
+   "label": "Received Date"
+  },
+  {
+   "fieldname": "voyage_no",
+   "fieldtype": "Data",
+   "label": "Voyage No"
+  },
+  {
+   "fieldname": "ship_name",
+   "fieldtype": "Data",
+   "label": "Ship"
+  },
+  {
+   "fieldname": "port",
+   "fieldtype": "Data",
+   "label": "Port"
+  },
+  {
+   "fieldname": "column_break_azrq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "carry_in_date",
+   "fieldtype": "Date",
+   "label": "Carry-In Date"
+  },
+  {
+   "fieldname": "port_time_out",
+   "fieldtype": "Time",
+   "label": "Port Time Out"
+  },
+  {
+   "fieldname": "container_particulars_tab",
+   "fieldtype": "Tab Break",
+   "label": "Container Particulars"
+  },
+  {
+   "fieldname": "container_no",
+   "fieldtype": "Data",
+   "label": "Container"
+  },
+  {
+   "fieldname": "size",
+   "fieldtype": "Select",
+   "label": "Size (FT)",
+   "options": "20\n40\n45"
+  },
+  {
+   "fieldname": "cbm",
+   "fieldtype": "Data",
+   "label": "CBM"
+  },
+  {
+   "fieldname": "truck_name",
+   "fieldtype": "Data",
+   "label": "Truck Name"
+  },
+  {
+   "fieldname": "weight",
+   "fieldtype": "Data",
+   "label": "Weight"
+  },
+  {
+   "fieldname": "weight_unit",
+   "fieldtype": "Select",
+   "label": "Weight Unit",
+   "options": "KG\nTON"
+  },
+  {
+   "fieldname": "seal_no_1",
+   "fieldtype": "Data",
+   "label": "Seal No. 1"
+  },
+  {
+   "fieldname": "seal_no_2",
+   "fieldtype": "Data",
+   "label": "Seal No. 2"
+  },
+  {
+   "fieldname": "dcn",
+   "fieldtype": "Data",
+   "label": "DCN"
+  },
+  {
+   "fieldname": "personnel_and_security_tab",
+   "fieldtype": "Tab Break",
+   "label": "Personnel and Security"
+  },
+  {
+   "fieldname": "clerk",
+   "fieldtype": "Link",
+   "label": "Clerk",
+   "options": "Clerk"
+  },
+  {
+   "fieldname": "security_officer",
+   "fieldtype": "Link",
+   "label": "Security Officer",
+   "options": "Security officer"
+  },
+  {
+   "fieldname": "column_break_twjr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_fvbx",
+   "fieldtype": "Section Break",
+   "label": "Container Condition"
+  },
+  {
+   "fieldname": "movement_order",
+   "fieldtype": "Link",
+   "label": "Container Movement Order",
+   "options": "Container Movement Order"
+  },
+  {
+   "fieldname": "column_break_kepu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "top",
+   "fieldtype": "Table MultiSelect",
+   "label": "Top",
+   "options": "Condition state"
+  },
+  {
+   "fieldname": "front",
+   "fieldtype": "Table MultiSelect",
+   "label": "Front",
+   "options": "Condition state"
+  },
+  {
+   "fieldname": "rear",
+   "fieldtype": "Table MultiSelect",
+   "label": "Rear",
+   "options": "Condition state"
+  },
+  {
+   "fieldname": "bottom",
+   "fieldtype": "Table MultiSelect",
+   "label": "Bottom",
+   "options": "Condition state"
+  },
+  {
+   "fieldname": "left_side",
+   "fieldtype": "Table MultiSelect",
+   "label": "Left side",
+   "options": "Condition state"
+  },
+  {
+   "fieldname": "right_side",
+   "fieldtype": "Table MultiSelect",
+   "label": " Right side",
+   "options": "Condition state"
+  },
+  {
+   "fieldname": "column_break_iath",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_woyo",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-19 14:26:16.954164",
+ "modified_by": "Administrator",
+ "module": "ICD TZ",
+ "name": "Container Reception",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,191 @@
+{
+  "actions": [],
+  "allow_rename": 1,
+  "creation": "2024-07-10 11:54:01.257045",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "gate_pass_details_section",
+    "gate_pass_number",
+    "booking_id",
+    "container_number",
+    "goods_description",
+    "quantity",
+    "column_break_1",
+    "c_and_f_agent",
+    "customer",
+    "inspection_location",
+    "final_carry_out_section",
+    "dues_cleared",
+    "payment_verified",
+    "document_clearance_verified",
+    "required_documents_section",
+    "invoice_clearance",
+    "permits",
+    "relevant_authority_approvals",
+    "column_break_2",
+    "gate_pass",
+    "security_and_verification_section",
+    "id_verification",
+    "id_type",
+    "id_number",
+    "security_check_completed"
+  ],
+  "fields": [
+    {
+      "fieldname": "gate_pass_details_section",
+      "fieldtype": "Section Break",
+      "label": "Gate Pass Details"
+    },
+    {
+      "fieldname": "gate_pass_number",
+      "fieldtype": "Data",
+      "label": "Gate Pass Number",
+      "read_only": 1
+    },
+    {
+      "fieldname": "booking_id",
+      "fieldtype": "Link",
+      "label": "Booking ID",
+      "options": "In Yard Container Booking"
+    },
+    {
+      "fieldname": "container_number",
+      "fieldtype": "Link",
+      "label": "Container Number",
+      "options": "Container"
+    },
+    {
+      "fieldname": "goods_description",
+      "fieldtype": "Text",
+      "label": "Goods Description"
+    },
+    {
+      "fieldname": "quantity",
+      "fieldtype": "Int",
+      "label": "Quantity"
+    },
+    {
+      "fieldname": "column_break_1",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "c_and_f_agent",
+      "fieldtype": "Link",
+      "label": "C&F Agent",
+      "options": "Clearing Agent"
+    },
+    {
+      "fieldname": "customer",
+      "fieldtype": "Link",
+      "label": "Customer",
+      "options": "Customer"
+    },
+    {
+      "fieldname": "inspection_location",
+      "fieldtype": "Select",
+      "label": "Inspection Location",
+      "options": "ICD\nPort"
+    },
+    {
+      "fieldname": "final_carry_out_section",
+      "fieldtype": "Section Break",
+      "label": "Final Carry Out"
+    },
+    {
+      "fieldname": "dues_cleared",
+      "fieldtype": "Check",
+      "label": "Dues Cleared"
+    },
+    {
+      "fieldname": "payment_verified",
+      "fieldtype": "Check",
+      "label": "Payment Verified"
+    },
+    {
+      "fieldname": "document_clearance_verified",
+      "fieldtype": "Check",
+      "label": "Document Clearance Verified"
+    },
+    {
+      "fieldname": "required_documents_section",
+      "fieldtype": "Section Break",
+      "label": "Required Documents"
+    },
+    {
+      "fieldname": "invoice_clearance",
+      "fieldtype": "Data",
+      "label": "Invoice Clearance"
+    },
+    {
+      "fieldname": "permits",
+      "fieldtype": "Data",
+      "label": "Permits"
+    },
+    {
+      "fieldname": "relevant_authority_approvals",
+      "fieldtype": "Data",
+      "label": "Relevant Authority Approvals"
+    },
+    {
+      "fieldname": "column_break_2",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "gate_pass",
+      "fieldtype": "Data",
+      "label": "Gate Pass",
+      "read_only": 1
+    },
+    {
+      "fieldname": "security_and_verification_section",
+      "fieldtype": "Section Break",
+      "label": "Security and Verification"
+    },
+    {
+      "fieldname": "id_verification",
+      "fieldtype": "Check",
+      "label": "ID Verification"
+    },
+    {
+      "fieldname": "id_type",
+      "fieldtype": "Select",
+      "label": "ID Type",
+      "options": "National ID\nDriver's License\nPassport"
+    },
+    {
+      "fieldname": "id_number",
+      "fieldtype": "Data",
+      "label": "ID Number"
+    },
+    {
+      "fieldname": "security_check_completed",
+      "fieldtype": "Check",
+      "label": "Security Check Completed"
+    }
+  ],
+  "index_web_pages_for_search": 1,
+  "links": [],
+  "modified": "2024-07-10 11:54:01.257045",
+  "modified_by": "Administrator",
+  "module": "Icd Tz",
+  "name": "Gate Pass",
+  "owner": "Administrator",
+  "permissions": [
+    {
+      "create": 1,
+      "delete": 1,
+      "email": 1,
+      "export": 1,
+      "print": 1,
+      "read": 1,
+      "report": 1,
+      "role": "System Manager",
+      "share": 1,
+      "write": 1
+    }
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": []
+}

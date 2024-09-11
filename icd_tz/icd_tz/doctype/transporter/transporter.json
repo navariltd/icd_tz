@@ -1,0 +1,129 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-09 11:58:07.123949",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "movement_order",
+  "column_break_iytt",
+  "container",
+  "transporter_details_section",
+  "name1",
+  "column_break_jaxj",
+  "driver_details_section",
+  "driver_name",
+  "driver_license_number",
+  "column_break_dtjr",
+  "contact_information",
+  "truck_details_section",
+  "truck_name",
+  "truck_registration_number",
+  "column_break_jjvz",
+  "truck_type"
+ ],
+ "fields": [
+  {
+   "fieldname": "movement_order",
+   "fieldtype": "Link",
+   "label": "Movement Order",
+   "options": "Container Movement Order"
+  },
+  {
+   "fieldname": "column_break_iytt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "container",
+   "fieldtype": "Link",
+   "label": "Container",
+   "options": "Container"
+  },
+  {
+   "fieldname": "transporter_details_section",
+   "fieldtype": "Section Break",
+   "label": "Transporter Details"
+  },
+  {
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "label": "Name"
+  },
+  {
+   "fieldname": "column_break_jaxj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "driver_details_section",
+   "fieldtype": "Section Break",
+   "label": "Driver Details"
+  },
+  {
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "label": "Driver Name"
+  },
+  {
+   "fieldname": "driver_license_number",
+   "fieldtype": "Data",
+   "label": "Driver License Number"
+  },
+  {
+   "fieldname": "column_break_dtjr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contact_information",
+   "fieldtype": "Data",
+   "label": "Contact Information "
+  },
+  {
+   "fieldname": "truck_details_section",
+   "fieldtype": "Section Break",
+   "label": "Truck Details"
+  },
+  {
+   "fieldname": "truck_name",
+   "fieldtype": "Data",
+   "label": "Truck Name"
+  },
+  {
+   "fieldname": "truck_registration_number",
+   "fieldtype": "Data",
+   "label": "Truck Registration Number"
+  },
+  {
+   "fieldname": "column_break_jjvz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "truck_type",
+   "fieldtype": "Data",
+   "label": "Truck Type"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-07-19 13:12:03.411257",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Transporter",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
