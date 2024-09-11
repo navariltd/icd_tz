@@ -135,16 +135,18 @@
    "options": "MasterBI"
   },
   {
+   "default": "ICD-M-.YYYY.-",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Naming Series",
-   "options": "ICD-M-.YYYY.-"
+   "options": "ICD-M-.YYYY.-",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-11 21:30:56.844569",
+ "modified": "2024-09-11 22:57:38.447853",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Manifest",
