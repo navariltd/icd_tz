@@ -51,6 +51,7 @@
   {
    "fieldname": "m_bl_no",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "M B/L No"
   },
   {
@@ -61,16 +62,19 @@
   {
    "fieldname": "bl_type",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "B/L Type"
   },
   {
    "fieldname": "place_of_destination",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Place of Destination"
   },
   {
    "fieldname": "place_of_delivery",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Place of Delivery"
   },
   {
@@ -81,11 +85,13 @@
   {
    "fieldname": "port_of_loading",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Port of Loading"
   },
   {
    "fieldname": "number_of_package",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Number of Package"
   },
   {
@@ -249,9 +255,9 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-24 01:15:25.372554",
+ "modified": "2024-09-11 21:50:46.554443",
  "modified_by": "Administrator",
- "module": "ICD TZ",
+ "module": "Icd Tz",
  "name": "MasterBI",
  "owner": "Administrator",
  "permissions": [],

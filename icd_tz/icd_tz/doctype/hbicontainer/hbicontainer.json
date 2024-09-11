@@ -30,11 +30,13 @@
   {
    "fieldname": "m_bl_no",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "M B/L No"
   },
   {
    "fieldname": "h_bl_no",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "H B/L No"
   },
   {
@@ -45,11 +47,13 @@
   {
    "fieldname": "container_no",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Container No"
   },
   {
    "fieldname": "container_size",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Container Size"
   },
   {
@@ -75,6 +79,7 @@
   {
    "fieldname": "no_of_packages",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "No of Packages"
   },
   {
@@ -121,7 +126,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-19 11:40:02.336199",
+ "modified": "2024-09-11 21:49:07.781032",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "HBIContainer",

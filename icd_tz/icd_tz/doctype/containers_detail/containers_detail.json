@@ -29,6 +29,7 @@
   {
    "fieldname": "m_bl_no",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "M B/L No"
   },
   {
@@ -39,11 +40,13 @@
   {
    "fieldname": "container_no",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Container No"
   },
   {
    "fieldname": "container_size",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Container Size"
   },
   {
@@ -69,6 +72,7 @@
   {
    "fieldname": "no_of_packages",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "No of Packages"
   },
   {
@@ -115,7 +119,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-19 11:28:25.268947",
+ "modified": "2024-09-11 21:48:15.838068",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Containers Detail",
