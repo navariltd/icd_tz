@@ -3,7 +3,7 @@
  "allow_events_in_timeline": 1,
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "format:{movement_order_number}",
+ "autoname": "naming_series:naming_series",
  "creation": "2024-06-26 09:42:10.321625",
  "default_view": "List",
  "doctype": "DocType",
@@ -12,10 +12,12 @@
  "field_order": [
   "details_tab",
   "movement_order",
+  "manifest",
   "ship_name",
+  "column_break_75qur",
+  "voyage_no",
   "ship_id_date",
   "received_date",
-  "voyage_no",
   "column_break_azrq",
   "port",
   "carry_in_date",
@@ -24,6 +26,7 @@
   "container_no",
   "size",
   "cbm",
+  "column_break_zcgxx",
   "truck_name",
   "weight",
   "weight_unit",
@@ -43,7 +46,9 @@
   "personnel_and_security_tab",
   "clerk",
   "column_break_kepu",
-  "security_officer"
+  "security_officer",
+  "naming_series",
+  "amended_from"
  ],
  "fields": [
   {
@@ -62,16 +67,19 @@
    "label": "Received Date"
   },
   {
+   "fetch_from": "movement_order.voyage_no",
    "fieldname": "voyage_no",
    "fieldtype": "Data",
    "label": "Voyage No"
   },
   {
+   "fetch_from": "movement_order.ship",
    "fieldname": "ship_name",
    "fieldtype": "Data",
    "label": "Ship"
   },
   {
+   "fetch_from": "movement_order.port",
    "fieldname": "port",
    "fieldtype": "Data",
    "label": "Port"
@@ -96,11 +104,13 @@
    "label": "Container Particulars"
   },
   {
+   "fetch_from": "movement_order.container_number",
    "fieldname": "container_no",
    "fieldtype": "Data",
    "label": "Container"
   },
   {
+   "fetch_from": "movement_order.size",
    "fieldname": "size",
    "fieldtype": "Select",
    "label": "Size (FT)",
@@ -112,6 +122,7 @@
    "label": "CBM"
   },
   {
+   "fetch_from": "movement_order.truck_name",
    "fieldname": "truck_name",
    "fieldtype": "Data",
    "label": "Truck Name"
@@ -171,7 +182,7 @@
   {
    "fieldname": "movement_order",
    "fieldtype": "Link",
-   "label": "Container Movement Order",
+   "label": "Movement Order",
    "options": "Container Movement Order"
   },
   {
@@ -221,15 +232,49 @@
   {
    "fieldname": "column_break_woyo",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Container Reception",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "movement_order.manifest",
+   "fieldname": "manifest",
+   "fieldtype": "Link",
+   "label": "Manifest",
+   "options": "Manifest",
+   "read_only": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "ICD-CR-.YYYY.-",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_75qur",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zcgxx",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2024-07-19 14:26:16.954164",
+ "modified": "2024-09-12 15:53:24.855276",
  "modified_by": "Administrator",
- "module": "ICD TZ",
+ "module": "Icd Tz",
  "name": "Container Reception",
- "naming_rule": "Expression",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -247,5 +292,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }
