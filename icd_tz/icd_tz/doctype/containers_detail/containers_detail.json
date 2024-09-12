@@ -23,7 +23,8 @@
   "weight_unit",
   "plug_type_of_reefer",
   "minimum_temperature",
-  "maximum_temperature"
+  "maximum_temperature",
+  "has_order"
  ],
  "fields": [
   {
@@ -114,12 +115,19 @@
    "fieldname": "maximum_temperature",
    "fieldtype": "Data",
    "label": "Maximum Temperature"
+  },
+  {
+   "default": "0",
+   "fieldname": "has_order",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Has Order"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-09-11 21:48:15.838068",
+ "modified": "2024-09-12 12:35:45.069030",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Containers Detail",
