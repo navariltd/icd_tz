@@ -46,3 +46,15 @@ class ContainerMovementOrder(Document):
 			)
 	
 				
+@frappe.whitelist()
+def get_manifest_details(manifest):
+	"""Get details of a manifest"""
+	
+	details = frappe.db.get_value(
+		"Manifest",
+		manifest,
+		["mrn", "vessel_name", "tpa_uid", "voyage", "arrival_date", "departure_date", "call_sign"], 
+		as_dict=True
+	)
+
+	return details
