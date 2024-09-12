@@ -3,80 +3,51 @@
  "allow_events_in_timeline": 1,
  "allow_import": 1,
  "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
  "creation": "2024-07-09 11:40:46.380139",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "details_tab",
-  "company_details_section",
-  "company_name",
-  "tin_number",
-  "vat_number",
-  "column_break_zsmn",
-  "address",
+  "manifest",
   "shipment_details_section",
   "vessel_name",
   "movement_date",
   "ship_dc_date",
-  "received_date",
   "column_break_bvub",
-  "ship",
   "rot_no",
   "sline",
+  "received_date",
   "column_break_1",
+  "ship",
   "voyage_no",
   "port",
   "transport_details_section",
   "transporter",
+  "truck_name",
   "column_break_xoba",
   "driver",
-  "truck_name",
+  "driver_name",
   "container_details_tab",
-  "container_id",
-  "serial_number",
-  "size",
-  "column_break_wyva",
   "container_number",
-  "vessel",
+  "serial_number",
+  "column_break_wyva",
+  "size",
   "transfer_sequence_number",
   "signatures_and_time_tab",
   "driver_signature",
   "driver_time",
   "column_break_fziv",
   "gate_no_signature",
-  "gate_no_time"
+  "gate_no_time",
+  "amended_from",
+  "naming_series"
  ],
  "fields": [
   {
    "fieldname": "details_tab",
    "fieldtype": "Tab Break",
    "label": "Details"
-  },
-  {
-   "fieldname": "company_details_section",
-   "fieldtype": "Section Break",
-   "label": "Company Details"
-  },
-  {
-   "fieldname": "company_name",
-   "fieldtype": "Link",
-   "label": "Company Name",
-   "options": "Customer"
-  },
-  {
-   "fieldname": "address",
-   "fieldtype": "Text",
-   "label": "Address"
-  },
-  {
-   "fieldname": "vat_number",
-   "fieldtype": "Data",
-   "label": "VAT Number"
-  },
-  {
-   "fieldname": "tin_number",
-   "fieldtype": "Data",
-   "label": "TIN Number"
   },
   {
    "fieldname": "shipment_details_section",
@@ -126,7 +97,8 @@
   {
    "fieldname": "movement_date",
    "fieldtype": "Date",
-   "label": "Movement Date"
+   "label": "Movement Date",
+   "reqd": 1
   },
   {
    "fieldname": "transport_details_section",
@@ -137,13 +109,15 @@
    "fieldname": "transporter",
    "fieldtype": "Link",
    "label": "Transporter",
-   "options": "Transporter"
+   "options": "Transporter",
+   "reqd": 1
   },
   {
    "fieldname": "driver",
    "fieldtype": "Link",
    "label": "Driver",
-   "options": "Driver"
+   "options": "Driver",
+   "reqd": 1
   },
   {
    "fieldname": "truck_name",
@@ -162,8 +136,9 @@
   },
   {
    "fieldname": "container_number",
-   "fieldtype": "Data",
-   "label": "Container Number"
+   "fieldtype": "Select",
+   "label": "Container Number",
+   "reqd": 1
   },
   {
    "fieldname": "size",
@@ -175,11 +150,6 @@
    "fieldname": "port",
    "fieldtype": "Data",
    "label": "Port"
-  },
-  {
-   "fieldname": "vessel",
-   "fieldtype": "Data",
-   "label": "Vessel"
   },
   {
    "fieldname": "transfer_sequence_number",
@@ -216,10 +186,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "column_break_zsmn",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "column_break_bvub",
    "fieldtype": "Column Break"
   },
@@ -232,21 +198,51 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "container_id",
-   "fieldtype": "Data",
-   "label": "Container ID"
-  },
-  {
    "fieldname": "column_break_wyva",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Container Movement Order",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "default": "ICD-CMO-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "ICD-CMO-.YYYY.-",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "driver.full_name",
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "label": "Driver Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "manifest",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Manifest",
+   "options": "Manifest",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2024-07-09 17:14:51.275319",
+ "modified": "2024-09-12 12:39:22.187731",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Movement Order",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -264,5 +260,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }
