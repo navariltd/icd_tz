@@ -44,21 +44,33 @@
   {
    "fieldname": "mrn",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "MRN"
   },
   {
    "fieldname": "vessel_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Vessel Name"
   },
   {
    "fieldname": "tpa_uid",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "TPA UID"
   },
   {
    "fieldname": "voyage",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Voyage"
   },
   {
@@ -66,18 +78,26 @@
    "fieldtype": "Column Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "arrival_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Arrival date"
   },
   {
    "fieldname": "departure_date",
    "fieldtype": "Date",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Departure date"
   },
   {
    "fieldname": "call_sign",
    "fieldtype": "Data",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Call Sign"
   },
   {
@@ -146,7 +166,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-11 22:57:38.447853",
+ "modified": "2024-09-12 12:01:17.922358",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Manifest",
