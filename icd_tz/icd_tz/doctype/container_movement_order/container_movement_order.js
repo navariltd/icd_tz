@@ -33,6 +33,7 @@ frappe.ui.form.on("Container Movement Order", {
                         frm.set_value("vessel_name", data.voyage);
                         frm.set_value("received_date", data.arrival_date);
                         frm.set_value("voyage_no", data.voyage);
+                        frm.set_df_property("container_number", "options", data.containers);
                         frm.refresh_fields();
                     }
                 }

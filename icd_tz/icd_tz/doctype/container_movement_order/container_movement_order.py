@@ -56,5 +56,15 @@ def get_manifest_details(manifest):
 		["mrn", "vessel_name", "tpa_uid", "voyage", "arrival_date", "departure_date", "call_sign"], 
 		as_dict=True
 	)
+	
+	containers = frappe.db.get_all(
+		"Containers Detail",
+		filters={"parent": manifest, "has_order": 0},
+		fields=["container_no"],
+		pluck="container_no"
+	)
+
+	if len(containers) > 0:
+		details["containers"] = containers
 
 	return details
