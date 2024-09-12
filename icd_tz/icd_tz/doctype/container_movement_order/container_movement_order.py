@@ -13,7 +13,9 @@ class ContainerMovementOrder(Document):
 		if self.container_number:
 			self.validate_container_is_in_manifest()
 			self.validate_duplicate_cmo_per_container_number()
-	
+
+	def on_submit(self):
+		self.update_container_has_order()
 	
 	def validate_container_is_in_manifest(self):
 		"""Validate that the container number is in the selected manifest"""
@@ -45,7 +47,16 @@ class ContainerMovementOrder(Document):
 				f"Container: {self.container_number} already has a Movement Order: <a href='{url}'>{duplicates[0].cmo_id}</a>"
 			)
 	
-				
+	def update_container_has_order(self):
+		"""Update the status of the container to Has Order"""
+		if self.container_number:
+			frappe.db.set_value(
+				"Containers Detail",
+				{"parent": self.manifest, "container_no": self.container_number},
+				"has_order", 1
+			)
+
+
 @frappe.whitelist()
 def get_manifest_details(manifest):
 	"""Get details of a manifest"""
@@ -56,7 +67,7 @@ def get_manifest_details(manifest):
 		["mrn", "vessel_name", "tpa_uid", "voyage", "arrival_date", "departure_date", "call_sign"], 
 		as_dict=True
 	)
-	
+
 	containers = frappe.db.get_all(
 		"Containers Detail",
 		filters={"parent": manifest, "has_order": 0},
