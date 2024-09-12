@@ -3,7 +3,7 @@
 
 frappe.ui.form.on('Manifest', {
 	refresh: (frm) => {
-
+		frm.trigger("create_movement_order");
 	},
 	manifest: (frm) => {
 		if (frm.doc.manifest) {
@@ -20,7 +20,18 @@ frappe.ui.form.on('Manifest', {
 					}
 				}
 			});
-			console.log(frm.doc.manifest);
 		}
 	},
+	create_movement_order: (frm) => {
+		if (frm.doc.docstatus == 1) {
+			frm.add_custom_button(__('Create Movement Order'), () => {
+				frappe.new_doc('Container Movement Order', {
+					"manifest": frm.doc.name,
+					"vessel_name": frm.doc.voyage,
+					"received_date": frm.doc.arrival_date,
+					"voyage_no": frm.doc.voyage,
+				}, doc => {});
+			}).addClass('btn-primary');
+		}
+	}
 });
