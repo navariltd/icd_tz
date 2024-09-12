@@ -4,10 +4,11 @@
 frappe.ui.form.on("Container Movement Order", {
 	refresh: (frm) => {
         frm.trigger("set_queries");
-
+        frm.trigger("create_container_reception");
 	},
     onload: (frm) => {
         frm.trigger("set_queries");
+        frm.trigger("create_container_reception");
     },
     set_queries: (frm) => {
         frm.set_query("manifest", () => {
@@ -40,4 +41,22 @@ frappe.ui.form.on("Container Movement Order", {
             });
         }
     },
+    create_container_reception: (frm) => {
+        if (frm.doc.docstatus == 1) {
+            frm.add_custom_button(__('Create Container Reception'), () => {
+                frappe.new_doc('Container Reception', {
+                    "movement_order": frm.doc.name,
+                    "manifest": frm.doc.manifest,
+                    "ship_name": frm.doc.ship,
+                    "vessel_name": frm.doc.vessel_name,
+                    "received_date": frm.doc.received_date,
+                    "voyage_no": frm.doc.voyage_no,
+                    "port": frm.doc.port,
+                    "container_no": frm.doc.container_number,
+                    "size": frm.doc.size,
+                    "truck_name": frm.doc.truck_name,
+                }, doc => {});
+            }).addClass('btn-primary');
+        }
+    }
 });
