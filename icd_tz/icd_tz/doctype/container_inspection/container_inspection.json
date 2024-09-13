@@ -1,0 +1,215 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2024-09-13 11:24:28.105415",
+ "default_view": "List",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_9rl7",
+  "movement_date",
+  "driver_name",
+  "column_break_bu4nq",
+  "in_yard_container_booking",
+  "customer",
+  "column_break_aamu",
+  "container",
+  "original_location",
+  "inspection_details_section",
+  "inspector_name",
+  "inspection_results",
+  "column_break_oepr",
+  "inspection_date",
+  "inspection_comments",
+  "post_inspection_location",
+  "yard_number",
+  "row",
+  "position",
+  "column_break_gdea",
+  "additional_note",
+  "services_tab",
+  "services",
+  "section_break_vfatw",
+  "amended_from",
+  "naming_series"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_9rl7",
+   "fieldtype": "Tab Break",
+   "label": "Details"
+  },
+  {
+   "default": "now",
+   "fieldname": "movement_date",
+   "fieldtype": "Datetime",
+   "label": "Movement Date"
+  },
+  {
+   "fieldname": "in_yard_container_booking",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "In Yard Container Booking",
+   "options": "In Yard Container Booking",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "in_yard_container_booking.customer",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_aamu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "in_yard_container_booking.container_no",
+   "fieldname": "container",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Container",
+   "options": "Container",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fetch_from": "container.previous_location",
+   "fieldname": "original_location",
+   "fieldtype": "Data",
+   "label": "Original Location"
+  },
+  {
+   "fieldname": "driver_name",
+   "fieldtype": "Link",
+   "label": "Driver Name",
+   "options": "Driver"
+  },
+  {
+   "fieldname": "inspection_details_section",
+   "fieldtype": "Section Break",
+   "label": "Inspection Details"
+  },
+  {
+   "fieldname": "inspector_name",
+   "fieldtype": "Data",
+   "label": "Inspector Name"
+  },
+  {
+   "fieldname": "inspection_results",
+   "fieldtype": "Text Editor",
+   "label": "Inspection Results"
+  },
+  {
+   "fieldname": "column_break_oepr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "inspection_date",
+   "fieldtype": "Datetime",
+   "label": "Inspection Date"
+  },
+  {
+   "fieldname": "inspection_comments",
+   "fieldtype": "Text Editor",
+   "label": "Inspection Comments"
+  },
+  {
+   "fieldname": "post_inspection_location",
+   "fieldtype": "Section Break",
+   "label": "Post-Inspection Location"
+  },
+  {
+   "fieldname": "yard_number",
+   "fieldtype": "Data",
+   "label": "Yard Number"
+  },
+  {
+   "fieldname": "row",
+   "fieldtype": "Data",
+   "label": "Row"
+  },
+  {
+   "fieldname": "position",
+   "fieldtype": "Data",
+   "label": "Position"
+  },
+  {
+   "fieldname": "column_break_gdea",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "additional_note",
+   "fieldtype": "Small Text",
+   "label": "Additional Note"
+  },
+  {
+   "default": "ICD-CI-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "ICD-CI-.YYYY.-",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Container Inspection",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "services_tab",
+   "fieldtype": "Tab Break",
+   "label": "Service Details"
+  },
+  {
+   "fieldname": "services",
+   "fieldtype": "Table",
+   "label": "Services",
+   "options": "Container Inspection Detail"
+  },
+  {
+   "fieldname": "section_break_vfatw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bu4nq",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-09-13 11:59:27.481882",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Container Inspection",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
