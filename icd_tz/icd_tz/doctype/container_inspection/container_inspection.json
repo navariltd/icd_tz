@@ -13,9 +13,13 @@
   "column_break_bu4nq",
   "in_yard_container_booking",
   "customer",
+  "clearing_agent",
   "column_break_aamu",
-  "container",
+  "container_no",
   "original_location",
+  "column_break_d1lgj",
+  "posting_date",
+  "posting_time",
   "inspection_details_section",
   "inspector_name",
   "inspection_results",
@@ -65,16 +69,6 @@
   {
    "fieldname": "column_break_aamu",
    "fieldtype": "Column Break"
-  },
-  {
-   "fetch_from": "in_yard_container_booking.container_no",
-   "fieldname": "container",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Container",
-   "options": "Container",
-   "read_only": 1,
-   "reqd": 1
   },
   {
    "fetch_from": "container.previous_location",
@@ -182,12 +176,45 @@
   {
    "fieldname": "column_break_bu4nq",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_d1lgj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "now",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "default": "now",
+   "fieldname": "posting_time",
+   "fieldtype": "Time",
+   "label": "Posting Time"
+  },
+  {
+   "fetch_from": "in_yard_container_booking.c_and_f_agent",
+   "fieldname": "clearing_agent",
+   "fieldtype": "Link",
+   "label": "Clearing Agent",
+   "options": "Clearing Agent"
+  },
+  {
+   "fetch_from": "in_yard_container_booking.container_no",
+   "fieldname": "container_no",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Container Number",
+   "options": "Container",
+   "read_only": 1,
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-13 11:59:27.481882",
+ "modified": "2024-09-13 12:25:26.284800",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Inspection",
