@@ -37,12 +37,12 @@ class ContainerMovementOrder(Document):
 		duplicates = (
 			frappe.qb.from_(cmo)
 			.select(
-				cmo.name.as_(cmo_id)
+				cmo.name.as_("cmo_id")
 			)
 			.where(
 				(cmo.manifest == self.manifest) &
 				(cmo.container_number == self.container_number)
-				(cmo.name != self.name)
+				& (cmo.name != self.name)
 			)
 		).run(as_dict=True)
 		if duplicates:
