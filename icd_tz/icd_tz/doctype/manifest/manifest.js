@@ -5,6 +5,12 @@ frappe.ui.form.on('Manifest', {
 	refresh: (frm) => {
 		frm.trigger("create_movement_order");
 	},
+	onload: (frm) => {
+		// if (!frm.doc.company) {
+		// 	frm.set_value("company", frappe.defaults.get_user_default("Company"));
+		// }
+		frm.trigger("create_movement_order");
+	},
 	manifest: (frm) => {
 		if (frm.doc.manifest) {
 			frappe.call({

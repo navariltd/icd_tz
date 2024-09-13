@@ -6,4 +6,6 @@ from frappe.model.document import Document
 
 
 class InYardContainerBooking(Document):
-	pass
+	def before_save(self):
+		if not self.company:
+			self.company = frappe.defaults.get_user_default("Company")

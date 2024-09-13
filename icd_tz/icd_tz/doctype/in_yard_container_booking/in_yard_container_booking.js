@@ -6,6 +6,10 @@ frappe.ui.form.on("In Yard Container Booking", {
         frm.trigger("create_container_inspection");
 	},
     onload: (frm) => {
+        if (!frm.doc.company) {
+            frm.set_value("company", frappe.defaults.get_user_default("Company"));
+        }
+        
         frm.trigger("create_container_inspection");
     },
 	create_container_inspection: (frm) => {

@@ -9,6 +9,10 @@ from frappe.model.document import Document
 cmo = DocType("Container Movement Order")
 
 class ContainerMovementOrder(Document):
+	def before_save(self):
+		if not self.company:
+			self.company = frappe.defaults.get_user_default("Company")
+		
 	def validate(self):
 		if self.container_number:
 			self.validate_container_is_in_manifest()

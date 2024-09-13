@@ -9,6 +9,8 @@
  "engine": "InnoDB",
  "field_order": [
   "manifest",
+  "column_break_ejvcs",
+  "company",
   "vessel_information_section",
   "mrn",
   "vessel_name",
@@ -161,12 +163,22 @@
    "label": "Naming Series",
    "options": "ICD-M-.YYYY.-",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_ejvcs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-12 12:01:17.922358",
+ "modified": "2024-09-13 14:45:43.137387",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Manifest",

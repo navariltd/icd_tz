@@ -10,6 +10,8 @@
  "field_order": [
   "details_tab",
   "manifest",
+  "column_break_tnol5",
+  "company",
   "shipment_details_section",
   "vessel_name",
   "movement_date",
@@ -233,12 +235,23 @@
    "label": "Manifest",
    "options": "Manifest",
    "reqd": 1
+  },
+  {
+   "fieldname": "column_break_tnol5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "manifest.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-12 12:39:22.187731",
+ "modified": "2024-09-13 14:54:07.155231",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Movement Order",

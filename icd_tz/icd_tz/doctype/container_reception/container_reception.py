@@ -9,6 +9,10 @@ from frappe.utils import get_link_to_form, nowdate
 cr = DocType("Container Reception")
 
 class ContainerReception(Document):
+	def before_save(self):
+		if not self.company:
+			self.company = frappe.defaults.get_user_default("Company")
+		
 	def validate(self):
 		self.validate_duplicate_cmo()
 	

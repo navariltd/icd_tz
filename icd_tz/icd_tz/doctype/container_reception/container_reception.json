@@ -13,12 +13,13 @@
   "details_tab",
   "movement_order",
   "manifest",
-  "ship_name",
+  "company",
   "column_break_75qur",
   "voyage_no",
   "ship_id_date",
   "received_date",
   "column_break_azrq",
+  "ship_name",
   "port",
   "carry_in_date",
   "port_time_out",
@@ -265,12 +266,19 @@
   {
    "fieldname": "column_break_zcgxx",
    "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "movement_order.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-12 15:53:24.855276",
+ "modified": "2024-09-13 14:55:58.889353",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",

@@ -17,6 +17,9 @@ class Manifest(Document):
                 "You cannot remove the manifest file once it has been attached.<br>\
                 Please delete the record and create a new one."
             )
+        
+        if not company:
+            self.company = frappe.defaults.get_user_default("Company")
     
     def on_trash(self):
         if self.manifest:

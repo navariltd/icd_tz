@@ -3,9 +3,14 @@
 
 frappe.ui.form.on('Container Reception', {
 	refresh: (frm) => {
-
+		frm.trigger("set_queries");
 	},
 	onload: (frm) => {
+        if (!frm.doc.company) {
+            frm.set_value("company", frappe.defaults.get_user_default("Company"));
+            console.log("Company: ", frm.doc.company);
+        }
+
 		frm.trigger("set_queries");
 	},
     set_queries: (frm) => {

@@ -7,6 +7,10 @@ frappe.ui.form.on("Container Movement Order", {
         frm.trigger("create_container_reception");
 	},
     onload: (frm) => {
+        if (!frm.doc.company) {
+            frm.set_value("company", frappe.defaults.get_user_default("Company"));
+        }
+        
         frm.trigger("set_queries");
         frm.trigger("create_container_reception");
     },
