@@ -20,6 +20,7 @@
   "column_break_d1lgj",
   "posting_date",
   "posting_time",
+  "company",
   "inspection_details_section",
   "inspector_name",
   "inspection_results",
@@ -35,6 +36,9 @@
   "services_tab",
   "services",
   "section_break_vfatw",
+  "sales_order",
+  "sales_invoice",
+  "column_break_vrwdx",
   "amended_from",
   "naming_series"
  ],
@@ -171,7 +175,8 @@
   },
   {
    "fieldname": "section_break_vfatw",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "References"
   },
   {
    "fieldname": "column_break_bu4nq",
@@ -209,12 +214,37 @@
    "options": "Container",
    "read_only": 1,
    "reqd": 1
+  },
+  {
+   "fetch_from": "in_yard_container_booking.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Sales Order",
+   "options": "Sales Order",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Sales Invoice",
+   "options": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_vrwdx",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-13 12:25:26.284800",
+ "modified": "2024-09-13 15:18:01.308401",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Inspection",

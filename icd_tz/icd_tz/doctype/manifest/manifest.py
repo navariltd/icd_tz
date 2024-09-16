@@ -18,7 +18,7 @@ class Manifest(Document):
                 Please delete the record and create a new one."
             )
         
-        if not company:
+        if not self.company:
             self.company = frappe.defaults.get_user_default("Company")
     
     def on_trash(self):
