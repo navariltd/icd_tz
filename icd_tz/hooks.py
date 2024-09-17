@@ -144,6 +144,14 @@ app_license = "MIT"
 # 		"icd_tz.tasks.monthly"
 # 	],
 # }
+scheduler_events = {
+    "cron": {
+        # run twice a day, at 00:30 night and 12:30 afternoon
+        "30 0,12 * * *": [
+            "icd_tz.icd_tz.doctype.container.container.daily_update_date_container_stay"
+        ]
+    }
+}
 
 # Testing
 # -------

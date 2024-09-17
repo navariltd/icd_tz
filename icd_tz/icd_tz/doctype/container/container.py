@@ -2,7 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
-from frappe.utils import nowdate
+from frappe.utils import nowdate, getdate
 from frappe.model.document import Document
 
 class Container(Document):
@@ -14,6 +14,8 @@ class Container(Document):
 		"""Update the container details from the Container Reception, Containers Detail and Container Movement Order"""
 
 		container_reception = frappe.get_doc("Container Reception", self.container_reception)
+		if not self.custom_status:
+			self.customs_status = "Pending"
 		if not self.sezi:
 			self.size = container_reception.size
 		if not self.volume:
@@ -68,3 +70,30 @@ class Container(Document):
 			self.append("container_dates", {
 				"date": nowdate(),
 			})
+
+
+def daily_update_date_container_stay():
+	containers = frappe.get_all("Container", filters={"customs_status": ["!=", "Cleared"]})
+
+	for item in containers:
+		try:
+			doc = frappe.get_doc("Container", item.name)
+			container_dates_len = len(doc.container_dates)
+			if container_dates_len > 0:
+				last_row = doc.container_dates[container_dates_len - 1]
+				if getdate(last_row.date) != getdate(nowdate()):
+					new_row = doc.append("container_dates", {})
+					new_row.date = nowdate()
+			elif container_dates_len == 0:
+				new_row = doc.append("container_dates", {})
+				new_row.date = nowdate()
+			
+			doc.save(ignore_permissions=True)
+			frappe.db.commit()
+		except Exception:
+			frappe.log_error(
+				str(f"<b>{item.name}</b> Daily Update Container Dates"),
+				frappe.get_traceback()
+			)
+			continue
+
