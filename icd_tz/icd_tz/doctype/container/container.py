@@ -9,9 +9,15 @@ class Container(Document):
 	def before_save(self):
 		if self.container_no and self.container_reception:
 			self.update_container_details()
+
+		self.update_billed_days()
 	
+
 	def update_container_details(self):
 		"""Update the container details from the Container Reception, Containers Detail and Container Movement Order"""
+
+		if customs_status == "Cleared":
+			return
 
 		container_reception = frappe.get_doc("Container Reception", self.container_reception)
 		if not self.custom_status:
@@ -70,6 +76,19 @@ class Container(Document):
 			self.append("container_dates", {
 				"date": nowdate(),
 			})
+
+	def update_billed_days(self):
+		"""Update the billed days of the container"""
+		
+		if customs_status == "Cleared":
+			return
+		
+		if len(self.container_dates) > 0:
+			self.total_days = len(self.container_dates)
+			self.no_of_billable_days = len([row for row in self.container_dates if row.is_billable == 1])
+			self.no_of_unbilled_days = len([row for row in self.container_dates if row.is_billable == 0])
+			self.days_to_be_billed = len([row for row in self.container_dates if row.is_billable == 1 and not row.sales_invoice])
+			self.no_of_billed_days = len([row for row in self.container_dates if row.sales_invoice])
 
 
 def daily_update_date_container_stay():

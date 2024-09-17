@@ -47,7 +47,17 @@
   "last_inspection_date",
   "next_inspection_date",
   "tab_break_edoll",
-  "container_dates"
+  "container_dates",
+  "section_break_517wd",
+  "total_days",
+  "column_break_dlhui",
+  "no_of_billable_days",
+  "column_break_cd24q",
+  "no_of_unbilled_days",
+  "column_break_xo7tr",
+  "days_to_be_billed",
+  "column_break_rs2fh",
+  "no_of_billed_days"
  ],
  "fields": [
   {
@@ -229,7 +239,8 @@
   },
   {
    "fieldname": "tab_break_edoll",
-   "fieldtype": "Tab Break"
+   "fieldtype": "Tab Break",
+   "label": "Dates"
   },
   {
    "fieldname": "container_dates",
@@ -252,12 +263,62 @@
    "fieldname": "package_unit",
    "fieldtype": "Small Text",
    "label": "Package Unit"
+  },
+  {
+   "fieldname": "section_break_517wd",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "no_of_billable_days",
+   "fieldtype": "Int",
+   "label": "No of Billable Days",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_cd24q",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "no_of_unbilled_days",
+   "fieldtype": "Int",
+   "label": "No of Unbilled Days",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_xo7tr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "no_of_billed_days",
+   "fieldtype": "Int",
+   "label": "No of Billed Days",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_days",
+   "fieldtype": "Int",
+   "label": "Total Days",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_dlhui",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_rs2fh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "days_to_be_billed",
+   "fieldtype": "Int",
+   "label": "Days to be billed",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-17 10:14:08.668351",
+ "modified": "2024-09-17 15:06:31.996027",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",

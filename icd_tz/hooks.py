@@ -146,8 +146,8 @@ app_license = "MIT"
 # }
 scheduler_events = {
     "cron": {
-        # run twice a day, at 00:30 night and 12:30 afternoon
-        "30 0,12 * * *": [
+        # run after every two hours
+        "0 */2 * * *": [
             "icd_tz.icd_tz.doctype.container.container.daily_update_date_container_stay"
         ]
     }
