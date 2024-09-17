@@ -23,8 +23,11 @@
   "inspection_location",
   "verification_area",
   "handling_and_charges_section",
-  "stripping_charges",
+  "has_stripping_charges",
+  "column_break_4jkmd",
+  "sales_order",
   "column_break_sfhl",
+  "sales_invoice",
   "documents_section",
   "documents",
   "record_keeping_section",
@@ -119,12 +122,6 @@
    "fieldname": "handling_and_charges_section",
    "fieldtype": "Section Break",
    "label": "Handling and Charges"
-  },
-  {
-   "default": "0",
-   "fieldname": "stripping_charges",
-   "fieldtype": "Check",
-   "label": "Stripping Charges"
   },
   {
    "fieldname": "notifications_section",
@@ -229,12 +226,35 @@
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"
+  },
+  {
+   "fieldname": "column_break_4jkmd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Data",
+   "label": "Sales Order",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Data",
+   "label": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "has_stripping_charges",
+   "fieldtype": "Select",
+   "label": "Has Stripping Charges",
+   "options": "Yes\nNo",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-13 15:01:04.786930",
+ "modified": "2024-09-17 12:24:09.966035",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "In Yard Container Booking",
