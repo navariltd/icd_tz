@@ -56,3 +56,16 @@ class ContainerReception(Document):
 		container.save(ignore_permissions=True)
 
 		return container.name
+
+@frappe.whitelist()
+def get_container_details(manifest, container_no):
+	"""Get the details of a container based on the container no and manifest"""
+
+	container = frappe.get_all(
+		"Containers Detail",
+		filters={"parent": manifest, "container_no": container_no},
+		fields=["*"]
+	)
+
+	if len(container) > 0:
+		return container[0]

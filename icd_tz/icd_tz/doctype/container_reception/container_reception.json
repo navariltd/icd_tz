@@ -14,27 +14,28 @@
   "movement_order",
   "manifest",
   "company",
-  "column_break_75qur",
-  "voyage_no",
-  "ship_id_date",
+  "column_break_ytg9x",
+  "ship_dc_date",
   "received_date",
-  "column_break_azrq",
-  "ship_name",
+  "column_break_75qur",
+  "ship",
   "port",
-  "carry_in_date",
+  "column_break_azrq",
+  "voyage_no",
   "port_time_out",
   "container_particulars_tab",
   "container_no",
   "size",
-  "cbm",
+  "volume",
   "column_break_zcgxx",
   "truck_name",
   "weight",
   "weight_unit",
   "column_break_twjr",
+  "dcn",
   "seal_no_1",
   "seal_no_2",
-  "dcn",
+  "seal_no_3",
   "section_break_fvbx",
   "top",
   "bottom",
@@ -46,6 +47,7 @@
   "left_side",
   "personnel_and_security_tab",
   "clerk",
+  "cleck_name",
   "column_break_kepu",
   "security_officer",
   "naming_series",
@@ -58,11 +60,8 @@
    "label": "Details"
   },
   {
-   "fieldname": "ship_id_date",
-   "fieldtype": "Date",
-   "label": "Ship I/D Date"
-  },
-  {
+   "fetch_from": "movement_order.received_date",
+   "fetch_if_empty": 1,
    "fieldname": "received_date",
    "fieldtype": "Date",
    "label": "Received Date"
@@ -71,28 +70,19 @@
    "fetch_from": "movement_order.voyage_no",
    "fieldname": "voyage_no",
    "fieldtype": "Data",
-   "label": "Voyage No"
-  },
-  {
-   "fetch_from": "movement_order.ship",
-   "fieldname": "ship_name",
-   "fieldtype": "Data",
-   "label": "Ship"
+   "label": "Voyage No",
+   "read_only": 1
   },
   {
    "fetch_from": "movement_order.port",
    "fieldname": "port",
    "fieldtype": "Data",
-   "label": "Port"
+   "label": "Port",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_azrq",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "carry_in_date",
-   "fieldtype": "Date",
-   "label": "Carry-In Date"
   },
   {
    "fieldname": "port_time_out",
@@ -105,54 +95,52 @@
    "label": "Container Particulars"
   },
   {
-   "fetch_from": "movement_order.container_number",
+   "fetch_from": "movement_order.container_no",
    "fieldname": "container_no",
    "fieldtype": "Data",
-   "label": "Container"
+   "label": "Container",
+   "read_only": 1
   },
   {
    "fetch_from": "movement_order.size",
+   "fetch_if_empty": 1,
    "fieldname": "size",
    "fieldtype": "Select",
    "label": "Size (FT)",
-   "options": "20\n40\n45"
-  },
-  {
-   "fieldname": "cbm",
-   "fieldtype": "Data",
-   "label": "CBM"
+   "options": "20\n40\n45\n22G1\n45G1"
   },
   {
    "fetch_from": "movement_order.truck_name",
    "fieldname": "truck_name",
-   "fieldtype": "Data",
-   "label": "Truck Name"
+   "fieldtype": "Link",
+   "label": "Truck Name",
+   "options": "Vehicle",
+   "read_only": 1
   },
   {
    "fieldname": "weight",
    "fieldtype": "Data",
-   "label": "Weight"
+   "label": "Weight",
+   "read_only": 1
   },
   {
    "fieldname": "weight_unit",
    "fieldtype": "Select",
    "label": "Weight Unit",
-   "options": "KG\nTON"
+   "options": "KG\nTON",
+   "read_only": 1
   },
   {
    "fieldname": "seal_no_1",
    "fieldtype": "Data",
-   "label": "Seal No. 1"
+   "label": "Seal No. 1",
+   "read_only": 1
   },
   {
    "fieldname": "seal_no_2",
    "fieldtype": "Data",
-   "label": "Seal No. 2"
-  },
-  {
-   "fieldname": "dcn",
-   "fieldtype": "Data",
-   "label": "DCN"
+   "label": "Seal No. 2",
+   "read_only": 1
   },
   {
    "fieldname": "personnel_and_security_tab",
@@ -163,7 +151,7 @@
    "fieldname": "clerk",
    "fieldtype": "Link",
    "label": "Clerk",
-   "options": "Clerk"
+   "options": "Employee"
   },
   {
    "fieldname": "security_officer",
@@ -183,8 +171,10 @@
   {
    "fieldname": "movement_order",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Movement Order",
-   "options": "Container Movement Order"
+   "options": "Container Movement Order",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_kepu",
@@ -273,12 +263,52 @@
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"
+  },
+  {
+   "fieldname": "volume",
+   "fieldtype": "Data",
+   "label": "Volume (CBM)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "seal_no_3",
+   "fieldtype": "Data",
+   "label": "Seal No. 3",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_ytg9x",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "movement_order.ship",
+   "fieldname": "ship",
+   "fieldtype": "Data",
+   "label": "Ship",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ship_dc_date",
+   "fieldtype": "Date",
+   "label": "Ship D/C Date"
+  },
+  {
+   "fieldname": "dcn",
+   "fieldtype": "Data",
+   "label": "DCN"
+  },
+  {
+   "fetch_from": "clerk.employee_name",
+   "fieldname": "cleck_name",
+   "fieldtype": "Data",
+   "label": "Cleck Name",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-13 14:55:58.889353",
+ "modified": "2024-09-16 20:12:19.106614",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",
@@ -298,6 +328,7 @@
    "write": 1
   }
  ],
+ "search_fields": "movement_order, ship_dc_date, received_date, ship, port, voyage_no, container_no, truck_name, dcn",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
