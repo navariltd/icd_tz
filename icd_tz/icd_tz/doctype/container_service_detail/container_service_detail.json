@@ -1,0 +1,40 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-09-17 09:31:15.780183",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "date",
+  "is_confirmed"
+ ],
+ "fields": [
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date"
+  },
+  {
+   "default": "0",
+   "description": "If ticked, the date of this row will be counted for Customer Bill",
+   "fieldname": "is_confirmed",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Confirmed"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-09-17 09:31:15.780183",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Container Service Detail",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

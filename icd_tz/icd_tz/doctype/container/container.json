@@ -10,33 +10,42 @@
  "field_order": [
   "container_details_section",
   "container_no",
-  "document_control_number",
+  "dcn",
+  "m_bl_no",
+  "column_break_iq9ob",
   "size",
+  "type_of_container",
+  "no_of_packages",
   "column_break_ldlxm",
   "volume",
+  "volume_unit",
   "weght",
+  "weight_unit",
   "column_break_sohs",
   "seal_no_1",
   "seal_no_2",
-  "ownership_details_section",
+  "seal_no_3",
+  "freight_indicator",
   "cargo_details_section",
+  "sline",
   "port_of_origin",
   "port_of_destination",
-  "shipper",
   "customs_status",
   "column_break_jhhs",
   "cargo_description",
   "movement_details_section",
   "status",
+  "original_location",
   "current_location",
-  "previous_location",
   "container_reception",
   "column_break_lduxs",
   "arrival_date",
   "departure_date",
   "column_break_qkrn",
   "last_inspection_date",
-  "next_inspection_date"
+  "next_inspection_date",
+  "tab_break_edoll",
+  "container_dates"
  ],
  "fields": [
   {
@@ -49,11 +58,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "document_control_number",
-   "fieldtype": "Data",
-   "label": "Document Control Number"
-  },
-  {
    "fieldname": "seal_no_1",
    "fieldtype": "Data",
    "label": "Seal No. 1"
@@ -64,11 +68,6 @@
    "label": "Seal No. 2"
   },
   {
-   "fieldname": "ownership_details_section",
-   "fieldtype": "Section Break",
-   "label": "Ownership Details"
-  },
-  {
    "fieldname": "cargo_details_section",
    "fieldtype": "Section Break",
    "label": "Cargo Details"
@@ -77,11 +76,6 @@
    "fieldname": "cargo_description",
    "fieldtype": "Text",
    "label": "Cargo Description"
-  },
-  {
-   "fieldname": "shipper",
-   "fieldtype": "Data",
-   "label": "Shipper"
   },
   {
    "fieldname": "column_break_jhhs",
@@ -147,30 +141,24 @@
    "fieldname": "container_no",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Container Number",
+   "label": "Container",
    "reqd": 1,
    "unique": 1
   },
   {
    "fieldname": "size",
    "fieldtype": "Int",
-   "label": "Size (M)"
+   "label": "Size (FT)"
   },
   {
    "fieldname": "volume",
    "fieldtype": "Int",
-   "label": "Volume (CBM)"
+   "label": "Volume"
   },
   {
    "fieldname": "weght",
    "fieldtype": "Data",
-   "label": "Weight (Kg)"
-  },
-  {
-   "fieldname": "previous_location",
-   "fieldtype": "Data",
-   "label": "Previous Location",
-   "read_only": 1
+   "label": "Weight"
   },
   {
    "fieldname": "column_break_lduxs",
@@ -186,12 +174,76 @@
    "hidden": 1,
    "label": "Container Reception",
    "options": "Container Reception"
+  },
+  {
+   "fieldname": "dcn",
+   "fieldtype": "Data",
+   "label": "DCN"
+  },
+  {
+   "fieldname": "seal_no_3",
+   "fieldtype": "Data",
+   "label": "Seal No. 3"
+  },
+  {
+   "fieldname": "sline",
+   "fieldtype": "Data",
+   "label": "Sline"
+  },
+  {
+   "fieldname": "original_location",
+   "fieldtype": "Data",
+   "label": "Original Location"
+  },
+  {
+   "fieldname": "m_bl_no",
+   "fieldtype": "Data",
+   "label": "M B/L No"
+  },
+  {
+   "fieldname": "type_of_container",
+   "fieldtype": "Data",
+   "label": "Type of Container"
+  },
+  {
+   "fieldname": "no_of_packages",
+   "fieldtype": "Data",
+   "label": "No of Packages"
+  },
+  {
+   "fieldname": "volume_unit",
+   "fieldtype": "Data",
+   "label": "Volume Unit"
+  },
+  {
+   "fieldname": "weight_unit",
+   "fieldtype": "Data",
+   "label": "Weight Unit"
+  },
+  {
+   "fieldname": "freight_indicator",
+   "fieldtype": "Data",
+   "label": "Freight Indicator"
+  },
+  {
+   "fieldname": "column_break_iq9ob",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tab_break_edoll",
+   "fieldtype": "Tab Break"
+  },
+  {
+   "fieldname": "container_dates",
+   "fieldtype": "Table",
+   "options": "Container Service Detail",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-12 18:47:45.098784",
+ "modified": "2024-09-17 09:32:51.923945",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",
