@@ -71,9 +71,10 @@ frappe.ui.form.on('Container Inspection', {
 				return;
 			}
 			frappe.call({
-				method: "icd_tz.icd_tz.doctype.container_inspection.container_inspection.make_sales_order",
+				method: "icd_tz.icd_tz.api.sales_order.make_sales_order",
 				args: {
-					self: frm.doc
+					doc_type: frm.doc.doctype,
+					doc_name: frm.doc.name
 				},
 				freeze: true,
 				freeze_message: __("Creating Sales Order"),
