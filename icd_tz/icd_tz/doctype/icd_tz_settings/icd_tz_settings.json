@@ -7,7 +7,9 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "default_price_list"
+  "default_price_list",
+  "in_yard_booking_item",
+  "container_storage_item"
  ],
  "fields": [
   {
@@ -16,12 +18,28 @@
    "fieldtype": "Link",
    "label": "Default Price List",
    "options": "Price List"
+  },
+  {
+   "fieldname": "in_yard_booking_item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "In Yard Booking Item",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "container_storage_item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Container Storage Item",
+   "options": "Item",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-09-13 14:41:58.992959",
+ "modified": "2024-09-17 15:16:56.069577",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "ICD TZ Settings",
