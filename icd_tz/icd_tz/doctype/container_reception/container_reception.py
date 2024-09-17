@@ -46,13 +46,20 @@ class ContainerReception(Document):
 		container.container_reception = self.name
 		container.container_no = self.container_no
 		container.size = self.size
-		container.volume = self.cbm
+		container.volume = self.volume
 		container.weght = self.weight
 		container.seal_no_1 = self.seal_no_1
 		container.seal_no_2 = self.seal_no_2
+		container.seal_no_3 = self.seal_no_3
 		container.port_of_origin = self.port
 		container.port_of_destination = self.port
 		container.arrival_date = nowdate()
+		container.original_location = self.container_location
+		container.current_location = self.container_location
+
+		container.append("container_dates", {
+			"date": nowdate(),
+		})
 		container.save(ignore_permissions=True)
 
 		return container.name

@@ -12,20 +12,22 @@
   "container_no",
   "dcn",
   "m_bl_no",
-  "column_break_iq9ob",
-  "size",
+  "company",
   "type_of_container",
   "no_of_packages",
-  "column_break_ldlxm",
-  "volume",
-  "volume_unit",
-  "weght",
-  "weight_unit",
-  "column_break_sohs",
+  "column_break_iq9ob",
   "seal_no_1",
   "seal_no_2",
   "seal_no_3",
   "freight_indicator",
+  "column_break_sohs",
+  "volume",
+  "volume_unit",
+  "weght",
+  "weight_unit",
+  "column_break_gwgiu",
+  "size",
+  "package_unit",
   "cargo_details_section",
   "sline",
   "port_of_origin",
@@ -165,10 +167,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "column_break_ldlxm",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "container_reception",
    "fieldtype": "Link",
    "hidden": 1,
@@ -238,12 +236,28 @@
    "fieldtype": "Table",
    "options": "Container Service Detail",
    "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "column_break_gwgiu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "package_unit",
+   "fieldtype": "Small Text",
+   "label": "Package Unit"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-17 09:32:51.923945",
+ "modified": "2024-09-17 10:14:08.668351",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",
