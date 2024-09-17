@@ -15,7 +15,7 @@
   "mrn",
   "vessel_name",
   "tpa_uid",
-  "voyage",
+  "voyage_no",
   "column_break_0ml7u",
   "arrival_date",
   "departure_date",
@@ -66,14 +66,6 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "TPA UID"
-  },
-  {
-   "fieldname": "voyage",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Voyage"
   },
   {
    "fieldname": "column_break_0ml7u",
@@ -173,12 +165,20 @@
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"
+  },
+  {
+   "fieldname": "voyage_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Voyage No"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-13 14:45:43.137387",
+ "modified": "2024-09-16 19:14:19.154336",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Manifest",
@@ -198,6 +198,7 @@
    "write": 1
   }
  ],
+ "search_fields": "mrn, vessel_name, tpa_uid, voyage_no, arrival_date, departure_date, call_sign",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

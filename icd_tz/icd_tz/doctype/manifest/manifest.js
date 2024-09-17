@@ -6,9 +6,9 @@ frappe.ui.form.on('Manifest', {
 		frm.trigger("create_movement_order");
 	},
 	onload: (frm) => {
-		// if (!frm.doc.company) {
-		// 	frm.set_value("company", frappe.defaults.get_user_default("Company"));
-		// }
+		if (!frm.doc.company) {
+			frm.set_value("company", frappe.defaults.get_user_default("Company"));
+		}
 		frm.trigger("create_movement_order");
 	},
 	manifest: (frm) => {
@@ -35,7 +35,8 @@ frappe.ui.form.on('Manifest', {
 					"manifest": frm.doc.name,
 					"vessel_name": frm.doc.voyage,
 					"received_date": frm.doc.arrival_date,
-					"voyage_no": frm.doc.voyage,
+					"voyage_no": frm.doc.voyage_no,
+					"company": frm.doc.company,
 				}, doc => {});
 			}).addClass('btn-primary');
 		}
