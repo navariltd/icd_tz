@@ -11,9 +11,10 @@
   "booking_date",
   "booking_time",
   "column_break_qpoo6",
-  "customer",
-  "c_and_f_agent",
   "container_no",
+  "c_and_f_company",
+  "c_and_f_agent",
+  "customer",
   "column_break_1",
   "cargo_description",
   "inspection_scheduling_section",
@@ -78,7 +79,8 @@
    "fieldname": "c_and_f_agent",
    "fieldtype": "Link",
    "label": "Clearing Agent",
-   "options": "Clearing Agent"
+   "options": "Clearing Agent",
+   "reqd": 1
   },
   {
    "fieldname": "customer",
@@ -249,12 +251,19 @@
    "label": "Has Stripping Charges",
    "options": "Yes\nNo",
    "reqd": 1
+  },
+  {
+   "fieldname": "c_and_f_company",
+   "fieldtype": "Link",
+   "label": "C & F company",
+   "options": "Clearing and Forwarding Company",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-17 12:24:09.966035",
+ "modified": "2024-09-18 18:38:48.878874",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "In Yard Container Booking",
