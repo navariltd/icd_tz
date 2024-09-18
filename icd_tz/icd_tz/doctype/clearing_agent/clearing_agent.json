@@ -8,11 +8,13 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "c_and_f_company",
   "agent_name",
   "other_details",
   "column_break_mdjeq",
   "email",
-  "phone"
+  "phone",
+  "introduction_letter"
  ],
  "fields": [
   {
@@ -22,7 +24,8 @@
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
-   "label": "Agent name"
+   "label": "Agent Full Name",
+   "reqd": 1
   },
   {
    "allow_in_quick_entry": 1,
@@ -51,11 +54,27 @@
    "in_preview": 1,
    "label": "Phone",
    "options": "Phone"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "c_and_f_company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "C & F Company",
+   "options": "Clearing and Forwarding Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "introduction_letter",
+   "fieldtype": "Attach",
+   "label": "Introduction Letter"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-13 10:49:21.443139",
+ "modified": "2024-09-18 17:13:07.701020",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Clearing Agent",
