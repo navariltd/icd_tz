@@ -17,7 +17,7 @@ class InYardContainerBooking(Document):
 		"""
 		Validate the Clearing and Forwarding Agent
 		"""
-		if self.c_and_f_agent:
+		if self.c_and_f_company and self.c_and_f_agent:
 			cf_company = frappe.get_cached_value("Clearing Agent", self.c_and_f_agent, "c_and_f_company")
 			if self.c_and_f_company != cf_company:
 				frappe.throw(f"The selected Clearing Agent: <b>{self.c_and_f_agent}</b> does not belong to the selected Clearing and Forwarding Company: <b>{self.c_and_f_company}</b>")

@@ -1,191 +1,247 @@
 {
-  "actions": [],
-  "allow_rename": 1,
-  "creation": "2024-07-10 11:54:01.257045",
-  "doctype": "DocType",
-  "engine": "InnoDB",
-  "field_order": [
-    "gate_pass_details_section",
-    "gate_pass_number",
-    "booking_id",
-    "container_number",
-    "goods_description",
-    "quantity",
-    "column_break_1",
-    "c_and_f_agent",
-    "customer",
-    "inspection_location",
-    "final_carry_out_section",
-    "dues_cleared",
-    "payment_verified",
-    "document_clearance_verified",
-    "required_documents_section",
-    "invoice_clearance",
-    "permits",
-    "relevant_authority_approvals",
-    "column_break_2",
-    "gate_pass",
-    "security_and_verification_section",
-    "id_verification",
-    "id_type",
-    "id_number",
-    "security_check_completed"
-  ],
-  "fields": [
-    {
-      "fieldname": "gate_pass_details_section",
-      "fieldtype": "Section Break",
-      "label": "Gate Pass Details"
-    },
-    {
-      "fieldname": "gate_pass_number",
-      "fieldtype": "Data",
-      "label": "Gate Pass Number",
-      "read_only": 1
-    },
-    {
-      "fieldname": "booking_id",
-      "fieldtype": "Link",
-      "label": "Booking ID",
-      "options": "In Yard Container Booking"
-    },
-    {
-      "fieldname": "container_number",
-      "fieldtype": "Link",
-      "label": "Container Number",
-      "options": "Container"
-    },
-    {
-      "fieldname": "goods_description",
-      "fieldtype": "Text",
-      "label": "Goods Description"
-    },
-    {
-      "fieldname": "quantity",
-      "fieldtype": "Int",
-      "label": "Quantity"
-    },
-    {
-      "fieldname": "column_break_1",
-      "fieldtype": "Column Break"
-    },
-    {
-      "fieldname": "c_and_f_agent",
-      "fieldtype": "Link",
-      "label": "C&F Agent",
-      "options": "Clearing Agent"
-    },
-    {
-      "fieldname": "customer",
-      "fieldtype": "Link",
-      "label": "Customer",
-      "options": "Customer"
-    },
-    {
-      "fieldname": "inspection_location",
-      "fieldtype": "Select",
-      "label": "Inspection Location",
-      "options": "ICD\nPort"
-    },
-    {
-      "fieldname": "final_carry_out_section",
-      "fieldtype": "Section Break",
-      "label": "Final Carry Out"
-    },
-    {
-      "fieldname": "dues_cleared",
-      "fieldtype": "Check",
-      "label": "Dues Cleared"
-    },
-    {
-      "fieldname": "payment_verified",
-      "fieldtype": "Check",
-      "label": "Payment Verified"
-    },
-    {
-      "fieldname": "document_clearance_verified",
-      "fieldtype": "Check",
-      "label": "Document Clearance Verified"
-    },
-    {
-      "fieldname": "required_documents_section",
-      "fieldtype": "Section Break",
-      "label": "Required Documents"
-    },
-    {
-      "fieldname": "invoice_clearance",
-      "fieldtype": "Data",
-      "label": "Invoice Clearance"
-    },
-    {
-      "fieldname": "permits",
-      "fieldtype": "Data",
-      "label": "Permits"
-    },
-    {
-      "fieldname": "relevant_authority_approvals",
-      "fieldtype": "Data",
-      "label": "Relevant Authority Approvals"
-    },
-    {
-      "fieldname": "column_break_2",
-      "fieldtype": "Column Break"
-    },
-    {
-      "fieldname": "gate_pass",
-      "fieldtype": "Data",
-      "label": "Gate Pass",
-      "read_only": 1
-    },
-    {
-      "fieldname": "security_and_verification_section",
-      "fieldtype": "Section Break",
-      "label": "Security and Verification"
-    },
-    {
-      "fieldname": "id_verification",
-      "fieldtype": "Check",
-      "label": "ID Verification"
-    },
-    {
-      "fieldname": "id_type",
-      "fieldtype": "Select",
-      "label": "ID Type",
-      "options": "National ID\nDriver's License\nPassport"
-    },
-    {
-      "fieldname": "id_number",
-      "fieldtype": "Data",
-      "label": "ID Number"
-    },
-    {
-      "fieldname": "security_check_completed",
-      "fieldtype": "Check",
-      "label": "Security Check Completed"
-    }
-  ],
-  "index_web_pages_for_search": 1,
-  "links": [],
-  "modified": "2024-07-10 11:54:01.257045",
-  "modified_by": "Administrator",
-  "module": "Icd Tz",
-  "name": "Gate Pass",
-  "owner": "Administrator",
-  "permissions": [
-    {
-      "create": 1,
-      "delete": 1,
-      "email": 1,
-      "export": 1,
-      "print": 1,
-      "read": 1,
-      "report": 1,
-      "role": "System Manager",
-      "share": 1,
-      "write": 1
-    }
-  ],
-  "sort_field": "modified",
-  "sort_order": "DESC",
-  "states": []
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2024-07-10 11:54:01.257045",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "gate_pass_details_section",
+  "booking_id",
+  "container_no",
+  "inspection_location",
+  "column_break_phfzs",
+  "c_and_f_company",
+  "c_and_f_agent",
+  "customer",
+  "column_break_1",
+  "quantity",
+  "goods_description",
+  "final_carry_out_section",
+  "dues_cleared",
+  "payment_verified",
+  "document_clearance_verified",
+  "required_documents_section",
+  "invoice_clearance",
+  "permits",
+  "relevant_authority_approvals",
+  "column_break_2",
+  "gate_pass",
+  "security_and_verification_section",
+  "id_verification",
+  "id_type",
+  "id_number",
+  "security_check_completed",
+  "section_break_wivrp",
+  "amended_from",
+  "naming_series"
+ ],
+ "fields": [
+  {
+   "fieldname": "gate_pass_details_section",
+   "fieldtype": "Section Break",
+   "label": "Gate Pass Details"
+  },
+  {
+   "fieldname": "booking_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Booking ID",
+   "options": "In Yard Container Booking",
+   "reqd": 1
+  },
+  {
+   "fieldname": "goods_description",
+   "fieldtype": "Small Text",
+   "label": "Goods Description"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Int",
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "booking_id.c_and_f_agent",
+   "fieldname": "c_and_f_agent",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Clearing Agent",
+   "options": "Clearing Agent",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fetch_from": "booking_id.customer",
+   "fetch_if_empty": 1,
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fetch_from": "booking_id.inspection_location",
+   "fetch_if_empty": 1,
+   "fieldname": "inspection_location",
+   "fieldtype": "Select",
+   "label": "Inspection Location",
+   "options": "ICD\nPort",
+   "read_only": 1
+  },
+  {
+   "fieldname": "final_carry_out_section",
+   "fieldtype": "Section Break",
+   "label": "Final Carry Out"
+  },
+  {
+   "default": "0",
+   "fieldname": "dues_cleared",
+   "fieldtype": "Check",
+   "label": "Dues Cleared"
+  },
+  {
+   "default": "0",
+   "fieldname": "payment_verified",
+   "fieldtype": "Check",
+   "label": "Payment Verified"
+  },
+  {
+   "default": "0",
+   "fieldname": "document_clearance_verified",
+   "fieldtype": "Check",
+   "label": "Document Clearance Verified"
+  },
+  {
+   "fieldname": "required_documents_section",
+   "fieldtype": "Section Break",
+   "label": "Required Documents"
+  },
+  {
+   "fieldname": "invoice_clearance",
+   "fieldtype": "Data",
+   "label": "Invoice Clearance"
+  },
+  {
+   "fieldname": "permits",
+   "fieldtype": "Data",
+   "label": "Permits"
+  },
+  {
+   "fieldname": "relevant_authority_approvals",
+   "fieldtype": "Data",
+   "label": "Relevant Authority Approvals"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "gate_pass",
+   "fieldtype": "Data",
+   "label": "Gate Pass",
+   "read_only": 1
+  },
+  {
+   "fieldname": "security_and_verification_section",
+   "fieldtype": "Section Break",
+   "label": "Security and Verification"
+  },
+  {
+   "default": "0",
+   "fieldname": "id_verification",
+   "fieldtype": "Check",
+   "label": "ID Verification"
+  },
+  {
+   "fieldname": "id_type",
+   "fieldtype": "Select",
+   "label": "ID Type",
+   "options": "\nNational ID\nDriver's License\nPassport"
+  },
+  {
+   "fieldname": "id_number",
+   "fieldtype": "Data",
+   "label": "ID Number"
+  },
+  {
+   "default": "0",
+   "fieldname": "security_check_completed",
+   "fieldtype": "Check",
+   "label": "Security Check Completed"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Gate Pass",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "booking_id.container_no",
+   "fieldname": "container_no",
+   "fieldtype": "Link",
+   "label": "Container Number",
+   "options": "Container",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_phfzs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "booking_id.c_and_f_company",
+   "fieldname": "c_and_f_company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "C & F Company",
+   "options": "Clearing and Forwarding Company",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "default": "ICD-GP-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "ICD-GP-.YYYY.-",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_wivrp",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-09-19 13:01:41.257325",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Gate Pass",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
 }
