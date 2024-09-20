@@ -3,13 +3,18 @@
 
 import frappe
 from frappe.model.document import Document
-from icd_tz.icd_tz.api.utils import validate_cf_agent
+from icd_tz.icd_tz.api.utils import validate_cf_agent, validate_draft_doc
 
 class ServiceOrder(Document):
 	def after_insert(self):
 		self.update_container_inspection()
 
+	def before_save(self):
+		if not self.company:
+			self.company = frappe.defaults.get_user_default("Company")
+	
 	def validate(self):
+		validate_draft_doc("Container Inspection", self.container_inspection)
 		validate_cf_agent(self)
 
 	@frappe.whitelist()

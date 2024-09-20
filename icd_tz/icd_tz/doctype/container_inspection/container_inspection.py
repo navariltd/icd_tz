@@ -4,7 +4,7 @@
 import frappe
 from frappe.utils import nowdate
 from frappe.model.document import Document
-from icd_tz.icd_tz.api.utils import validate_cf_agent
+from icd_tz.icd_tz.api.utils import validate_cf_agent, validate_draft_doc
 
 class ContainerInspection(Document):
     def after_insert(self):
@@ -15,6 +15,7 @@ class ContainerInspection(Document):
             self.company = frappe.defaults.get_user_default("Company")
     
     def validate(self):
+        validate_draft_doc("In Yard Container Booking", self.in_yard_booking)
         validate_cf_agent(self)
     
     def update_in_yard_booking(self):
