@@ -5,6 +5,9 @@ import frappe
 from frappe.model.document import Document
 
 class ServiceOrder(Document):
+	def after_insert(self):
+		self.update_container_inspection()
+	
 	@frappe.whitelist()
 	def get_strip_services(self):
 		if isinstance(self, str):
@@ -49,3 +52,13 @@ class ServiceOrder(Document):
 			if storage_item not in service_names:
 				return storage_item
 
+	def update_container_inspection(self):
+		if not self.container_inspection:
+			return
+		
+		frappe.db.set_value(
+			"Container Inspection",
+			self.container_inspection,
+			"service_order",
+			self.name
+		)
