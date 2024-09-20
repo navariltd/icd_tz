@@ -1,0 +1,271 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2024-09-20 11:18:02.636141",
+ "default_view": "List",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_9rl7",
+  "container_inspection",
+  "c_and_f_company",
+  "column_break_ifoto",
+  "clearing_agent",
+  "customer",
+  "country",
+  "column_break_bu4nq",
+  "company",
+  "posting_date",
+  "posting_time",
+  "container_details_section",
+  "vessel_name",
+  "port",
+  "consignee_name",
+  "column_break_nlrcd",
+  "container_no",
+  "container_seal",
+  "container_location",
+  "column_break_aamu",
+  "container_status",
+  "container_size",
+  "column_break_tuh56",
+  "discharge_date",
+  "services_tab",
+  "services",
+  "section_break_vfatw",
+  "sales_order",
+  "sales_invoice",
+  "column_break_vrwdx",
+  "naming_series",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_9rl7",
+   "fieldtype": "Tab Break",
+   "label": "Details"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "container_inspection",
+   "fieldtype": "Link",
+   "label": "Container Inspection",
+   "options": "Container Inspection",
+   "reqd": 1
+  },
+  {
+   "fieldname": "c_and_f_company",
+   "fieldtype": "Link",
+   "label": "C & F Company",
+   "options": "Clearing and Forwarding Company",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ifoto",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "container_inspection.c_and_f_company",
+   "fieldname": "clearing_agent",
+   "fieldtype": "Link",
+   "label": "Clearing Agent",
+   "options": "Clearing Agent",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fetch_from": "in_yard_container_booking.customer",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "country",
+   "fieldtype": "Data",
+   "label": "Country"
+  },
+  {
+   "fieldname": "column_break_bu4nq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "container_inspection.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "default": "now",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "default": "now",
+   "fieldname": "posting_time",
+   "fieldtype": "Time",
+   "label": "Posting Time"
+  },
+  {
+   "fieldname": "container_details_section",
+   "fieldtype": "Section Break",
+   "label": "Container Details"
+  },
+  {
+   "fieldname": "vessel_name",
+   "fieldtype": "Data",
+   "label": "Vessel Name"
+  },
+  {
+   "fieldname": "port",
+   "fieldtype": "Data",
+   "label": "Port"
+  },
+  {
+   "fieldname": "consignee_name",
+   "fieldtype": "Data",
+   "label": "Consignee Name"
+  },
+  {
+   "fieldname": "column_break_nlrcd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "container_inspection.container_no",
+   "fieldname": "container_no",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Container Number",
+   "options": "Container",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fetch_from": "container_no.seal_no_1",
+   "fieldname": "container_seal",
+   "fieldtype": "Data",
+   "label": "Container Seal"
+  },
+  {
+   "fetch_from": "container_inspection.container_location",
+   "fieldname": "container_location",
+   "fieldtype": "Data",
+   "label": "Container Location"
+  },
+  {
+   "fieldname": "column_break_aamu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "container_status",
+   "fieldtype": "Data",
+   "label": "Container Status"
+  },
+  {
+   "fetch_from": "container_no.size",
+   "fieldname": "container_size",
+   "fieldtype": "Data",
+   "label": "Container Size"
+  },
+  {
+   "fieldname": "column_break_tuh56",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "discharge_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Discharge Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "services_tab",
+   "fieldtype": "Tab Break",
+   "label": "Service Details"
+  },
+  {
+   "fieldname": "section_break_vfatw",
+   "fieldtype": "Section Break",
+   "label": "References"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Link",
+   "label": "Sales Order",
+   "options": "Sales Order",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Sales Invoice",
+   "options": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_vrwdx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "ICD-SO-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "ICD-SO-.YYYY.-",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Service Order",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "services",
+   "fieldtype": "Table",
+   "label": "services",
+   "options": "Service Order Detail"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-09-20 11:42:57.426175",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Service Order",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "show_preview_popup": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
