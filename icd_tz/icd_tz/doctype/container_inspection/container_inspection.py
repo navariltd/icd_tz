@@ -18,6 +18,9 @@ class ContainerInspection(Document):
         validate_draft_doc("In Yard Container Booking", self.in_yard_booking)
         validate_cf_agent(self)
     
+    def on_submit(self):
+        self.update_container_doc()
+    
     def update_in_yard_booking(self):
         if not self.in_yard_booking:
             return
@@ -28,3 +31,11 @@ class ContainerInspection(Document):
             "container_inspection",
             self.name
         )
+    
+    def update_container_doc(self):
+        if not self.container_no:
+            return
+        
+        container_doc = frappe.get_doc("Container", self.container_no)
+        container_doc.current_location = self.container_location
+        container_doc.save(ignore_permissions=True)
