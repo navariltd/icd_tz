@@ -4,6 +4,7 @@
 import frappe
 from frappe.utils import nowdate
 from frappe.model.document import Document
+from icd_tz.icd_tz.api.utils import validate_cf_agent
 
 class ContainerInspection(Document):
     def after_insert(self):
@@ -14,17 +15,8 @@ class ContainerInspection(Document):
             self.company = frappe.defaults.get_user_default("Company")
     
     def validate(self):
-        self.validate_cf_agent()
+        validate_cf_agent(self)
     
-    def validate_cf_agent(self):
-        """
-		Validate the Clearing and Forwarding Agent
-		"""
-        if self.c_and_f_company and self.c_and_f_agent:
-            cf_company = frappe.get_cached_value("Clearing Agent", self.c_and_f_agent, "c_and_f_company")
-            if self.c_and_f_company != cf_company:
-                frappe.throw(f"The selected Clearing Agent: <b>{self.c_and_f_agent}</b> does not belong to the selected Clearing and Forwarding Company: <b>{self.c_and_f_company}</b>")
-
     def update_in_yard_booking(self):
         if not self.in_yard_booking:
             return

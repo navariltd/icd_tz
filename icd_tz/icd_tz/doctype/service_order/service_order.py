@@ -3,11 +3,15 @@
 
 import frappe
 from frappe.model.document import Document
+from icd_tz.icd_tz.api.utils import validate_cf_agent
 
 class ServiceOrder(Document):
 	def after_insert(self):
 		self.update_container_inspection()
-	
+
+	def validate(self):
+		validate_cf_agent(self)
+
 	@frappe.whitelist()
 	def get_strip_services(self):
 		if isinstance(self, str):
