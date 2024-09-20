@@ -18,48 +18,6 @@ frappe.ui.form.on('Container Inspection', {
 			};
 		});
 	},
-	in_yard_container_booking: (frm) => {
-		frm.trigger("get_booking_item");
-		frm.trigger("get_container_storage_item");
-	},
-	get_booking_item: (frm) => {
-		if (frm.doc.in_yard_container_booking) {
-			frappe.call({
-				method: "get_strip_services",
-				doc: frm.doc,
-				args: {
-					self: frm.doc
-				},
-				callback: (r) => {
-					if (r.message) {
-						frm.add_child("services", {
-							"service": r.message
-						});
-						frm.refresh_field("services");
-					}
-				}
-			});
-		}
-	},
-	get_container_storage_item: (frm) => {
-		if (frm.doc.in_yard_container_booking) {
-			frappe.call({
-				method: "get_storage_services",
-				doc: frm.doc,
-				args: {
-					self: frm.doc
-				},
-				callback: (r) => {
-					if (r.message) {
-						frm.add_child("services", {
-							"service": r.message
-						});
-						frm.refresh_field("services");
-					}
-				}
-			});
-		}
-	},
 	make_sales_order: (frm) => {
 		frm.add_custom_button(__("Make Sales Order"), () => {
 			if (!frm.doc.customer) {
