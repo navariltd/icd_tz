@@ -38,8 +38,9 @@
   "notifications_section",
   "notify_c_and_f_agent",
   "notify_customer",
-  "column_break_unre",
   "notification_method",
+  "column_break_unre",
+  "container_inspection",
   "naming_series",
   "amended_from"
  ],
@@ -258,12 +259,18 @@
    "label": "C & F company",
    "options": "Clearing and Forwarding Company",
    "reqd": 1
+  },
+  {
+   "fieldname": "container_inspection",
+   "fieldtype": "Data",
+   "label": "Container Inspection",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-18 18:38:48.878874",
+ "modified": "2024-09-20 12:31:59.664220",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "In Yard Container Booking",
