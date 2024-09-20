@@ -12,7 +12,7 @@
   "driver_name",
   "column_break_bu4nq",
   "in_yard_container_booking",
-  "customer",
+  "c_and_f_company",
   "clearing_agent",
   "column_break_aamu",
   "container_no",
@@ -34,8 +34,7 @@
   "services_tab",
   "services",
   "section_break_vfatw",
-  "sales_order",
-  "sales_invoice",
+  "service_order",
   "column_break_vrwdx",
   "amended_from",
   "naming_series"
@@ -59,14 +58,6 @@
    "label": "In Yard Container Booking",
    "options": "In Yard Container Booking",
    "reqd": 1
-  },
-  {
-   "fetch_from": "in_yard_container_booking.customer",
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "Customer",
-   "options": "Customer",
-   "read_only": 1
   },
   {
    "fieldname": "column_break_aamu",
@@ -206,20 +197,6 @@
    "options": "Company"
   },
   {
-   "fieldname": "sales_order",
-   "fieldtype": "Link",
-   "label": "Sales Order",
-   "options": "Sales Order",
-   "read_only": 1
-  },
-  {
-   "fieldname": "sales_invoice",
-   "fieldtype": "Link",
-   "label": "Sales Invoice",
-   "options": "Sales Invoice",
-   "read_only": 1
-  },
-  {
    "fieldname": "column_break_vrwdx",
    "fieldtype": "Column Break"
   },
@@ -227,12 +204,26 @@
    "fieldname": "container_location",
    "fieldtype": "Data",
    "label": "Container Location"
+  },
+  {
+   "fetch_from": "in_yard_container_booking.c_and_f_company",
+   "fieldname": "c_and_f_company",
+   "fieldtype": "Link",
+   "label": "C & F Company",
+   "options": "Clearing and Forwarding Company",
+   "read_only": 1
+  },
+  {
+   "fieldname": "service_order",
+   "fieldtype": "Data",
+   "label": "Service Order",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-17 12:05:33.247074",
+ "modified": "2024-09-20 11:51:21.708025",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Inspection",
