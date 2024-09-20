@@ -11,6 +11,7 @@
   "container_no",
   "inspection_location",
   "column_break_phfzs",
+  "service_order",
   "c_and_f_company",
   "c_and_f_agent",
   "customer",
@@ -25,8 +26,6 @@
   "invoice_clearance",
   "permits",
   "relevant_authority_approvals",
-  "column_break_2",
-  "gate_pass",
   "security_and_verification_section",
   "id_verification",
   "id_type",
@@ -65,7 +64,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "booking_id.c_and_f_agent",
+   "fetch_from": "service_order.clearing_agent",
    "fieldname": "c_and_f_agent",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -75,7 +74,7 @@
    "reqd": 1
   },
   {
-   "fetch_from": "booking_id.customer",
+   "fetch_from": "service_order.customer",
    "fetch_if_empty": 1,
    "fieldname": "customer",
    "fieldtype": "Link",
@@ -135,16 +134,6 @@
    "label": "Relevant Authority Approvals"
   },
   {
-   "fieldname": "column_break_2",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "gate_pass",
-   "fieldtype": "Data",
-   "label": "Gate Pass",
-   "read_only": 1
-  },
-  {
    "fieldname": "security_and_verification_section",
    "fieldtype": "Section Break",
    "label": "Security and Verification"
@@ -195,7 +184,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "booking_id.c_and_f_company",
    "fieldname": "c_and_f_company",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -215,12 +203,20 @@
   {
    "fieldname": "section_break_wivrp",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "service_order",
+   "fieldtype": "Link",
+   "label": "Service Order",
+   "options": "Service Order",
+   "reqd": 1
   }
  ],
+ "in_create": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-19 13:01:41.257325",
+ "modified": "2024-09-20 13:49:46.228716",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Gate Pass",
@@ -240,6 +236,7 @@
    "write": 1
   }
  ],
+ "show_preview_popup": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

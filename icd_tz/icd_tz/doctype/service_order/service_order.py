@@ -17,6 +17,9 @@ class ServiceOrder(Document):
 		validate_draft_doc("Container Inspection", self.container_inspection)
 		validate_cf_agent(self)
 
+	def on_submit(self):
+		self.create_getpass()
+
 	@frappe.whitelist()
 	def get_strip_services(self):
 		if isinstance(self, str):
@@ -71,3 +74,28 @@ class ServiceOrder(Document):
 			"service_order",
 			self.name
 		)
+	
+	def create_getpass(self):
+		"""
+		Create a Get pass document
+		"""
+		booking_id = frappe.db.get_value(
+			"In Yard Container Booking", 
+			{"Container Inspection": self.container_inspection},
+			"name"
+		)
+		
+		getpass = frappe.new_doc("Gate Pass")
+		getpass.update({
+			"booking_id": booking_id,
+			"service_order": self.name,
+			"c_and_f_company": self.c_and_f_company,
+			"c_and_f_agent": self.c_and_f_agent,
+			"customer": self.customer,
+			"container_no": self.container_no,
+		})
+		getpass.save(ignore_permissions=True)
+		getpass.reload()
+
+		self.db_set("get_pass", getpass.name)
+		self.reload()
