@@ -2,8 +2,20 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Service Order', {
-	refresh: (frm) => {
-
+	refresh: (frm) =>{
+		frm.trigger("set_filters");
+	},
+	onload: (frm) => {
+		frm.trigger("set_filters");
+	},
+	set_filters: (frm) => {
+		frm.set_query("service", "services", () => {
+			return {
+				filters: {
+					"item_group": "ICD Services"
+				}
+			};
+		});
 	},
 	container_inspection: (frm) => {
 		frm.trigger("get_booking_item");
