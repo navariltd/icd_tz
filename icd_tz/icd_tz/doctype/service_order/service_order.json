@@ -29,6 +29,7 @@
   "column_break_aamu",
   "container_status",
   "container_size",
+  "discharged_at",
   "services_tab",
   "services",
   "section_break_vfatw",
@@ -236,12 +237,18 @@
    "fieldname": "destination",
    "fieldtype": "Data",
    "label": "Destination"
+  },
+  {
+   "fieldname": "discharged_at",
+   "fieldtype": "Select",
+   "label": "Discharged At",
+   "options": "\nTerminal 1\nTerminal 2"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 22:16:41.827051",
+ "modified": "2024-09-23 23:32:53.520627",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Service Order",

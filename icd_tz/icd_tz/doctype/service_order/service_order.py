@@ -41,6 +41,7 @@ class ServiceOrder(Document):
 	
 	def get_services(self):
 		self.get_transport_services()
+		self.get_shore_handling_services()
 		self.get_strip_services()
 		self.get_storage_services()
 		self.get_removal_services()
@@ -48,10 +49,18 @@ class ServiceOrder(Document):
 
 	def get_transport_services(self):
 		if self.container_no:
-			container_doc = frappe.get_doc("Container", self.container_no)
-			container_reception_doc = frappe.get_doc("Container Reception", container_doc.container_reception)
-			
-			if container_reception_doc.has_transport_charges == "Yes":
+			container_reception = frappe.db.get_value(
+				"Container",
+				self.container_no,
+				"container_reception"
+			)
+			has_transport_charges = has_shore_handling_charges = frappe.db.get_value(
+				"Container Reception",
+				container_reception,
+				"has_transport_charges"
+			)
+
+			if has_transport_charges == "Yes":
 				service_names = []
 				for row in self.services:
 					service_names.append(row.service)
@@ -61,6 +70,34 @@ class ServiceOrder(Document):
 				if transport_item not in service_names:
 					self.append("services", {
 						"service": transport_item
+					})
+	
+	def get_shore_handling_services(self):
+		if self.container_no:
+			container_reception = frappe.db.get_value(
+				"Container",
+				self.container_no,
+				"container_reception"
+			)
+			has_shore_handling_charges, discharged_at = frappe.db.get_value(
+				"Container Reception",
+				container_reception,
+				["has_shore_handling_charges", "discharged_at"]
+			)
+			self.discharged_at = discharged_at
+			
+			if has_shore_handling_charges == "Yes":
+				service_names = []
+				for row in self.services:
+					service_names.append(row.service)
+				
+				shore_handling_item = frappe.db.get_single_value("ICD TZ Settings", "shore_handling_item")
+				
+				if shore_handling_item not in service_names:
+					
+					self.append("services", {
+						"service": shore_handling_item,
+						"remarks": f"Size: {self.container_size}, Destination: {self.destination}, DischargedAt: {self.discharged_at}"
 					})
 
 	def get_strip_services(self):
@@ -139,6 +176,8 @@ class ServiceOrder(Document):
 					self.append("services", {
 						"service": corridor_item
 					})
+	
+		
 
 	def update_container_inspection(self):
 		if not self.container_inspection:

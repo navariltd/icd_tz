@@ -15,20 +15,24 @@
   "manifest",
   "company",
   "column_break_ytg9x",
-  "ship_dc_date",
-  "received_date",
-  "column_break_75qur",
   "ship",
   "port",
-  "column_break_azrq",
   "voyage_no",
+  "column_break_75qur",
+  "ship_dc_date",
+  "received_date",
+  "column_break_azrq",
   "port_time_out",
+  "discharged_at",
   "handling_and_charges_section",
   "has_transport_charges",
+  "has_shore_handling_charges",
   "column_break_q5fqb",
-  "sales_order",
+  "t_sales_order",
+  "s_sales_order",
   "column_break_eqvx2",
-  "sales_invoice",
+  "t_sales_invoice",
+  "s_sales_invoice",
   "container_particulars_tab",
   "container_no",
   "container_location",
@@ -335,26 +339,51 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "sales_order",
-   "fieldtype": "Data",
-   "label": "Sales Order",
-   "read_only": 1
-  },
-  {
    "fieldname": "column_break_eqvx2",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "sales_invoice",
+   "fetch_from": "manifest.discharged_at",
+   "fieldname": "discharged_at",
+   "fieldtype": "Select",
+   "label": "Discharged At",
+   "options": "\nTerminal 1\nTerminal 2"
+  },
+  {
+   "fieldname": "s_sales_order",
    "fieldtype": "Data",
-   "label": "Sales Invoice",
+   "label": "S Sales Order",
    "read_only": 1
+  },
+  {
+   "fieldname": "t_sales_order",
+   "fieldtype": "Data",
+   "label": "T Sales Order",
+   "read_only": 1
+  },
+  {
+   "fieldname": "s_sales_invoice",
+   "fieldtype": "Data",
+   "label": "S Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "t_sales_invoice",
+   "fieldtype": "Data",
+   "label": "T Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "has_shore_handling_charges",
+   "fieldtype": "Select",
+   "label": "Has Shore Handling Charges",
+   "options": "Yes\nNo"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 22:05:47.700675",
+ "modified": "2024-09-23 23:19:21.645529",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",
