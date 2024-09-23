@@ -19,9 +19,12 @@
   "column_break_0ml7u",
   "arrival_date",
   "port",
+  "discharged_at",
   "call_sign",
-  "naming_series",
+  "section_break_w7oqg",
   "amended_from",
+  "column_break_qoth5",
+  "naming_series",
   "containers_section_section",
   "containers",
   "section_break_xni6w",
@@ -171,12 +174,26 @@
    "fieldname": "port",
    "fieldtype": "Data",
    "label": "Port"
+  },
+  {
+   "fieldname": "discharged_at",
+   "fieldtype": "Select",
+   "label": "Discharged At",
+   "options": "\nTerminal 1\nTerminal 2"
+  },
+  {
+   "fieldname": "section_break_w7oqg",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_qoth5",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 12:22:28.930282",
+ "modified": "2024-09-23 22:53:57.118436",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Manifest",
