@@ -23,6 +23,12 @@
   "column_break_azrq",
   "voyage_no",
   "port_time_out",
+  "handling_and_charges_section",
+  "has_transport_charges",
+  "column_break_q5fqb",
+  "sales_order",
+  "column_break_eqvx2",
+  "sales_invoice",
   "container_particulars_tab",
   "container_no",
   "container_location",
@@ -309,12 +315,45 @@
    "fieldtype": "Data",
    "label": "Container Location",
    "reqd": 1
+  },
+  {
+   "depends_on": "eval: !doc.__islocal",
+   "fieldname": "handling_and_charges_section",
+   "fieldtype": "Section Break",
+   "label": "Handling and Charges"
+  },
+  {
+   "default": "Yes",
+   "fieldname": "has_transport_charges",
+   "fieldtype": "Select",
+   "label": "Has Transport Charges",
+   "options": "Yes\nNo"
+  },
+  {
+   "fieldname": "column_break_q5fqb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Data",
+   "label": "Sales Order",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_eqvx2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Data",
+   "label": "Sales Invoice",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 13:32:56.453015",
+ "modified": "2024-09-23 13:57:04.790971",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",
