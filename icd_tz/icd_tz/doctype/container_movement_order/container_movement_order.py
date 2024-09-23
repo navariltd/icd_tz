@@ -26,7 +26,7 @@ class ContainerMovementOrder(Document):
 
 		if not frappe.db.exists(
 			"Containers Detail",
-			{"parent": self.manifest, "container_no": self.container_np}
+			{"parent": self.manifest, "container_no": self.container_no}
 		):
 			frappe.throw(
 				f"Container: {self.container_no} does not belong to the this Manifest: {self.manifest}"
