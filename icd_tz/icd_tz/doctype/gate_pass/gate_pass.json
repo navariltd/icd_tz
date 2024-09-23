@@ -70,8 +70,7 @@
    "in_list_view": 1,
    "label": "Clearing Agent",
    "options": "Clearing Agent",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fetch_from": "service_order.customer",
@@ -216,7 +215,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-20 13:49:46.228716",
+ "modified": "2024-09-20 16:58:26.813505",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Gate Pass",
