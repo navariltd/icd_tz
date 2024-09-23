@@ -22,6 +22,8 @@ class Container(Document):
 		container_reception = frappe.get_doc("Container Reception", self.container_reception)
 		if not self.customs_status:
 			self.customs_status = "Pending"
+		if not self.status:
+			self.status = "In Yard"
 		if not self.size:
 			self.size = container_reception.size
 		if not self.volume:
@@ -34,16 +36,12 @@ class Container(Document):
 			self.seal_no_2 = container_reception.seal_no_2
 		if not self.seal_no_3:
 			self.seal_no_3 = container_reception.seal_no_3
-		if not self.port_of_origin:
-			self.port_of_origin = container_reception.port
 		if not self.port_of_destination:
 			self.port_of_destination = container_reception.port
 		if not self.original_location:
 			self.original_location = container_reception.container_location
 		if not self.current_location:
 			self.current_location = container_reception.container_location
-		if not self.dcn:
-			self.dcn = container_reception.dcn
 		if not self.company:
 			self.company = container_reception.company
 
@@ -71,6 +69,24 @@ class Container(Document):
 				self.volume_unit = container_info.volume_unit
 			if not self.weight_unit:
 				self.weight_unit = container_info.weight_unit
+		
+		if container_info.m_bl_no:
+			masterbi_info = frappe.db.get_value(
+				"Master BL", 
+				{"parent": container_reception.manifest, "m_bl_no": container_info.m_bl_no}, 
+				["place_of_destination", "place_of_delivery", "port_of_loading", "cosignee_name"],
+				as_dict=True
+			)
+			if masterbi_info:
+				if not self.place_of_destination:
+					self.place_of_destination = masterbi_info.place_of_destination
+				if not self.place_of_delivery:
+					self.place_of_delivery = masterbi_info.place_of_delivery
+				if not self.port_of_loading:
+					self.port_of_loading = masterbi_info.port_of_loading
+				if not self.consignee_name:
+					self.consignee_name = masterbi_info.cosignee_name
+
 
 		if len(self.container_dates) == 0:
 			self.append("container_dates", {

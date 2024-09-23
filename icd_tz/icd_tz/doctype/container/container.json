@@ -10,7 +10,6 @@
  "field_order": [
   "container_details_section",
   "container_no",
-  "dcn",
   "m_bl_no",
   "company",
   "type_of_container",
@@ -30,9 +29,13 @@
   "package_unit",
   "cargo_details_section",
   "sline",
-  "port_of_origin",
+  "port_of_loading",
   "port_of_destination",
   "customs_status",
+  "column_break_6s4dw",
+  "consignee",
+  "place_of_destination",
+  "place_of_delivery",
   "column_break_jhhs",
   "cargo_description",
   "movement_details_section",
@@ -57,7 +60,11 @@
   "column_break_xo7tr",
   "days_to_be_billed",
   "column_break_rs2fh",
-  "no_of_billed_days"
+  "no_of_billed_days",
+  "section_break_twu7u",
+  "has_paid_for_corridor_levy",
+  "column_break_mvsdg",
+  "has_paid_for_removal_charges"
  ],
  "fields": [
   {
@@ -94,11 +101,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "port_of_origin",
-   "fieldtype": "Data",
-   "label": "Port of Origin"
-  },
-  {
    "fieldname": "port_of_destination",
    "fieldtype": "Data",
    "label": "Port of Destination"
@@ -123,7 +125,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "\nIn Transit\nAt Port\nDelivered\nOn Hold"
+   "options": "\nIn Yard\nIn Transit\nAt Port\nDelivered\nOn Hold"
   },
   {
    "fieldname": "arrival_date",
@@ -159,7 +161,7 @@
   },
   {
    "fieldname": "size",
-   "fieldtype": "Int",
+   "fieldtype": "Data",
    "label": "Size (FT)"
   },
   {
@@ -177,11 +179,6 @@
    "hidden": 1,
    "label": "Container Reception",
    "options": "Container Reception"
-  },
-  {
-   "fieldname": "dcn",
-   "fieldtype": "Data",
-   "label": "DCN"
   },
   {
    "fieldname": "seal_no_3",
@@ -312,12 +309,59 @@
    "fieldname": "weight",
    "fieldtype": "Data",
    "label": "Weight"
+  },
+  {
+   "fieldname": "section_break_twu7u",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "has_paid_for_corridor_levy",
+   "fieldtype": "Check",
+   "label": "Has Paid for Corridor levy",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_mvsdg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "has_paid_for_removal_charges",
+   "fieldtype": "Check",
+   "label": "Has Paid for Removal Charges",
+   "read_only": 1
+  },
+  {
+   "fieldname": "port_of_loading",
+   "fieldtype": "Data",
+   "label": "Port of Loading"
+  },
+  {
+   "fieldname": "column_break_6s4dw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "consignee",
+   "fieldtype": "Link",
+   "label": "Consignee",
+   "options": "Consignee"
+  },
+  {
+   "fieldname": "place_of_destination",
+   "fieldtype": "Data",
+   "label": "Place of Destination"
+  },
+  {
+   "fieldname": "place_of_delivery",
+   "fieldtype": "Data",
+   "label": "Place of Delivery"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-20 15:20:24.282895",
+ "modified": "2024-09-23 14:26:00.188756",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",

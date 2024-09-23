@@ -64,6 +64,7 @@ class ContainerReception(Document):
 		container.arrival_date = arrival_date
 		container.original_location = self.container_location
 		container.current_location = self.container_location
+		container.status = "In Yard"
 
 		container.append("container_dates", {
 			"date": arrival_date,
