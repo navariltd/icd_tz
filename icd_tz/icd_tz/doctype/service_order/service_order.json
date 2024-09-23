@@ -142,8 +142,9 @@
   {
    "fetch_from": "container_inspection.container_location",
    "fieldname": "container_location",
-   "fieldtype": "Data",
-   "label": "Container Location"
+   "fieldtype": "Link",
+   "label": "Container Location",
+   "options": "Container Location"
   },
   {
    "fieldname": "column_break_aamu",
@@ -240,7 +241,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 15:27:35.511473",
+ "modified": "2024-09-23 22:16:41.827051",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Service Order",

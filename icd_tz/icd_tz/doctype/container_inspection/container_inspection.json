@@ -67,8 +67,9 @@
   {
    "fetch_from": "container_no.original_location",
    "fieldname": "original_location",
-   "fieldtype": "Data",
-   "label": "Original Location"
+   "fieldtype": "Link",
+   "label": "Original Location",
+   "options": "Container Location"
   },
   {
    "fieldname": "driver_name",
@@ -204,8 +205,9 @@
   },
   {
    "fieldname": "container_location",
-   "fieldtype": "Data",
-   "label": "Container Location"
+   "fieldtype": "Link",
+   "label": "Container Location",
+   "options": "Container Location"
   },
   {
    "fetch_from": "in_yard_container_booking.c_and_f_company",
@@ -232,7 +234,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 14:48:04.623356",
+ "modified": "2024-09-23 22:13:10.421481",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Inspection",

@@ -118,8 +118,9 @@
   },
   {
    "fieldname": "current_location",
-   "fieldtype": "Data",
-   "label": "Current Location"
+   "fieldtype": "Link",
+   "label": "Current Location",
+   "options": "Container Location"
   },
   {
    "fieldname": "status",
@@ -192,8 +193,9 @@
   },
   {
    "fieldname": "original_location",
-   "fieldtype": "Data",
-   "label": "Original Location"
+   "fieldtype": "Link",
+   "label": "Original Location",
+   "options": "Container Location"
   },
   {
    "fieldname": "m_bl_no",
@@ -361,7 +363,7 @@
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-23 14:26:00.188756",
+ "modified": "2024-09-23 22:08:15.653131",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",

@@ -312,8 +312,9 @@
   },
   {
    "fieldname": "container_location",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Container Location",
+   "options": "Container Location",
    "reqd": 1
   },
   {
@@ -353,7 +354,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 13:57:04.790971",
+ "modified": "2024-09-23 22:05:47.700675",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",
