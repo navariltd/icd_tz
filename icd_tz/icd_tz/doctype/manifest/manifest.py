@@ -25,6 +25,9 @@ class Manifest(Document):
         if not self.port:
             frappe.throw("Please fill the <b>Port</b> before submitting.")
 
+    def on_submit(self):
+        self.create_consignees()
+
     def on_trash(self):
         if self.manifest:
             delete_file(self.manifest)
@@ -208,3 +211,19 @@ class Manifest(Document):
             housebi.notify_tin = row[36]
             housebi.shipping_mark = row[37]
             # housebi.oil_type = row[38]
+    
+    def create_consignees(self):
+        for row in self.masterbi:
+            if not row.cosignee_name:
+                continue
+
+            if not frappe.db.exists("Consignee", row.cosignee_name):
+                consignee = frappe.get_doc({
+                    "doctype": "Consignee",
+                    "consignee_name": row.cosignee_name,
+                    "consignee_tel": row.cosignee_tel,
+                    "consignee_tin": row.cosignee_tin,
+                    "consignee_address": row.cosignee_address,
+                })
+                consignee.insert()
+        
