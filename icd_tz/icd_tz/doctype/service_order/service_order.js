@@ -18,48 +18,6 @@ frappe.ui.form.on('Service Order', {
 			};
 		});
 	},
-	container_inspection: (frm) => {
-		frm.trigger("get_booking_item");
-		frm.trigger("get_container_storage_item");
-	},
-	get_booking_item: (frm) => {
-		if (frm.doc.in_yard_container_booking) {
-			frappe.call({
-				method: "get_strip_services",
-				doc: frm.doc,
-				args: {
-					self: frm.doc
-				},
-				callback: (r) => {
-					if (r.message) {
-						frm.add_child("services", {
-							"service": r.message
-						});
-						frm.refresh_field("services");
-					}
-				}
-			});
-		}
-	},
-	get_container_storage_item: (frm) => {
-		if (frm.doc.in_yard_container_booking) {
-			frappe.call({
-				method: "get_storage_services",
-				doc: frm.doc,
-				args: {
-					self: frm.doc
-				},
-				callback: (r) => {
-					if (r.message) {
-						frm.add_child("services", {
-							"service": r.message
-						});
-						frm.refresh_field("services");
-					}
-				}
-			});
-		}
-	},
 	make_sales_order: (frm) => {
 		if (!frm.doc.sales_order && frm.doc.docstatus == 1) {
 			frm.add_custom_button(__("Make Sales Order"), () => {

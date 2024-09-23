@@ -72,7 +72,7 @@ class Container(Document):
 		
 		if container_info.m_bl_no:
 			masterbi_info = frappe.db.get_value(
-				"Master BL", 
+				"MasterBI", 
 				{"parent": container_reception.manifest, "m_bl_no": container_info.m_bl_no}, 
 				["place_of_destination", "place_of_delivery", "port_of_loading", "cosignee_name"],
 				as_dict=True
@@ -84,8 +84,8 @@ class Container(Document):
 					self.place_of_delivery = masterbi_info.place_of_delivery
 				if not self.port_of_loading:
 					self.port_of_loading = masterbi_info.port_of_loading
-				if not self.consignee_name:
-					self.consignee_name = masterbi_info.cosignee_name
+				if not self.consignee:
+					self.consignee = masterbi_info.cosignee_name
 
 
 		if len(self.container_dates) == 0:

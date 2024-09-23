@@ -6,6 +6,10 @@ from frappe.model.document import Document
 from icd_tz.icd_tz.api.utils import validate_cf_agent, validate_draft_doc
 
 class ServiceOrder(Document):
+	def before_insert(self):
+		self.set_missing_values()
+		self.get_services()
+	
 	def after_insert(self):
 		self.update_container_inspection()
 
@@ -20,7 +24,45 @@ class ServiceOrder(Document):
 	def on_submit(self):
 		self.create_getpass()
 
-	@frappe.whitelist()
+	def set_missing_values(self):
+		if self.container_no:
+			container_doc = frappe.get_doc("Container", self.container_no)
+			container_reception_doc = frappe.get_doc("Container Reception", container_doc.container_reception)
+
+			self.vessel_name = container_reception_doc.ship
+			self.port = container_reception_doc.port
+		
+			if container_doc.place_of_destination and "TZ" in container_doc.place_of_destination:
+				self.destination = "Local"
+				self.country = "Local"
+			else:
+				self.destination = container_doc.place_of_destination
+				self.country = ""
+	
+	def get_services(self):
+		self.get_transport_services()
+		self.get_strip_services()
+		self.get_storage_services()
+		self.get_removal_services()
+		self.get_corridor_services()
+
+	def get_transport_services(self):
+		if self.container_no:
+			container_doc = frappe.get_doc("Container", self.container_no)
+			container_reception_doc = frappe.get_doc("Container Reception", container_doc.container_reception)
+			
+			if container_reception_doc.has_transport_charges == "Yes":
+				service_names = []
+				for row in self.services:
+					service_names.append(row.service)
+				
+				transport_item = frappe.db.get_single_value("ICD TZ Settings", "transport_item")
+				
+				if transport_item not in service_names:
+					self.append("services", {
+						"service": transport_item
+					})
+
 	def get_strip_services(self):
 		if isinstance(self, str):
 			self = frappe.parse_json(self)
@@ -41,7 +83,9 @@ class ServiceOrder(Document):
 			booking_item = frappe.db.get_single_value("ICD TZ Settings", "in_yard_booking_item")
 			
 			if booking_item not in service_names:
-				return booking_item
+				self.append("services", {
+					"service": booking_item
+				})
     
 	@frappe.whitelist()
 	def get_storage_services(self):
@@ -52,7 +96,7 @@ class ServiceOrder(Document):
 			return
 
 		has_storage_charges = frappe.db.get_value(
-            "Container", container_no, "days_to_be_billed"
+            "Container", self.get("container_no"), "days_to_be_billed"
         )
 		if has_storage_charges > 0:
 			service_names = []
@@ -62,7 +106,39 @@ class ServiceOrder(Document):
 			storage_item = frappe.db.get_single_value("ICD TZ Settings", "container_storage_item")
             
 			if storage_item not in service_names:
-				return storage_item
+				self.append("services", {
+					"service": storage_item
+				})
+	
+	def get_removal_services(self):
+		if self.container_no:
+			container_doc = frappe.get_doc("Container", self.container_no)
+			if container_doc.has_paid_for_removal_charges == 0:
+				service_names = []
+				for row in self.services:
+					service_names.append(row.service)
+				
+				removal_item = frappe.db.get_single_value("ICD TZ Settings", "removal_item")
+				
+				if removal_item not in service_names:
+					self.append("services", {
+						"service": removal_item
+					})
+	
+	def get_corridor_services(self):
+		if self.container_no:
+			container_doc = frappe.get_doc("Container", self.container_no)
+			if container_doc.has_paid_for_corridor_levy == 0:
+				service_names = []
+				for row in self.services:
+					service_names.append(row.service)
+				
+				corridor_item = frappe.db.get_single_value("ICD TZ Settings", "corridor_levy_item")
+				
+				if corridor_item not in service_names:
+					self.append("services", {
+						"service": corridor_item
+					})
 
 	def update_container_inspection(self):
 		if not self.container_inspection:

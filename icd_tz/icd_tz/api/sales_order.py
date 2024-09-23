@@ -37,10 +37,13 @@ def make_sales_order(doc_type, doc_name):
     sales_order.save(ignore_permissions=True)
     sales_order.reload()
 
-    frappe.db.set_value("Container Inspection", doc.name, "sales_order", sales_order.name)
-
-    if doc.in_yard_container_booking:
-        frappe.db.set_value("In Yard Container Booking", doc.in_yard_container_booking, "sales_order", sales_order.name)
+    if doc.container_inspection:
+        frappe.db.set_value(
+            "In Yard Container Booking",
+            {"container_inspection": doc.container_inspection},
+            "sales_order",
+            sales_order.name
+        )
 
     if doc.container_no and len(container_childs) > 0:
         for child in container_childs:
