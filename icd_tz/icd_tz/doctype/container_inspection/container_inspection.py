@@ -15,19 +15,19 @@ class ContainerInspection(Document):
             self.company = frappe.defaults.get_user_default("Company")
     
     def validate(self):
-        validate_draft_doc("In Yard Container Booking", self.in_yard_booking)
+        validate_draft_doc("In Yard Container Booking", self.in_yard_container_booking)
         validate_cf_agent(self)
     
     def on_submit(self):
         self.update_container_doc()
     
     def update_in_yard_booking(self):
-        if not self.in_yard_booking:
+        if not self.in_yard_container_booking:
             return
         
         frappe.db.set_value(
             "In Yard Container Booking",
-            self.in_yard_booking,
+            self.in_yard_container_booking,
             "container_inspection",
             self.name
         )
