@@ -173,11 +173,12 @@
    "label": "Posting Time"
   },
   {
-   "fetch_from": "in_yard_container_booking.c_and_f_agent",
+   "fetch_from": "in_yard_container_booking.clearing_agent",
    "fieldname": "clearing_agent",
    "fieldtype": "Link",
    "label": "Clearing Agent",
-   "options": "Clearing Agent"
+   "options": "Clearing Agent",
+   "read_only": 1
   },
   {
    "fetch_from": "in_yard_container_booking.container_no",
@@ -223,7 +224,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-20 11:51:21.708025",
+ "modified": "2024-09-23 11:43:37.322300",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Inspection",
