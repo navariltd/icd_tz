@@ -90,8 +90,8 @@ class ServiceOrder(Document):
 			"booking_id": booking_id,
 			"service_order": self.name,
 			"c_and_f_company": self.c_and_f_company,
-			"c_and_f_agent": self.clearing_agent,
-			"customer": self.customer,
+			"clearing_agent": self.clearing_agent,
+			"consignee": self.consignee,
 			"container_no": self.container_no,
 		})
 		getpass.save(ignore_permissions=True)

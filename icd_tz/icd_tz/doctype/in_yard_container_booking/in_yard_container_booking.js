@@ -36,7 +36,7 @@ frappe.ui.form.on("In Yard Container Booking", {
 			frm.add_custom_button(__('Create Container Inspection'), () => {
 				frappe.new_doc('Container Inspection', {
 					"in_yard_container_booking": frm.doc.name,
-					"customer": frm.doc.customer,
+					"consignee": frm.doc.consignee,
 					"clearing_agent": frm.doc.c_and_f_agent,
 					"c_and_f_company": frm.doc.c_and_f_company,
 					"container_no": frm.doc.container_no,

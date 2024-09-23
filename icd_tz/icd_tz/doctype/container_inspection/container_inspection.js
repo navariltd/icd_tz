@@ -24,7 +24,7 @@ frappe.ui.form.on('Container Inspection', {
 			frm.add_custom_button(__('Create Service Order'), () => {
 				frappe.new_doc('Service Order', {
 					"container_inspection": frm.doc.name,
-					"customer": frm.doc.customer,
+					"consignee": frm.doc.consignee,
 					"clearing_agent": frm.doc.c_and_f_agent,
 					"c_and_f_company": frm.doc.c_and_f_company,
 					"container_no": frm.doc.container_no,
