@@ -70,7 +70,7 @@ frappe.ui.form.on("Container Movement Order", {
                     "movement_order": frm.doc.name,
                     "manifest": frm.doc.manifest,
                     "ship": frm.doc.ship,
-                    "received_date": frm.doc.received_date,
+                    "ship_dc_date": frm.doc.received_date,
                     "voyage_no": frm.doc.voyage_no,
                     "port": frm.doc.port,
                     "container_no": frm.doc.container_no,

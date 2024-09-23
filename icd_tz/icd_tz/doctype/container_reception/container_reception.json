@@ -25,15 +25,14 @@
   "port_time_out",
   "container_particulars_tab",
   "container_no",
+  "container_location",
+  "truck_name",
+  "column_break_zcgxx",
   "size",
   "volume",
-  "column_break_zcgxx",
-  "truck_name",
+  "column_break_twjr",
   "weight",
   "weight_unit",
-  "column_break_twjr",
-  "dcn",
-  "container_location",
   "column_break_y5zga",
   "seal_no_1",
   "seal_no_2",
@@ -62,11 +61,10 @@
    "label": "Details"
   },
   {
-   "fetch_from": "movement_order.received_date",
-   "fetch_if_empty": 1,
    "fieldname": "received_date",
    "fieldtype": "Date",
-   "label": "Received Date"
+   "label": "Received Date",
+   "reqd": 1
   },
   {
    "fetch_from": "movement_order.voyage_no",
@@ -109,7 +107,7 @@
    "fieldname": "size",
    "fieldtype": "Select",
    "label": "Size (FT)",
-   "options": "20\n40\n45\n22G1\n45G1"
+   "options": "\n20\n40\n45\n22G1\n45G1"
   },
   {
    "fetch_from": "movement_order.truck_name",
@@ -290,14 +288,10 @@
    "read_only": 1
   },
   {
+   "fetch_from": "movement_order.movement_date",
    "fieldname": "ship_dc_date",
    "fieldtype": "Date",
    "label": "Ship D/C Date"
-  },
-  {
-   "fieldname": "dcn",
-   "fieldtype": "Data",
-   "label": "DCN"
   },
   {
    "fetch_from": "clerk.employee_name",
@@ -320,7 +314,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-17 09:55:39.884567",
+ "modified": "2024-09-23 13:32:56.453015",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",
@@ -340,7 +334,7 @@
    "write": 1
   }
  ],
- "search_fields": "movement_order, ship_dc_date, received_date, ship, port, voyage_no, container_no, truck_name, dcn",
+ "search_fields": "movement_order, ship_dc_date, received_date, ship, port, voyage_no, container_no, truck_name",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

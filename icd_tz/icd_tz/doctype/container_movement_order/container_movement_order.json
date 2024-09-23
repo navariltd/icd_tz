@@ -24,8 +24,8 @@
   "column_break_bvub",
   "movement_date",
   "received_date",
-  "transport_details_section",
   "transporter",
+  "transport_details_section",
   "column_break_xoba",
   "driver",
   "truck_name",
@@ -63,6 +63,7 @@
    "label": "Received Date"
   },
   {
+   "fetch_from": "manifest.port",
    "fieldname": "port",
    "fieldtype": "Data",
    "label": "Port"
@@ -119,6 +120,7 @@
    "options": "\n20\n40\n45\n22G1\n45G1"
   },
   {
+   "fetch_from": "manifest.port",
    "fieldname": "port",
    "fieldtype": "Data",
    "label": "Port"
@@ -230,7 +232,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-16 20:09:31.992835",
+ "modified": "2024-09-23 13:12:30.428013",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Movement Order",

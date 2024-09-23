@@ -4,7 +4,7 @@
 import frappe
 from frappe.query_builder import DocType
 from frappe.model.document import Document
-from frappe.utils import get_link_to_form, nowdate
+from frappe.utils import get_link_to_form, nowdate, getdate, add_days
 
 cr = DocType("Container Reception")
 
@@ -42,6 +42,14 @@ class ContainerReception(Document):
 	def create_container(self):
 		"""Create a Container record from the Container Reception"""
 
+		arrival_date = None
+		if self.ship_dc_date and self.received_date:
+			if add_days(self.ship_dc_date, 2) <= getdate(self.received_date):
+				arrival_date = self.received_date
+			else:
+				arrival_date = self.ship_dc_date
+
+
 		container = frappe.new_doc("Container")
 		container.container_reception = self.name
 		container.container_no = self.container_no
@@ -53,12 +61,12 @@ class ContainerReception(Document):
 		container.seal_no_3 = self.seal_no_3
 		container.port_of_origin = self.port
 		container.port_of_destination = self.port
-		container.arrival_date = nowdate()
+		container.arrival_date = arrival_date
 		container.original_location = self.container_location
 		container.current_location = self.container_location
 
 		container.append("container_dates", {
-			"date": nowdate(),
+			"date": arrival_date,
 		})
 		container.save(ignore_permissions=True)
 
