@@ -18,7 +18,7 @@
   "voyage_no",
   "column_break_0ml7u",
   "arrival_date",
-  "departure_date",
+  "port",
   "call_sign",
   "naming_series",
   "amended_from",
@@ -79,13 +79,6 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Arrival date"
-  },
-  {
-   "fieldname": "departure_date",
-   "fieldtype": "Date",
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Departure date"
   },
   {
    "fieldname": "call_sign",
@@ -173,12 +166,17 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Voyage No"
+  },
+  {
+   "fieldname": "port",
+   "fieldtype": "Data",
+   "label": "Port"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-16 19:14:19.154336",
+ "modified": "2024-09-23 12:22:28.930282",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Manifest",
@@ -198,7 +196,7 @@
    "write": 1
   }
  ],
- "search_fields": "mrn, vessel_name, tpa_uid, voyage_no, arrival_date, departure_date, call_sign",
+ "search_fields": "mrn, vessel_name, tpa_uid, voyage_no, arrival_date, call_sign, port",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

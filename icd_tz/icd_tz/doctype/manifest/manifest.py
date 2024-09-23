@@ -21,6 +21,10 @@ class Manifest(Document):
         if not self.company:
             self.company = frappe.defaults.get_user_default("Company")
     
+    def before_submit(self):
+        if not self.port:
+            frappe.throw("Please fill the <b>Port</b> before submitting.")
+
     def on_trash(self):
         if self.manifest:
             delete_file(self.manifest)
@@ -53,7 +57,8 @@ class Manifest(Document):
             self.tpa_uid = vessel_info_row[2]
             self.voyage_no = vessel_info_row[3]
             self.arrival_date = convert_date(vessel_info_row[4])
-            self.departure_date = convert_date(vessel_info_row[5])
+            # no need for departure date
+            # self.departure_date = convert_date(vessel_info_row[5])
             self.call_sign = vessel_info_row[6]
 
             # Process the Containers sheet
