@@ -1,5 +1,5 @@
 import frappe
-
+from frappe.utils import nowdate
 
 @frappe.whitelist()
 def make_sales_order(doc_type, doc_name):
@@ -24,7 +24,7 @@ def make_sales_order(doc_type, doc_name):
     sales_order = frappe.get_doc({
         "doctype": "Sales Order",
         "company": doc.get("company"),
-        "customer": doc.get("customer"),
+        "customer": doc.c_and_f_company,
         "transaction_date": nowdate(),
         "delivery_date": nowdate(),
         "selling_price_list": default_price_list,

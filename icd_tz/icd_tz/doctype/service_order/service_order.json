@@ -30,7 +30,6 @@
   "container_status",
   "container_size",
   "column_break_tuh56",
-  "discharge_date",
   "services_tab",
   "services",
   "section_break_vfatw",
@@ -57,6 +56,7 @@
    "reqd": 1
   },
   {
+   "fetch_from": "container_inspection.c_and_f_company",
    "fieldname": "c_and_f_company",
    "fieldtype": "Link",
    "label": "C & F Company",
@@ -69,13 +69,11 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "container_inspection.c_and_f_company",
+   "fetch_from": "container_inspection.clearing_agent",
    "fieldname": "clearing_agent",
    "fieldtype": "Link",
    "label": "Clearing Agent",
-   "options": "Clearing Agent",
-   "read_only": 1,
-   "reqd": 1
+   "options": "Clearing Agent"
   },
   {
    "allow_in_quick_entry": 1,
@@ -180,14 +178,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "allow_in_quick_entry": 1,
-   "fieldname": "discharge_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Discharge Date",
-   "reqd": 1
-  },
-  {
    "fieldname": "services_tab",
    "fieldtype": "Tab Break",
    "label": "Service Details"
@@ -254,7 +244,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-20 14:36:19.481905",
+ "modified": "2024-09-20 16:52:44.654522",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Service Order",

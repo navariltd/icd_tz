@@ -13,7 +13,7 @@
   "column_break_qpoo6",
   "container_no",
   "c_and_f_company",
-  "c_and_f_agent",
+  "clearing_agent",
   "customer",
   "column_break_1",
   "cargo_description",
@@ -75,13 +75,6 @@
   {
    "fieldname": "column_break_1",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "c_and_f_agent",
-   "fieldtype": "Link",
-   "label": "Clearing Agent",
-   "options": "Clearing Agent",
-   "reqd": 1
   },
   {
    "fieldname": "customer",
@@ -265,12 +258,18 @@
    "fieldtype": "Data",
    "label": "Container Inspection",
    "read_only": 1
+  },
+  {
+   "fieldname": "clearing_agent",
+   "fieldtype": "Link",
+   "label": "Clearing Agent",
+   "options": "Clearing Agent"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-20 12:31:59.664220",
+ "modified": "2024-09-20 16:38:43.045950",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "In Yard Container Booking",

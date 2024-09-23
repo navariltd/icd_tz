@@ -81,7 +81,7 @@ class ServiceOrder(Document):
 		"""
 		booking_id = frappe.db.get_value(
 			"In Yard Container Booking", 
-			{"Container Inspection": self.container_inspection},
+			{"container_inspection": self.container_inspection},
 			"name"
 		)
 		
@@ -90,7 +90,7 @@ class ServiceOrder(Document):
 			"booking_id": booking_id,
 			"service_order": self.name,
 			"c_and_f_company": self.c_and_f_company,
-			"c_and_f_agent": self.c_and_f_agent,
+			"c_and_f_agent": self.clearing_agent,
 			"customer": self.customer,
 			"container_no": self.container_no,
 		})
