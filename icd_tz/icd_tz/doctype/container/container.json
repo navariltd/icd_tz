@@ -23,7 +23,7 @@
   "column_break_sohs",
   "volume",
   "volume_unit",
-  "weght",
+  "weight",
   "weight_unit",
   "column_break_gwgiu",
   "size",
@@ -168,11 +168,6 @@
    "label": "Volume"
   },
   {
-   "fieldname": "weght",
-   "fieldtype": "Data",
-   "label": "Weight"
-  },
-  {
    "fieldname": "column_break_lduxs",
    "fieldtype": "Column Break"
   },
@@ -245,8 +240,7 @@
   {
    "fieldname": "container_dates",
    "fieldtype": "Table",
-   "options": "Container Service Detail",
-   "read_only": 1
+   "options": "Container Service Detail"
   },
   {
    "fieldname": "company",
@@ -313,12 +307,17 @@
    "fieldtype": "Int",
    "label": "Days to be billed",
    "read_only": 1
+  },
+  {
+   "fieldname": "weight",
+   "fieldtype": "Data",
+   "label": "Weight"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-17 15:06:31.996027",
+ "modified": "2024-09-20 15:20:24.282895",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",

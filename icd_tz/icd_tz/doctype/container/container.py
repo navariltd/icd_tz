@@ -2,8 +2,8 @@
 # For license information, please see license.txt
 
 import frappe
-from frappe.utils import nowdate, getdate
 from frappe.model.document import Document
+from frappe.utils import nowdate, getdate, add_days
 
 class Container(Document):
 	def before_save(self):
@@ -16,13 +16,13 @@ class Container(Document):
 	def update_container_details(self):
 		"""Update the container details from the Container Reception, Containers Detail and Container Movement Order"""
 
-		if customs_status == "Cleared":
+		if self.customs_status == "Cleared":
 			return
 
 		container_reception = frappe.get_doc("Container Reception", self.container_reception)
-		if not self.custom_status:
+		if not self.customs_status:
 			self.customs_status = "Pending"
-		if not self.sezi:
+		if not self.size:
 			self.size = container_reception.size
 		if not self.volume:
 			self.volume = container_reception.volume
@@ -74,13 +74,13 @@ class Container(Document):
 
 		if len(self.container_dates) == 0:
 			self.append("container_dates", {
-				"date": nowdate(),
+				"date": self.arrival_date,
 			})
 
 	def update_billed_days(self):
 		"""Update the billed days of the container"""
 		
-		if customs_status == "Cleared":
+		if self.customs_status == "Cleared":
 			return
 		
 		if len(self.container_dates) > 0:
@@ -102,10 +102,10 @@ def daily_update_date_container_stay():
 				last_row = doc.container_dates[container_dates_len - 1]
 				if getdate(last_row.date) != getdate(nowdate()):
 					new_row = doc.append("container_dates", {})
-					new_row.date = nowdate()
+					new_row.date = add_days(last_row.date, 1)
 			elif container_dates_len == 0:
 				new_row = doc.append("container_dates", {})
-				new_row.date = nowdate()
+				new_row.date = doc.arrival_date
 			
 			doc.save(ignore_permissions=True)
 			frappe.db.commit()
