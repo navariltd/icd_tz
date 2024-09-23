@@ -12,7 +12,7 @@
   "c_and_f_company",
   "column_break_ifoto",
   "clearing_agent",
-  "customer",
+  "consignee",
   "country",
   "column_break_bu4nq",
   "company",
@@ -21,7 +21,6 @@
   "container_details_section",
   "vessel_name",
   "port",
-  "consignee_name",
   "column_break_nlrcd",
   "container_no",
   "container_seal",
@@ -29,7 +28,6 @@
   "column_break_aamu",
   "container_status",
   "container_size",
-  "column_break_tuh56",
   "services_tab",
   "services",
   "section_break_vfatw",
@@ -78,14 +76,6 @@
   },
   {
    "allow_in_quick_entry": 1,
-   "fetch_from": "in_yard_container_booking.customer",
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "Customer",
-   "options": "Customer"
-  },
-  {
-   "allow_in_quick_entry": 1,
    "fieldname": "country",
    "fieldtype": "Data",
    "label": "Country"
@@ -129,11 +119,6 @@
    "label": "Port"
   },
   {
-   "fieldname": "consignee_name",
-   "fieldtype": "Data",
-   "label": "Consignee Name"
-  },
-  {
    "fieldname": "column_break_nlrcd",
    "fieldtype": "Column Break"
   },
@@ -173,10 +158,6 @@
    "fieldname": "container_size",
    "fieldtype": "Data",
    "label": "Container Size"
-  },
-  {
-   "fieldname": "column_break_tuh56",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "services_tab",
@@ -240,12 +221,19 @@
    "label": "Get Pass",
    "options": "Gate Pass",
    "read_only": 1
+  },
+  {
+   "fetch_from": "container_inspection.consignee",
+   "fieldname": "consignee",
+   "fieldtype": "Link",
+   "label": "Consignee",
+   "options": "Consignee"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 11:44:55.335468",
+ "modified": "2024-09-23 14:54:34.603911",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Service Order",

@@ -15,6 +15,7 @@
   "c_and_f_company",
   "clearing_agent",
   "column_break_aamu",
+  "consignee",
   "container_no",
   "original_location",
   "column_break_d1lgj",
@@ -219,12 +220,19 @@
    "fieldtype": "Data",
    "label": "Service Order",
    "read_only": 1
+  },
+  {
+   "fetch_from": "in_yard_container_booking.consignee",
+   "fieldname": "consignee",
+   "fieldtype": "Link",
+   "label": "Consignee",
+   "options": "Consignee"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 11:43:37.322300",
+ "modified": "2024-09-23 14:48:04.623356",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Inspection",

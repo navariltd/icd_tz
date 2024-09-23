@@ -14,7 +14,7 @@
   "service_order",
   "c_and_f_company",
   "clearing_agent",
-  "customer",
+  "consignee",
   "column_break_1",
   "quantity",
   "goods_description",
@@ -62,14 +62,6 @@
   {
    "fieldname": "column_break_1",
    "fieldtype": "Column Break"
-  },
-  {
-   "fetch_from": "service_order.customer",
-   "fetch_if_empty": 1,
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "Customer",
-   "options": "Customer"
   },
   {
    "fetch_from": "booking_id.inspection_location",
@@ -210,13 +202,20 @@
    "options": "Clearing Agent",
    "read_only": 1,
    "reqd": 1
+  },
+  {
+   "fetch_from": "service_order.consignee",
+   "fieldname": "consignee",
+   "fieldtype": "Link",
+   "label": "Consignee",
+   "options": "Consignee"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 11:45:52.978358",
+ "modified": "2024-09-23 15:00:00.794478",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Gate Pass",

@@ -14,7 +14,7 @@
   "container_no",
   "c_and_f_company",
   "clearing_agent",
-  "customer",
+  "consignee",
   "column_break_1",
   "cargo_description",
   "inspection_scheduling_section",
@@ -37,7 +37,7 @@
   "movement_log",
   "notifications_section",
   "notify_c_and_f_agent",
-  "notify_customer",
+  "notify_consignee",
   "notification_method",
   "column_break_unre",
   "container_inspection",
@@ -75,12 +75,6 @@
   {
    "fieldname": "column_break_1",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "customer",
-   "fieldtype": "Link",
-   "label": "Customer",
-   "options": "Customer"
   },
   {
    "fieldname": "inspection_location",
@@ -129,12 +123,6 @@
    "fieldname": "notify_c_and_f_agent",
    "fieldtype": "Check",
    "label": "Notify Clearing Agent"
-  },
-  {
-   "default": "0",
-   "fieldname": "notify_customer",
-   "fieldtype": "Check",
-   "label": "Notify Customer"
   },
   {
    "fieldname": "notification_method",
@@ -265,12 +253,25 @@
    "label": "Clearing Agent",
    "options": "Clearing Agent",
    "reqd": 1
+  },
+  {
+   "fetch_from": "container_no.consignee",
+   "fieldname": "consignee",
+   "fieldtype": "Link",
+   "label": "Consignee",
+   "options": "Consignee"
+  },
+  {
+   "default": "0",
+   "fieldname": "notify_consignee",
+   "fieldtype": "Check",
+   "label": "Notify Consignee"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 11:44:14.957739",
+ "modified": "2024-09-23 14:44:29.818934",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "In Yard Container Booking",

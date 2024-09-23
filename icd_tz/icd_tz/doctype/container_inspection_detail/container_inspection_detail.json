@@ -40,7 +40,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "ICD Official",
-   "options": "Clerk",
+   "options": "Employee",
    "reqd": 1
   },
   {
@@ -71,7 +71,8 @@
   {
    "fieldname": "status_changed_to",
    "fieldtype": "Select",
-   "label": "Status Changed To"
+   "label": "Status Changed To",
+   "options": "\nLCL"
   },
   {
    "fieldname": "volume",
@@ -93,7 +94,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-09-13 12:04:21.854503",
+ "modified": "2024-09-23 14:50:10.537031",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Inspection Detail",
