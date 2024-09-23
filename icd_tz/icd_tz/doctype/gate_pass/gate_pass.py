@@ -3,9 +3,14 @@
 
 import frappe
 from frappe.model.document import Document
+from icd_tz.icd_tz.api.utils import validate_cf_agent, validate_draft_doc
 
 
 class GatePass(Document):
+	def validate(self):
+		validate_draft_doc("Service Order", self.service_order)
+		validate_cf_agent(self)
+	
 	def before_submit(self):
 		self.validate_storage_charges()
 		self.validate_in_yard_booking()
