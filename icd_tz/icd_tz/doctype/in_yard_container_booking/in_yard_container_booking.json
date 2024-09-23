@@ -25,10 +25,13 @@
   "verification_area",
   "handling_and_charges_section",
   "has_stripping_charges",
+  "has_custom_verification_charges",
   "column_break_4jkmd",
-  "sales_order",
+  "s_sales_order",
+  "cv_sales_order",
   "column_break_sfhl",
-  "sales_invoice",
+  "s_sales_invoice",
+  "cv_sales_invoice",
   "documents_section",
   "documents",
   "record_keeping_section",
@@ -216,23 +219,10 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "sales_order",
-   "fieldtype": "Data",
-   "label": "Sales Order",
-   "read_only": 1
-  },
-  {
-   "fieldname": "sales_invoice",
-   "fieldtype": "Data",
-   "label": "Sales Invoice",
-   "read_only": 1
-  },
-  {
    "fieldname": "has_stripping_charges",
    "fieldtype": "Select",
    "label": "Has Stripping Charges",
-   "options": "Yes\nNo",
-   "reqd": 1
+   "options": "Yes\nNo"
   },
   {
    "fieldname": "c_and_f_company",
@@ -266,12 +256,43 @@
    "fieldname": "notify_consignee",
    "fieldtype": "Check",
    "label": "Notify Consignee"
+  },
+  {
+   "fieldname": "s_sales_order",
+   "fieldtype": "Data",
+   "label": "S Sales Order",
+   "read_only": 1
+  },
+  {
+   "fieldname": "s_sales_invoice",
+   "fieldtype": "Data",
+   "label": "S Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cv_sales_order",
+   "fieldtype": "Data",
+   "label": "CV Sales Order",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cv_sales_invoice",
+   "fieldtype": "Data",
+   "label": "CV Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "default": "Yes",
+   "fieldname": "has_custom_verification_charges",
+   "fieldtype": "Select",
+   "label": "Has Custom Verification Charges",
+   "options": "Yes\nNo"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 14:44:29.818934",
+ "modified": "2024-09-24 00:00:39.911640",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "In Yard Container Booking",

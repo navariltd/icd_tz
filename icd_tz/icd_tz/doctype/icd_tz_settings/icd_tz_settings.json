@@ -8,12 +8,16 @@
  "engine": "InnoDB",
  "field_order": [
   "default_price_list",
-  "in_yard_booking_item",
-  "container_storage_item",
+  "service_items_section",
   "transport_item",
+  "shore_handling_item",
+  "column_break_m4wtn",
+  "in_yard_booking_item",
+  "custom_verification_item",
+  "column_break_50lb3",
   "removal_item",
   "corridor_levy_item",
-  "shore_handling_item"
+  "container_storage_item"
  ],
  "fields": [
   {
@@ -66,12 +70,32 @@
    "label": "Shore Handling Item",
    "options": "Item",
    "reqd": 1
+  },
+  {
+   "fieldname": "service_items_section",
+   "fieldtype": "Section Break",
+   "label": "Service Items"
+  },
+  {
+   "fieldname": "column_break_m4wtn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "custom_verification_item",
+   "fieldtype": "Link",
+   "label": "Custom Verification Item",
+   "options": "Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_50lb3",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-09-23 15:32:29.569209",
+ "modified": "2024-09-24 00:03:45.940030",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "ICD TZ Settings",

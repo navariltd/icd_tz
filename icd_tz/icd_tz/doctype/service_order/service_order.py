@@ -43,6 +43,7 @@ class ServiceOrder(Document):
 		self.get_transport_services()
 		self.get_shore_handling_services()
 		self.get_strip_services()
+		self.get_custom_verification_services()
 		self.get_storage_services()
 		self.get_removal_services()
 		self.get_corridor_services()
@@ -99,11 +100,29 @@ class ServiceOrder(Document):
 						"service": shore_handling_item,
 						"remarks": f"Size: {self.container_size}, Destination: {self.destination}, DischargedAt: {self.discharged_at}"
 					})
+	
+	def get_custom_verification_services(self):
+		if not self.get("container_inspection"):
+			return
+		
+		has_custom_verification_charges = frappe.db.get_value(
+			"In Yard Container Booking",
+            {"container_inspection": self.get("container_inspection")},
+            "has_custom_verification_charges"
+		)
+		if has_custom_verification_charges == "Yes":
+			service_names = []
+			for row in self.get("services"):
+				service_names.append(row.get("service"))
+			
+			verification_item = frappe.db.get_single_value("ICD TZ Settings", "custom_verification_item")
+			
+			if verification_item not in service_names:
+				self.append("services", {
+					"service": verification_item
+				})
 
 	def get_strip_services(self):
-		if isinstance(self, str):
-			self = frappe.parse_json(self)
-		
 		if not self.get("container_inspection"):
 			return
 		

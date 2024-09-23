@@ -374,6 +374,7 @@
    "read_only": 1
   },
   {
+   "default": "Yes",
    "fieldname": "has_shore_handling_charges",
    "fieldtype": "Select",
    "label": "Has Shore Handling Charges",
@@ -383,7 +384,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 23:19:21.645529",
+ "modified": "2024-09-23 23:51:21.029675",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",
