@@ -28,7 +28,12 @@ app_license = "MIT"
 
 # include js in doctype views
 # doctype_js = {"doctype" : "public/js/doctype.js"}
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
+
+doctype_list_js = {
+    "Custom Field": "icd_tz/patches/custom_field.js",
+    "Property Setter": "icd_tz/patches/property_setter.js",
+}
+
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
 
@@ -62,7 +67,14 @@ app_license = "MIT"
 # ------------
 
 # before_install = "icd_tz.install.before_install"
-# after_install = "icd_tz.install.after_install"
+after_install = [
+    "icd_tz.patches.create_custom_fields.execute",
+    "icd_tz.patches.create_property_setters.execute",
+]
+after_migrate = [
+    "icd_tz.patches.create_custom_fields.execute",
+    "icd_tz.patches.create_property_setters.execute",
+]
 
 # Uninstallation
 # ------------
