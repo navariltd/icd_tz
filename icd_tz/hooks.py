@@ -1,8 +1,8 @@
 app_name = "icd_tz"
 app_title = "Icd Tz"
-app_publisher = "Nathan Kagoro"
-app_description = "Doctypes for Icd Tz"
-app_email = "nathanamanikagoro@gmail.com"
+app_publisher = "elius mgani"
+app_description = "Inland Container Department (ICD) customization based on Tanzania"
+app_email = "emgani@aakvatech.com"
 app_license = "MIT"
 
 # Includes in <head>

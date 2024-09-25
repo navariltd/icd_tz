@@ -1,4 +1,4 @@
-# Copyright (c) 2024, Nathan Kagoro and Contributors
+# Copyright (c) 2024, elius mgani and Contributors
 # See license.txt
 
 # import frappe

@@ -1,7 +1,7 @@
 [project]
 name = "icd_tz"
 authors = [
-    { name = "Nathan Kagoro", email = "nathanamanikagoro@gmail.com"}
+    { name = "elius mgani", email = "emgani@aakvatech.com"}
 ]
 description = "Doctypes for Icd Tz"
 requires-python = ">=3.10"
