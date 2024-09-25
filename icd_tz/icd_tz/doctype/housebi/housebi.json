@@ -87,7 +87,7 @@
   },
   {
    "fieldname": "description_of_goods",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Description of Goods"
   },
   {
@@ -98,7 +98,7 @@
   },
   {
    "fieldname": "package_unit",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Package Unit"
   },
   {
@@ -183,7 +183,7 @@
   },
   {
    "fieldname": "exporter_address",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Exporter Address"
   },
   {
@@ -203,7 +203,7 @@
   },
   {
    "fieldname": "consignee_address",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Consignee Address"
   },
   {
@@ -223,7 +223,7 @@
   },
   {
    "fieldname": "notify_address",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Notify Address"
   },
   {
@@ -245,7 +245,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-09-11 22:45:32.599379",
+ "modified": "2024-09-25 12:02:36.525959",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "HouseBI",
