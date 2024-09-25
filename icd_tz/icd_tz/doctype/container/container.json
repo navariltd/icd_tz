@@ -62,9 +62,11 @@
   "column_break_rs2fh",
   "no_of_billed_days",
   "section_break_twu7u",
-  "has_paid_for_corridor_levy",
-  "column_break_mvsdg",
-  "has_paid_for_removal_charges"
+  "has_removal_charges",
+  "r_sales_invoice",
+  "column_break_iv6ai",
+  "has_corridor_levy_charges",
+  "c_sales_invoice"
  ],
  "fields": [
   {
@@ -317,24 +319,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "default": "0",
-   "fieldname": "has_paid_for_corridor_levy",
-   "fieldtype": "Check",
-   "label": "Has Paid for Corridor levy",
-   "read_only": 1
-  },
-  {
-   "fieldname": "column_break_mvsdg",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "has_paid_for_removal_charges",
-   "fieldtype": "Check",
-   "label": "Has Paid for Removal Charges",
-   "read_only": 1
-  },
-  {
    "fieldname": "port_of_loading",
    "fieldtype": "Data",
    "label": "Port of Loading"
@@ -358,12 +342,44 @@
    "fieldname": "place_of_delivery",
    "fieldtype": "Data",
    "label": "Place of Delivery"
+  },
+  {
+   "default": "Yes",
+   "fieldname": "has_removal_charges",
+   "fieldtype": "Select",
+   "label": "Has Removal Charges",
+   "options": "Yes\nNo"
+  },
+  {
+   "description": "Invoice for Removal Charges",
+   "fieldname": "r_sales_invoice",
+   "fieldtype": "Data",
+   "label": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_iv6ai",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Yes",
+   "fieldname": "has_corridor_levy_charges",
+   "fieldtype": "Select",
+   "label": "Has Corridor Levy Charges",
+   "options": "Yes\nNo"
+  },
+  {
+   "description": "Invoice for corridor levy charges",
+   "fieldname": "c_sales_invoice",
+   "fieldtype": "Data",
+   "label": "Sales Invoice",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-23 22:08:15.653131",
+ "modified": "2024-09-25 17:55:37.714616",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",
