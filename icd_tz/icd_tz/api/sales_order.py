@@ -45,25 +45,14 @@ def make_sales_order(doc_type, doc_name):
     sales_order.save(ignore_permissions=True)
     sales_order.reload()
 
-    if doc.container_inspection:
-        frappe.db.set_value(
-            "In Yard Container Booking",
-            {"container_inspection": doc.container_inspection},
-            "sales_order",
-            sales_order.name
-        )
-
-    if doc.container_no and len(container_childs) > 0:
-        for child in container_childs:
-            frappe.db.set_value("Container Service Detail", child.get("name"), "sales_order", sales_order.name)
-
+    doc.db_set("sales_order", sales_order.name)
     frappe.msgprint(f"Sales Order <b>{sales_order.name}</b> created successfully", alert=True)
     return sales_order.name
 
 def get_container_days_to_be_billed(container_no):
     details = frappe.db.get_all(
         "Container Service Detail",
-        filters={"parent": container_no, "is_billable": 1, "sales_order": ["=", ""]},
+        filters={"parent": container_no, "is_billable": 1, "sales_invoice": ["=", ""]},
         fields=["name"],
         pluck="name"
     )

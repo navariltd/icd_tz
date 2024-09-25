@@ -102,7 +102,7 @@ class Container(Document):
 		if len(self.container_dates) > 0:
 			self.total_days = len(self.container_dates)
 			self.no_of_billable_days = len([row for row in self.container_dates if row.is_billable == 1])
-			self.no_of_unbilled_days = len([row for row in self.container_dates if row.is_billable == 0])
+			self.no_of_free_days = len([row for row in self.container_dates if row.is_billable == 0])
 			self.days_to_be_billed = len([row for row in self.container_dates if row.is_billable == 1 and not row.sales_invoice])
 			self.no_of_billed_days = len([row for row in self.container_dates if row.sales_invoice])
 

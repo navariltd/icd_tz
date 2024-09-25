@@ -43,6 +43,7 @@ def update_sales_references(doc):
         else:
             update_container_insp(order_doc.container_inspection, item.item_code, invoice_id)
     
+    order_doc.db_set("sales_invoice", invoice_id)
 
 
 def update_container_rec(container_no, invoice_id, field):

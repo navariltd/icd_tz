@@ -34,9 +34,6 @@
   "additional_note",
   "services_tab",
   "services",
-  "section_break_vfatw",
-  "service_order",
-  "column_break_vrwdx",
   "amended_from",
   "naming_series"
  ],
@@ -150,11 +147,6 @@
    "options": "Container Inspection Detail"
   },
   {
-   "fieldname": "section_break_vfatw",
-   "fieldtype": "Section Break",
-   "label": "References"
-  },
-  {
    "fieldname": "column_break_bu4nq",
    "fieldtype": "Column Break"
   },
@@ -200,10 +192,6 @@
    "options": "Company"
   },
   {
-   "fieldname": "column_break_vrwdx",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "container_location",
    "fieldtype": "Link",
    "label": "Container Location",
@@ -218,12 +206,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "service_order",
-   "fieldtype": "Data",
-   "label": "Service Order",
-   "read_only": 1
-  },
-  {
    "fetch_from": "in_yard_container_booking.consignee",
    "fieldname": "consignee",
    "fieldtype": "Link",
@@ -234,7 +216,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 22:13:10.421481",
+ "modified": "2024-09-25 19:23:51.591983",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Inspection",

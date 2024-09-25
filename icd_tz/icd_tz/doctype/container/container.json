@@ -50,13 +50,11 @@
   "last_inspection_date",
   "next_inspection_date",
   "tab_break_edoll",
-  "container_dates",
-  "section_break_517wd",
   "total_days",
   "column_break_dlhui",
   "no_of_billable_days",
   "column_break_cd24q",
-  "no_of_unbilled_days",
+  "no_of_free_days",
   "column_break_xo7tr",
   "days_to_be_billed",
   "column_break_rs2fh",
@@ -66,7 +64,9 @@
   "r_sales_invoice",
   "column_break_iv6ai",
   "has_corridor_levy_charges",
-  "c_sales_invoice"
+  "c_sales_invoice",
+  "section_break_517wd",
+  "container_dates"
  ],
  "fields": [
   {
@@ -236,7 +236,7 @@
   {
    "fieldname": "tab_break_edoll",
    "fieldtype": "Tab Break",
-   "label": "Dates"
+   "label": "Billable Details"
   },
   {
    "fieldname": "container_dates",
@@ -261,7 +261,8 @@
   },
   {
    "fieldname": "section_break_517wd",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Dates"
   },
   {
    "fieldname": "no_of_billable_days",
@@ -272,12 +273,6 @@
   {
    "fieldname": "column_break_cd24q",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "no_of_unbilled_days",
-   "fieldtype": "Int",
-   "label": "No of Unbilled Days",
-   "read_only": 1
   },
   {
    "fieldname": "column_break_xo7tr",
@@ -374,12 +369,18 @@
    "fieldtype": "Data",
    "label": "Sales Invoice",
    "read_only": 1
+  },
+  {
+   "fieldname": "no_of_free_days",
+   "fieldtype": "Int",
+   "label": "No of Free Days",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-25 17:55:37.714616",
+ "modified": "2024-09-25 19:32:22.807295",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",

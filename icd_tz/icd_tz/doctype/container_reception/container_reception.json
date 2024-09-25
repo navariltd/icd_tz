@@ -26,12 +26,9 @@
   "discharged_at",
   "handling_and_charges_section",
   "has_transport_charges",
-  "has_shore_handling_charges",
-  "column_break_q5fqb",
-  "t_sales_order",
-  "s_sales_order",
-  "column_break_eqvx2",
   "t_sales_invoice",
+  "column_break_eqvx2",
+  "has_shore_handling_charges",
   "s_sales_invoice",
   "container_particulars_tab",
   "container_no",
@@ -332,11 +329,8 @@
    "fieldname": "has_transport_charges",
    "fieldtype": "Select",
    "label": "Has Transport Charges",
-   "options": "Yes\nNo"
-  },
-  {
-   "fieldname": "column_break_q5fqb",
-   "fieldtype": "Column Break"
+   "options": "Yes\nNo",
+   "permlevel": 1
   },
   {
    "fieldname": "column_break_eqvx2",
@@ -350,27 +344,17 @@
    "options": "\nTerminal 1\nTerminal 2"
   },
   {
-   "fieldname": "s_sales_order",
-   "fieldtype": "Data",
-   "label": "S Sales Order",
-   "read_only": 1
-  },
-  {
-   "fieldname": "t_sales_order",
-   "fieldtype": "Data",
-   "label": "T Sales Order",
-   "read_only": 1
-  },
-  {
+   "description": "Invoice for shore handling charges",
    "fieldname": "s_sales_invoice",
    "fieldtype": "Data",
-   "label": "S Sales Invoice",
+   "label": "Sales Invoice",
    "read_only": 1
   },
   {
+   "description": "Invoice for transport charges",
    "fieldname": "t_sales_invoice",
    "fieldtype": "Data",
-   "label": "T Sales Invoice",
+   "label": "Sales Invoice",
    "read_only": 1
   },
   {
@@ -378,13 +362,14 @@
    "fieldname": "has_shore_handling_charges",
    "fieldtype": "Select",
    "label": "Has Shore Handling Charges",
-   "options": "Yes\nNo"
+   "options": "Yes\nNo",
+   "permlevel": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 23:51:21.029675",
+ "modified": "2024-09-25 19:18:35.447658",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",
