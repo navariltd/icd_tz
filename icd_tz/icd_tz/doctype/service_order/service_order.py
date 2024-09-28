@@ -56,11 +56,13 @@ class ServiceOrder(Document):
 				self.container_no,
 				"container_reception"
 			)
-			has_transport_charges = has_shore_handling_charges = frappe.db.get_value(
+			has_transport_charges, t_sales_invoice = frappe.db.get_value(
 				"Container Reception",
 				container_reception,
-				"has_transport_charges"
+				["has_transport_charges", "t_sales_invoice"]
 			)
+			if t_sales_invoice:
+				return
 
 			if has_transport_charges == "Yes":
 				service_names = [row.get("service") for row in self.get("services")]
@@ -78,12 +80,15 @@ class ServiceOrder(Document):
 				self.container_no,
 				"container_reception"
 			)
-			has_shore_handling_charges, discharged_at = frappe.db.get_value(
+			has_shore_handling_charges, discharged_at, s_sales_invoice = frappe.db.get_value(
 				"Container Reception",
 				container_reception,
-				["has_shore_handling_charges", "discharged_at"]
+				["has_shore_handling_charges", "discharged_at", "s_sales_invoice"]
 			)
 			self.discharged_at = discharged_at
+
+			if s_sales_invoice:
+				return
 			
 			if has_shore_handling_charges == "Yes":
 				service_names = [row.get("service") for row in self.get("services")]
@@ -99,11 +104,15 @@ class ServiceOrder(Document):
 		if not self.get("container_inspection"):
 			return
 		
-		has_custom_verification_charges = frappe.db.get_value(
+		has_custom_verification_charges, cv_sales_invoice = frappe.db.get_value(
 			"In Yard Container Booking",
             {"container_inspection": self.get("container_inspection")},
-            "has_custom_verification_charges"
+            "has_custom_verification_charges", "cv_sales_invoice"
 		)
+
+		if cv_sales_invoice:
+			return
+		
 		if has_custom_verification_charges == "Yes":
 			service_names = [row.get("service") for row in self.get("services")]
 			verification_item = frappe.db.get_single_value("ICD TZ Settings", "custom_verification_item")
@@ -117,11 +126,15 @@ class ServiceOrder(Document):
 		if not self.get("container_inspection"):
 			return
 		
-		has_stripping_charges = frappe.db.get_value(
+		has_stripping_charges, s_sales_invoice = frappe.db.get_value(
             "In Yard Container Booking",
             {"container_inspection": self.get("container_inspection")},
-            "has_stripping_charges"
+            ["has_stripping_charges", "s_sales_invoice"]
         )
+
+		if s_sales_invoice:
+			return
+		
 		if has_stripping_charges == "Yes":
 			service_names = [row.get("service") for row in self.get("services")]
 			booking_item = frappe.db.get_single_value("ICD TZ Settings", "in_yard_booking_item")
@@ -150,7 +163,7 @@ class ServiceOrder(Document):
 	def get_removal_services(self):
 		if self.container_no:
 			container_doc = frappe.get_doc("Container", self.container_no)
-			if container_doc.has_paid_for_removal_charges == 0:
+			if not container_doc.r_sales_invoice:
 				service_names = [row.get("service") for row in self.get("services")]
 				removal_item = frappe.db.get_single_value("ICD TZ Settings", "removal_item")
 				
@@ -162,7 +175,7 @@ class ServiceOrder(Document):
 	def get_corridor_services(self):
 		if self.container_no:
 			container_doc = frappe.get_doc("Container", self.container_no)
-			if container_doc.has_paid_for_corridor_levy == 0:
+			if not container_doc.c_sales_invoice:
 				service_names = [row.get("service") for row in self.get("services")]
 				corridor_item = frappe.db.get_single_value("ICD TZ Settings", "corridor_levy_item")
 				
@@ -179,11 +192,13 @@ class ServiceOrder(Document):
 		c_rec_doc = frappe.get_doc("Container Inspection", self.container_inspection)
 
 		for d in c_rec_doc.get("services"):
+			if d.get("sales_invoice"):
+				continue
+				
 			if d.get("service") not in service_names:
 				self.append("services", {
 					"service": d.get("service")
 				})		
-
 
 	def update_container_inspection(self):
 		if not self.container_inspection:
