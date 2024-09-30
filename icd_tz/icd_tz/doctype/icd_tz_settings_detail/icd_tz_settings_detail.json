@@ -1,0 +1,56 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-09-30 12:13:00.434269",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "destination",
+  "from",
+  "to",
+  "charge"
+ ],
+ "fields": [
+  {
+   "fieldname": "destination",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Destination"
+  },
+  {
+   "fieldname": "from",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "From",
+   "mandatory_depends_on": "eval: doc.destination"
+  },
+  {
+   "fieldname": "to",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "To",
+   "mandatory_depends_on": "eval: doc.destination"
+  },
+  {
+   "fieldname": "charge",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Charge",
+   "mandatory_depends_on": "eval: doc.destination",
+   "options": "Free\nSingle\nDouble"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-09-30 12:35:11.866549",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "ICD TZ Settings Detail",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

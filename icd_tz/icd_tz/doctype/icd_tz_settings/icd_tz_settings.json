@@ -10,14 +10,24 @@
   "default_price_list",
   "service_items_section",
   "transport_item",
-  "shore_handling_item",
   "column_break_m4wtn",
   "in_yard_booking_item",
   "custom_verification_item",
-  "column_break_50lb3",
   "removal_item",
   "corridor_levy_item",
-  "container_storage_item"
+  "column_break_50lb3",
+  "shore_handling_item_t1_20ft",
+  "shore_handling_item_t1_40ft",
+  "shore_handling_item_t2_20ft",
+  "shore_handling_item_t2_40ft",
+  "column_break_hgbbw",
+  "storage_item_single_20ft",
+  "storage_item_single_40ft",
+  "storage_item_double_20ft",
+  "storage_item_double_40ft",
+  "no_of_days_for_container_storage_charges_section",
+  "storage_days",
+  "example"
  ],
  "fields": [
   {
@@ -25,51 +35,33 @@
    "fieldname": "default_price_list",
    "fieldtype": "Link",
    "label": "Default Price List",
-   "options": "Price List"
+   "options": "Price List",
+   "reqd": 1
   },
   {
    "fieldname": "in_yard_booking_item",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "In Yard Booking Item",
-   "options": "Item",
-   "reqd": 1
-  },
-  {
-   "fieldname": "container_storage_item",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Container Storage Item",
-   "options": "Item",
-   "reqd": 1
+   "options": "Item"
   },
   {
    "fieldname": "transport_item",
    "fieldtype": "Link",
    "label": "Transport Item",
-   "options": "Item",
-   "reqd": 1
+   "options": "Item"
   },
   {
    "fieldname": "removal_item",
    "fieldtype": "Link",
    "label": "Removal Item",
-   "options": "Item",
-   "reqd": 1
+   "options": "Item"
   },
   {
    "fieldname": "corridor_levy_item",
    "fieldtype": "Link",
    "label": "Corridor Levy Item",
-   "options": "Item",
-   "reqd": 1
-  },
-  {
-   "fieldname": "shore_handling_item",
-   "fieldtype": "Link",
-   "label": "Shore Handling Item",
-   "options": "Item",
-   "reqd": 1
+   "options": "Item"
   },
   {
    "fieldname": "service_items_section",
@@ -84,18 +76,86 @@
    "fieldname": "custom_verification_item",
    "fieldtype": "Link",
    "label": "Custom Verification Item",
-   "options": "Item",
-   "reqd": 1
+   "options": "Item"
   },
   {
    "fieldname": "column_break_50lb3",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "shore_handling_item_t1_20ft",
+   "fieldtype": "Link",
+   "label": "Shore Handling Item T1 20ft",
+   "options": "Item"
+  },
+  {
+   "fieldname": "shore_handling_item_t1_40ft",
+   "fieldtype": "Link",
+   "label": "Shore Handling Item T1 40ft",
+   "options": "Item"
+  },
+  {
+   "fieldname": "shore_handling_item_t2_20ft",
+   "fieldtype": "Link",
+   "label": "Shore Handling Item T2 20ft",
+   "options": "Item"
+  },
+  {
+   "fieldname": "shore_handling_item_t2_40ft",
+   "fieldtype": "Link",
+   "label": "Shore Handling Item T2 40ft",
+   "options": "Item"
+  },
+  {
+   "fieldname": "column_break_hgbbw",
+   "fieldtype": "Column Break",
+   "options": "Item"
+  },
+  {
+   "fieldname": "storage_item_single_20ft",
+   "fieldtype": "Link",
+   "label": "Storage Item Single 20ft",
+   "options": "Item"
+  },
+  {
+   "fieldname": "storage_item_single_40ft",
+   "fieldtype": "Link",
+   "label": "Storage Item Single 40ft",
+   "options": "Item"
+  },
+  {
+   "fieldname": "storage_item_double_20ft",
+   "fieldtype": "Link",
+   "label": "Storage Item Double 20ft",
+   "options": "Item"
+  },
+  {
+   "fieldname": "storage_item_double_40ft",
+   "fieldtype": "Link",
+   "label": "Storage Item Double 40ft",
+   "options": "Item"
+  },
+  {
+   "fieldname": "no_of_days_for_container_storage_charges_section",
+   "fieldtype": "Section Break",
+   "label": "No of Days for Container Storage Charges"
+  },
+  {
+   "fieldname": "storage_days",
+   "fieldtype": "Table",
+   "label": "Storage Days",
+   "options": "ICD TZ Settings Detail"
+  },
+  {
+   "fieldname": "example",
+   "fieldtype": "HTML",
+   "options": "<h2>Example</h2>\n\n\n\n<style>\ntable {\n  font-family: arial, sans-serif;\n  border-collapse: collapse;\n  width: 100%;\n}\n\ntd, th {\n  border: 1px solid #dddddd;\n  text-align: left;\n  padding: 8px;\n}\n\n</style>\n\n<table>\n  <tbody>\n  <tr style=\"background-color: #dddddd;\">\n    <th>Destination</th>\n    <th>From</th>\n    <th>To</th>\n    <th>Charge</th>\n  </tr>\n  <tr>\n    <td>Local</td>\n    <td>0</td>\n    <td>7</td>\n    <td>Free</td>\n  </tr>\n  <tr>\n    <td>Local</td>\n    <td>8</td>\n    <td>15</td>\n    <td>Single</td>\n  </tr>\n  <tr>\n    <td>Local</td>\n    <td>15</td>\n    <td>10000000</td>\n    <td>Double</td>\n  </tr>\n  <tr>\n    <td>DRC</td>\n    <td>0</td>\n    <td>30</td>\n    <td>Free</td>\n  </tr>\n  <tr>\n    <td>DRC</td>\n    <td>31</td>\n    <td>37</td>\n    <td>Single</td>\n  </tr>\n  <tr>\n    <td>DRC</td>\n    <td>38</td>\n    <td>10000000</td>\n    <td>Double</td>\n  </tr>\n  <tr>\n    <td>Non DRC</td>\n    <td>0</td>\n    <td>14</td>\n    <td>Free</td>\n  </tr>\n  <tr>\n    <td>Non DRC</td>\n    <td>15</td>\n    <td>21</td>\n    <td>Single</td>\n  </tr>\n  <tr>\n    <td>Non DRC</td>\n    <td>22</td>\n    <td>10000000</td>\n    <td>Double</td>\n  </tr>\n</tbody></table>\n\n\n\n"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-09-24 00:03:45.940030",
+ "modified": "2024-09-30 12:37:52.480970",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "ICD TZ Settings",
