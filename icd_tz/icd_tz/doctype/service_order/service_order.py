@@ -63,6 +63,8 @@ class ServiceOrder(Document):
 			if has_transport_charges == "Yes":
 				service_names = [row.get("service") for row in self.get("services")]
 				transport_item = frappe.db.get_single_value("ICD TZ Settings", "transport_item")
+				if not transport_item:
+					frappe.throw("Transport item is not set in ICD TZ Settings, Please set it to continue")
 				
 				if transport_item not in service_names:
 					self.append("services", {
@@ -88,6 +90,8 @@ class ServiceOrder(Document):
 			if has_shore_handling_charges == "Yes":
 				service_names = [row.get("service") for row in self.get("services")]
 				shore_handling_item = frappe.db.get_single_value("ICD TZ Settings", "shore_handling_item")
+				if not shore_handling_item:
+					frappe.throw("Shore Handling item is not set in ICD TZ Settings, Please set it to continue")
 				
 				if shore_handling_item not in service_names:
 					self.append("services", {
@@ -111,6 +115,8 @@ class ServiceOrder(Document):
 		if has_custom_verification_charges == "Yes":
 			service_names = [row.get("service") for row in self.get("services")]
 			verification_item = frappe.db.get_single_value("ICD TZ Settings", "custom_verification_item")
+			if not verification_item:
+				frappe.throw("Custom Verification item is not set in ICD TZ Settings, Please set it to continue")
 			
 			if verification_item not in service_names:
 				self.append("services", {
@@ -133,6 +139,8 @@ class ServiceOrder(Document):
 		if has_stripping_charges == "Yes":
 			service_names = [row.get("service") for row in self.get("services")]
 			booking_item = frappe.db.get_single_value("ICD TZ Settings", "in_yard_booking_item")
+			if not booking_item:
+				frappe.throw("In Yard Booking item is not set in ICD TZ Settings, Please set it to continue")
 			
 			if booking_item not in service_names:
 				self.append("services", {
@@ -153,8 +161,12 @@ class ServiceOrder(Document):
 		if container_doc.has_single_charge == 1:
 			if "2" in str(self.container_size)[0]:
 				storage_item = settings_doc.get("storage_item_single_20ft")
+				if not storage_item:
+					frappe.throw("Storage item (single) for 20ft container is not set in ICD TZ Settings, Please set it to continue")
 			elif "4" in str(self.container_size)[0]:
 				storage_item = settings_doc.get("storage_item_single_40ft")
+				if not storage_item:
+					frappe.throw("Storage item (single) for 40ft container is not set in ICD TZ Settings, Please set it to continue")
 			
 			if storage_item not in service_names:
 				self.append("services", {
@@ -164,8 +176,12 @@ class ServiceOrder(Document):
 		if container_doc.has_double_charge == 1:
 			if "2" in str(self.container_size)[0]:
 				storage_item = settings_doc.get("storage_item_double_20ft")
+				if not storage_item:
+					frappe.throw("Storage item (double) for 20ft container is not set in ICD TZ Settings, Please set it to continue")
 			elif "4" in str(self.container_size)[0]:
 				storage_item = settings_doc.get("storage_item_double_40ft")
+				if not storage_item:
+					frappe.throw("Storage item (double) for 40ft container is not set in ICD TZ Settings, Please set it to continue")
 			
 			if storage_item not in service_names:
 				self.append("services", {
@@ -175,9 +191,11 @@ class ServiceOrder(Document):
 	def get_removal_services(self):
 		if self.container_no:
 			container_doc = frappe.get_doc("Container", self.container_no)
-			if not container_doc.r_sales_invoice:
+			if not container_doc.r_sales_invoice and container_doc.days_to_be_billed > 0:
 				service_names = [row.get("service") for row in self.get("services")]
 				removal_item = frappe.db.get_single_value("ICD TZ Settings", "removal_item")
+				if not removal_item:
+					frappe.throw("Removal item is not set in ICD TZ Settings, Please set it to continue")
 				
 				if removal_item not in service_names:
 					self.append("services", {
@@ -187,9 +205,11 @@ class ServiceOrder(Document):
 	def get_corridor_services(self):
 		if self.container_no:
 			container_doc = frappe.get_doc("Container", self.container_no)
-			if not container_doc.c_sales_invoice:
+			if not container_doc.c_sales_invoice and container_doc.days_to_be_billed > 0:
 				service_names = [row.get("service") for row in self.get("services")]
 				corridor_item = frappe.db.get_single_value("ICD TZ Settings", "corridor_levy_item")
+				if not corridor_item:
+					frappe.throw("Corridor Levy item is not set in ICD TZ Settings, Please set it to continue")
 				
 				if corridor_item not in service_names:
 					self.append("services", {
