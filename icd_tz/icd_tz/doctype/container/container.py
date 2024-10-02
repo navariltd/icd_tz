@@ -9,8 +9,9 @@ class Container(Document):
 	def before_save(self):
 		if self.container_no and self.container_reception:
 			self.update_container_details()
-
+		
 		self.update_billed_days()
+		self.update_billed_details()
 	
 
 	def update_container_details(self):
@@ -96,17 +97,88 @@ class Container(Document):
 			})
 
 	def update_billed_days(self):
+		if not self.country_of_destination:
+			return
+		
+		setting_doc = frappe.get_doc("ICD TZ Settings")
+
+		no_of_free_days = 0
+		no_of_single_days = 0
+		no_of_double_days = 0
+		for d in setting_doc.storage_days:
+			if d.destination == self.country_of_destination:
+				if d.charge == "Free":
+					no_of_free_days = d.get("to") - d.get("from")
+
+				elif d.charge == "Single":
+					no_of_single_days = d.get("to") - d.get("from")
+
+				elif d.charge == "Double":
+					no_of_double_days = d.get("to") - d.get("from")
+		
+		free_count = 0
+		charge_count = 0
+		for row in self.container_dates:
+			if free_count < no_of_free_days:
+				row.is_free = 1
+				row.is_billable = 0
+				free_count += 1
+			
+			elif row.is_billable == 1  and row.is_free == 0:
+				charge_count += 1
+		
+		if charge_count == 0:
+			self.has_single_charge = 0
+			self.has_double_charge = 0
+		
+		elif charge_count > 0 and charge_count <= no_of_single_days:
+			self.has_single_charge = 1
+			self.has_double_charge = 0
+		
+		elif charge_count > no_of_single_days:
+			self.has_single_charge = 1
+			self.has_double_charge = 1
+		
+				
+		
+
+
+	def update_billed_details(self):
 		"""Update the billed days of the container"""
 		
 		if self.customs_status == "Cleared":
 			return
 		
 		if len(self.container_dates) > 0:
+			no_of_free_days = 0
+			no_of_billable_days = 0
+			no_of_writeoff_days = 0
+			days_to_be_billed = 0
+			no_of_billed_days = 0
+
+			for row in self.container_dates:
+				if row.is_billable == 0 and row.is_free == 1:
+					no_of_free_days += 1
+					
+				elif row.is_billable == 1 and row.is_free == 0:
+					no_of_billable_days += 1
+				
+				elif row.is_billable == 0 and row.is_free == 0:
+					no_of_writeoff_days += 1
+				
+				elif row.is_billable == 1 and row.is_free == 0 and not row.sales_invoice:
+					days_to_be_billed += 1
+				
+				elif row.sales_invoice:
+					no_of_billed_days += 1
+
+			
 			self.total_days = len(self.container_dates)
-			self.no_of_billable_days = len([row for row in self.container_dates if row.is_billable == 1])
-			self.no_of_free_days = len([row for row in self.container_dates if row.is_billable == 0])
-			self.days_to_be_billed = len([row for row in self.container_dates if row.is_billable == 1 and not row.sales_invoice])
-			self.no_of_billed_days = len([row for row in self.container_dates if row.sales_invoice])
+			self.no_of_free_days = no_of_free_days
+			self.no_of_billable_days = no_of_billable_days
+			self.no_of_writeoff_days = no_of_writeoff_days
+			self.days_to_be_billed = days_to_be_billed
+			self.no_of_billed_days = no_of_billed_days
 
 
 def daily_update_date_container_stay():

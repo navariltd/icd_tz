@@ -53,9 +53,11 @@
   "tab_break_edoll",
   "total_days",
   "column_break_dlhui",
-  "no_of_billable_days",
-  "column_break_cd24q",
   "no_of_free_days",
+  "column_break_cd24q",
+  "no_of_billable_days",
+  "column_break_uont4",
+  "no_of_writeoff_days",
   "column_break_xo7tr",
   "days_to_be_billed",
   "column_break_rs2fh",
@@ -66,6 +68,9 @@
   "column_break_iv6ai",
   "has_corridor_levy_charges",
   "c_sales_invoice",
+  "column_break_qjlyx",
+  "has_single_charge",
+  "has_double_charge",
   "section_break_517wd",
   "container_dates"
  ],
@@ -381,12 +386,41 @@
    "fieldname": "country_of_destination",
    "fieldtype": "Data",
    "label": "Country of Destination"
+  },
+  {
+   "fieldname": "column_break_qjlyx",
+   "fieldtype": "Column Break",
+   "label": "Storage Charge"
+  },
+  {
+   "default": "0",
+   "fieldname": "has_single_charge",
+   "fieldtype": "Check",
+   "label": "Has Single Charge",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "has_double_charge",
+   "fieldtype": "Check",
+   "label": "Has Double Charge",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_uont4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "no_of_writeoff_days",
+   "fieldtype": "Int",
+   "label": "No of Writeoff Days",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-02 11:10:54.572777",
+ "modified": "2024-10-02 12:46:56.674957",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",
