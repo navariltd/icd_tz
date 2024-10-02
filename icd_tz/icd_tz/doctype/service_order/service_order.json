@@ -19,6 +19,7 @@
   "posting_date",
   "posting_time",
   "container_details_section",
+  "manifest",
   "vessel_name",
   "port",
   "destination",
@@ -243,12 +244,18 @@
    "fieldtype": "Select",
    "label": "Discharged At",
    "options": "\nTerminal 1\nTerminal 2"
+  },
+  {
+   "fieldname": "manifest",
+   "fieldtype": "Link",
+   "label": "Manifest",
+   "options": "Manifest"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 23:32:53.520627",
+ "modified": "2024-10-02 12:11:31.291695",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Service Order",

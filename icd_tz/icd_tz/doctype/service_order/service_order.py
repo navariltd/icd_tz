@@ -26,18 +26,14 @@ class ServiceOrder(Document):
 
 	def set_missing_values(self):
 		if self.container_no:
-			container_doc = frappe.get_doc("Container", self.container_no)
-			container_reception_doc = frappe.get_doc("Container Reception", container_doc.container_reception)
+			container_reception = frappe.db.get_value("Container", self.container_no, "container_reception")
+			container_reception_doc = frappe.get_doc("Container Reception", container_reception)
 
 			self.vessel_name = container_reception_doc.ship
 			self.port = container_reception_doc.port
-		
-			if container_doc.place_of_destination and "TZ" in container_doc.place_of_destination:
-				self.destination = "Local"
-				self.country = "Local"
-			else:
-				self.destination = container_doc.place_of_destination
-				self.country = ""
+			self.destination = container_reception_doc.country_of_destination
+			self.manifest = container_reception_doc.manifest
+			self.discharged_at = container_reception_doc.discharged_at
 	
 	def get_services(self):
 		self.get_transport_services()
@@ -80,12 +76,11 @@ class ServiceOrder(Document):
 				self.container_no,
 				"container_reception"
 			)
-			has_shore_handling_charges, discharged_at, s_sales_invoice = frappe.db.get_value(
+			has_shore_handling_charges, s_sales_invoice = frappe.db.get_value(
 				"Container Reception",
 				container_reception,
-				["has_shore_handling_charges", "discharged_at", "s_sales_invoice"]
+				["has_shore_handling_charges", "s_sales_invoice"]
 			)
-			self.discharged_at = discharged_at
 
 			if s_sales_invoice:
 				return
