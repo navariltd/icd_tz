@@ -32,18 +32,20 @@
   "s_sales_invoice",
   "container_particulars_tab",
   "container_no",
-  "container_location",
   "truck_name",
-  "column_break_zcgxx",
   "size",
+  "column_break_zcgxx",
   "volume",
-  "column_break_twjr",
   "weight",
   "weight_unit",
-  "column_break_y5zga",
+  "column_break_twjr",
   "seal_no_1",
   "seal_no_2",
   "seal_no_3",
+  "column_break_y5zga",
+  "container_location",
+  "abbr_for_destination",
+  "country_of_destination",
   "section_break_fvbx",
   "top",
   "bottom",
@@ -113,7 +115,7 @@
    "fetch_if_empty": 1,
    "fieldname": "size",
    "fieldtype": "Select",
-   "label": "Size (FT)",
+   "label": "Container Size (FT)",
    "options": "\n20\n40\n45\n22G1\n45G1"
   },
   {
@@ -341,7 +343,8 @@
    "fieldname": "discharged_at",
    "fieldtype": "Select",
    "label": "Discharged At",
-   "options": "\nTerminal 1\nTerminal 2"
+   "options": "\nTerminal 1\nTerminal 2",
+   "read_only": 1
   },
   {
    "description": "Invoice for shore handling charges",
@@ -364,12 +367,24 @@
    "label": "Has Shore Handling Charges",
    "options": "Yes\nNo",
    "permlevel": 1
+  },
+  {
+   "fieldname": "abbr_for_destination",
+   "fieldtype": "Data",
+   "label": "Abbr for Destination",
+   "read_only": 1
+  },
+  {
+   "fieldname": "country_of_destination",
+   "fieldtype": "Select",
+   "label": "Country of Destination",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-25 19:18:35.447658",
+ "modified": "2024-10-02 08:42:22.021100",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",

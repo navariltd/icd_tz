@@ -42,6 +42,8 @@ class Container(Document):
 			self.original_location = container_reception.container_location
 		if not self.current_location:
 			self.current_location = container_reception.container_location
+		if not self.country_of_destination:
+			self.country_of_destination = container_reception.country_of_destination
 		if not self.company:
 			self.company = container_reception.company
 

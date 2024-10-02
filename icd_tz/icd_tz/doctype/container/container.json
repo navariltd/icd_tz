@@ -35,6 +35,7 @@
   "column_break_6s4dw",
   "consignee",
   "place_of_destination",
+  "country_of_destination",
   "place_of_delivery",
   "column_break_jhhs",
   "cargo_description",
@@ -375,12 +376,17 @@
    "fieldtype": "Int",
    "label": "No of Free Days",
    "read_only": 1
+  },
+  {
+   "fieldname": "country_of_destination",
+   "fieldtype": "Data",
+   "label": "Country of Destination"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-25 19:32:22.807295",
+ "modified": "2024-10-02 11:10:54.572777",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",

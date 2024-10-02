@@ -64,6 +64,7 @@ class ContainerReception(Document):
 		container.arrival_date = arrival_date
 		container.original_location = self.container_location
 		container.current_location = self.container_location
+		container.country_of_destination = self.country_of_destination
 		container.status = "In Yard"
 
 		container.append("container_dates", {
@@ -84,4 +85,21 @@ def get_container_details(manifest, container_no):
 	)
 
 	if len(container) > 0:
-		return container[0]
+		container_row = container[0]
+		container_row["abbr_for_destination"] = frappe.db.get_value(
+			"MasterBI", 
+			{"parent": manifest, "m_bl_no": container_row.m_bl_no}, 
+			"place_of_destination"
+		)
+		return container_row
+
+@frappe.whitelist()
+def get_country_of_destination():
+	destinations = []
+
+	icd_doc = frappe.get_doc("ICD TZ Settings")
+
+	for row in icd_doc.storage_days:
+		destinations.append(row.destination)
+	
+	return set(destinations)

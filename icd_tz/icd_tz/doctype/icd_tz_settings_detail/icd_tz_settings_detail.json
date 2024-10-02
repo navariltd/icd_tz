@@ -16,7 +16,7 @@
    "fieldname": "destination",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Destination"
+   "label": "Country of Destination"
   },
   {
    "fieldname": "from",
@@ -44,7 +44,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-09-30 12:35:11.866549",
+ "modified": "2024-10-02 08:48:10.540921",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "ICD TZ Settings Detail",

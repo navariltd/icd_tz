@@ -2,6 +2,9 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Container Reception', {
+    setup: (frm) => {
+        frm.trigger("get_countries_of_destination");
+    },
 	refresh: (frm) => {
 		frm.trigger("set_queries");
 	},
@@ -42,10 +45,25 @@ frappe.ui.form.on('Container Reception', {
                         frm.set_value("seal_no_1", data.seal_no1)
                         frm.set_value("seal_no_2", data.seal_no2)
                         frm.set_value("seal_no_3", data.seal_no3)
+                        frm.set_value("abbr_for_destination", data.abbr_for_destination)
                         frm.refresh_fields();
                     }
                 }
             });
         }
+    },
+    get_countries_of_destination: (frm) => {
+        frappe.call({
+            method: "icd_tz.icd_tz.doctype.container_reception.container_reception.get_country_of_destination",
+            args: {},
+            callback: (r) => {
+                console.log(r)
+
+                if (r.message) {
+                    frm.set_df_property("country_of_destination", "options", r.message);
+                    frm.refresh_field("country_of_destination");
+                }
+            }
+        });
     }
 });
