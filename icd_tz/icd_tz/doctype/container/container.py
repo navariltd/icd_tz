@@ -12,7 +12,6 @@ class Container(Document):
 		
 		self.update_billed_days()
 		self.update_billed_details()
-	
 
 	def update_container_details(self):
 		"""Update the container details from the Container Reception, Containers Detail and Container Movement Order"""
@@ -139,10 +138,6 @@ class Container(Document):
 			self.has_single_charge = 1
 			self.has_double_charge = 1
 		
-				
-		
-
-
 	def update_billed_details(self):
 		"""Update the billed days of the container"""
 		

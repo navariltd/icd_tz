@@ -143,13 +143,30 @@ class ServiceOrder(Document):
 		if not self.get("container_no"):
 			return
 
-		has_storage_charges = frappe.db.get_value(
-            "Container", self.get("container_no"), "days_to_be_billed"
-        )
-		if has_storage_charges > 0:
-			service_names = [row.get("service") for row in self.get("services")]
-			storage_item = frappe.db.get_single_value("ICD TZ Settings", "container_storage_item")
-            
+		container_doc = frappe.get_doc("Container", self.get("container_no"))
+		if container_doc.days_to_be_billed == 0:
+			return
+
+		service_names = [row.get("service") for row in self.get("services")]
+
+		settings_doc = frappe.get_doc("ICD TZ Settings")
+		if container_doc.has_single_charge == 1:
+			if "2" in str(self.container_size)[0]:
+				storage_item = settings_doc.get("storage_item_single_20ft")
+			elif "4" in str(self.container_size)[0]:
+				storage_item = settings_doc.get("storage_item_single_40ft")
+			
+			if storage_item not in service_names:
+				self.append("services", {
+					"service": storage_item
+				})
+		
+		if container_doc.has_double_charge == 1:
+			if "2" in str(self.container_size)[0]:
+				storage_item = settings_doc.get("storage_item_double_20ft")
+			elif "4" in str(self.container_size)[0]:
+				storage_item = settings_doc.get("storage_item_double_40ft")
+			
 			if storage_item not in service_names:
 				self.append("services", {
 					"service": storage_item
