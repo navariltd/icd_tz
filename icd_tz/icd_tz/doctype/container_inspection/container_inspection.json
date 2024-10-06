@@ -8,14 +8,15 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_9rl7",
+  "in_yard_container_booking",
   "movement_date",
   "driver_name",
   "column_break_bu4nq",
-  "in_yard_container_booking",
   "c_and_f_company",
   "clearing_agent",
-  "column_break_aamu",
   "consignee",
+  "column_break_aamu",
+  "container_id",
   "container_no",
   "original_location",
   "column_break_d1lgj",
@@ -175,14 +176,12 @@
    "read_only": 1
   },
   {
-   "fetch_from": "in_yard_container_booking.container_no",
+   "fetch_from": "container_id.container_no",
    "fieldname": "container_no",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Container Number",
-   "options": "Container",
-   "read_only": 1,
-   "reqd": 1
+   "label": "Container No",
+   "read_only": 1
   },
   {
    "fetch_from": "in_yard_container_booking.company",
@@ -211,12 +210,21 @@
    "fieldtype": "Link",
    "label": "Consignee",
    "options": "Consignee"
+  },
+  {
+   "fetch_from": "in_yard_container_booking.container_id",
+   "fieldname": "container_id",
+   "fieldtype": "Link",
+   "label": "Container ID",
+   "options": "Container",
+   "read_only": 1,
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-25 19:23:51.591983",
+ "modified": "2024-10-06 18:17:04.772543",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Inspection",

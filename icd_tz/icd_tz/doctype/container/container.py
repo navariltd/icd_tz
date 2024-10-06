@@ -96,9 +96,6 @@ class Container(Document):
 			})
 
 	def update_billed_days(self):
-		if not self.country_of_destination:
-			return
-		
 		setting_doc = frappe.get_doc("ICD TZ Settings")
 
 		no_of_free_days = 0
@@ -148,7 +145,6 @@ class Container(Document):
 			no_of_free_days = 0
 			no_of_billable_days = 0
 			no_of_writeoff_days = 0
-			days_to_be_billed = 0
 			no_of_billed_days = 0
 
 			for row in self.container_dates:
@@ -161,9 +157,6 @@ class Container(Document):
 				elif row.is_billable == 0 and row.is_free == 0:
 					no_of_writeoff_days += 1
 				
-				elif row.is_billable == 1 and row.is_free == 0 and not row.sales_invoice:
-					days_to_be_billed += 1
-				
 				elif row.sales_invoice:
 					no_of_billed_days += 1
 
@@ -172,8 +165,8 @@ class Container(Document):
 			self.no_of_free_days = no_of_free_days
 			self.no_of_billable_days = no_of_billable_days
 			self.no_of_writeoff_days = no_of_writeoff_days
-			self.days_to_be_billed = days_to_be_billed
 			self.no_of_billed_days = no_of_billed_days
+			self.days_to_be_billed = no_of_billable_days - no_of_billed_days	
 
 
 def daily_update_date_container_stay():
@@ -193,7 +186,6 @@ def daily_update_date_container_stay():
 				new_row.date = doc.arrival_date
 			
 			doc.save(ignore_permissions=True)
-			frappe.db.commit()
 		except Exception:
 			frappe.log_error(
 				str(f"<b>{item.name}</b> Daily Update Container Dates"),

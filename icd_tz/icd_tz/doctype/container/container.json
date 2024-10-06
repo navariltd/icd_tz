@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:container_no",
+ "autoname": "naming_series:naming_series",
  "creation": "2024-06-26 09:58:36.857547",
  "default_view": "List",
  "doctype": "DocType",
@@ -50,14 +50,15 @@
   "column_break_qkrn",
   "last_inspection_date",
   "next_inspection_date",
+  "naming_series",
   "tab_break_edoll",
   "total_days",
   "column_break_dlhui",
   "no_of_free_days",
   "column_break_cd24q",
-  "no_of_billable_days",
-  "column_break_uont4",
   "no_of_writeoff_days",
+  "column_break_uont4",
+  "no_of_billable_days",
   "column_break_xo7tr",
   "days_to_be_billed",
   "column_break_rs2fh",
@@ -158,13 +159,14 @@
   {
    "fieldname": "next_inspection_date",
    "fieldtype": "Date",
-   "label": "Next Inspection Date"
+   "label": "Next Inspection Date",
+   "read_only": 1
   },
   {
    "fieldname": "container_no",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Container",
+   "label": "Container No",
    "reqd": 1,
    "unique": 1
   },
@@ -349,7 +351,8 @@
    "fieldname": "has_removal_charges",
    "fieldtype": "Select",
    "label": "Has Removal Charges",
-   "options": "Yes\nNo"
+   "options": "Yes\nNo",
+   "permlevel": 1
   },
   {
    "description": "Invoice for Removal Charges",
@@ -367,7 +370,8 @@
    "fieldname": "has_corridor_levy_charges",
    "fieldtype": "Select",
    "label": "Has Corridor Levy Charges",
-   "options": "Yes\nNo"
+   "options": "Yes\nNo",
+   "permlevel": 1
   },
   {
    "description": "Invoice for corridor levy charges",
@@ -415,16 +419,22 @@
    "fieldtype": "Int",
    "label": "No of Writeoff Days",
    "read_only": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "ICD-C-.YYYY.-"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-02 12:46:56.674957",
+ "modified": "2024-10-06 17:42:39.180092",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",
- "naming_rule": "By fieldname",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -440,6 +450,7 @@
    "write": 1
   }
  ],
+ "search_fields": "container_no, m_bl_no, seal_no_1, size, country_of_destination, current_location, consignee",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

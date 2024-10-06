@@ -8,6 +8,7 @@
  "field_order": [
   "gate_pass_details_section",
   "booking_id",
+  "container_id",
   "container_no",
   "inspection_location",
   "column_break_phfzs",
@@ -154,12 +155,10 @@
    "search_index": 1
   },
   {
-   "fetch_from": "booking_id.container_no",
+   "fetch_from": "container_id.container_no",
    "fieldname": "container_no",
-   "fieldtype": "Link",
-   "label": "Container Number",
-   "options": "Container",
-   "read_only": 1
+   "fieldtype": "Data",
+   "label": "container No"
   },
   {
    "fieldname": "column_break_phfzs",
@@ -209,13 +208,21 @@
    "fieldtype": "Link",
    "label": "Consignee",
    "options": "Consignee"
+  },
+  {
+   "fetch_from": "booking_id.container_no",
+   "fieldname": "container_id",
+   "fieldtype": "Link",
+   "label": "Container ID",
+   "options": "Container",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-23 15:00:00.794478",
+ "modified": "2024-10-06 18:04:40.516248",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Gate Pass",

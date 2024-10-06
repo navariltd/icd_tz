@@ -107,7 +107,7 @@
    "fetch_from": "movement_order.container_no",
    "fieldname": "container_no",
    "fieldtype": "Data",
-   "label": "Container",
+   "label": "Container No",
    "read_only": 1
   },
   {
@@ -384,7 +384,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-02 08:42:22.021100",
+ "modified": "2024-10-06 16:23:37.280870",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",
