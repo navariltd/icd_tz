@@ -130,7 +130,11 @@ after_migrate = [
 
 doc_events = {
 	"Sales Invoice": {
+        "before_save": "icd_tz.icd_tz.api.sales_invoice.before_save",
         "on_submit": "icd_tz.icd_tz.api.sales_invoice.on_submit"
+    },
+    "Sales Order": {
+        "before_save": "icd_tz.icd_tz.api.sales_order.before_save"
     },
 }
 

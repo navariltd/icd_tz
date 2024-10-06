@@ -1,5 +1,10 @@
 import frappe
 from frappe.utils import nowdate
+from icd_tz.icd_tz.api.utils import validate_qty_storage_item
+
+
+def before_save(doc, method):
+    validate_qty_storage_item(doc)
 
 @frappe.whitelist()
 def make_sales_order(doc_type, doc_name):

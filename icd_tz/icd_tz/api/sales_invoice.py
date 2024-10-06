@@ -1,5 +1,9 @@
 import frappe
+from icd_tz.icd_tz.api.utils import validate_qty_storage_item
 
+
+def before_save(doc, method):
+    validate_qty_storage_item(doc)
 
 def on_submit(doc, method):
     update_sales_references(doc)
@@ -9,7 +13,7 @@ def update_sales_references(doc):
         return
     
     order_doc = frappe.get_doc("Service Order", doc.service_order)
-    if not order_doc.container_no:
+    if not order_doc.container_id:
         return
     
     settings_doc = frappe.get_doc("ICD TZ Settings")
@@ -20,7 +24,7 @@ def update_sales_references(doc):
 
     for item in doc.items:
         if item.item_code == settings_doc.transport_item:
-            update_container_rec(doc.container_no, invoice_id, "t_sales_invoice")
+            update_container_rec(order_doc.container_id, invoice_id, "t_sales_invoice")
         
         elif item.item_code in [
             settings_doc.get("shore_handling_item_t1_20ft"),
@@ -28,7 +32,7 @@ def update_sales_references(doc):
             settings_doc.get("shore_handling_item_t2_20ft"),
             settings_doc.get("shore_handling_item_t2_40ft")
         ]:
-            update_container_rec(doc.container_no, invoice_id, "s_sales_invoice")
+            update_container_rec(order_doc.container_id, invoice_id, "s_sales_invoice")
         
         elif item.item_code == settings_doc.in_yard_booking_item:
             update_booking_refs(order_doc.container_inspection, invoice_id, "s_sales_invoice")

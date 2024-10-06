@@ -50,6 +50,7 @@ frappe.ui.form.on('Container Inspection', {
 					"consignee": frm.doc.consignee,
 					"clearing_agent": frm.doc.c_and_f_agent,
 					"c_and_f_company": frm.doc.c_and_f_company,
+					"container_id": frm.doc.container_id,
 					"container_no": frm.doc.container_no,
 					"container_location": frm.doc.container_location,
 				}, doc => {
