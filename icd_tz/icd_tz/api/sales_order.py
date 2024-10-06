@@ -68,8 +68,8 @@ def get_container_days_to_be_billed(service_doc, container_doc, settings_doc):
     if container_doc.days_to_be_billed == 0:
         return single_days, double_days
 
-    for d in setting_doc.storage_days:
-        if d.destination == service_doc.country_of_destination:
+    for d in settings_doc.storage_days:
+        if d.destination == service_doc.destination:
             if d.charge == "Single":
                 no_of_single_days = d.get("to") - d.get("from")
 
@@ -87,7 +87,7 @@ def get_container_days_to_be_billed(service_doc, container_doc, settings_doc):
         
         elif (
             row.is_billable == 1 and
-            container_doc.hass_double_charge == 1 and
+            container_doc.has_double_charge == 1 and
             single_charge_count >= no_of_single_days and
             double_charge_count < no_of_double_days
         ):

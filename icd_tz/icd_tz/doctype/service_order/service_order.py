@@ -35,6 +35,22 @@ class ServiceOrder(Document):
 			self.destination = container_reception_doc.country_of_destination
 			self.manifest = container_reception_doc.manifest
 			self.discharged_at = container_reception_doc.discharged_at
+
+			self.container_inspection = frappe.db.get_value(
+				"Container Inspection",
+				{"container_id": self.container_id},
+				"name"
+			)
+			if not self.container_inspection:
+				booking_info = frappe.db.get_value(
+					"In Yard Container Booking",
+					{"container_id": self.container_id},
+					["name", "c_and_f_company", "clearing_agent", "consignee"],
+				)
+				if booking_info:
+					self.c_and_f_company = booking_info.c_and_f_company
+					self.clearing_agent = booking_info.clearing_agent
+					self.consignee = booking_info.consignee
 	
 	def get_services(self):
 		self.get_transport_services()
@@ -67,7 +83,7 @@ class ServiceOrder(Document):
 				if not transport_item:
 					frappe.throw("Transport item is not set in ICD TZ Settings, Please set it to continue")
 				
-				if transport_item not in service_names:
+				if transport_item and transport_item not in service_names:
 					self.append("services", {
 						"service": transport_item
 					})
@@ -116,7 +132,7 @@ class ServiceOrder(Document):
 						frappe.throw("Shore Handling Item (t2) for 40ft container is not set in ICD TZ setting, Please set it to continue")
 
 			service_names = [row.get("service") for row in self.get("services")]
-			if shore_handling_item not in service_names:
+			if shore_handling_item and shore_handling_item not in service_names:
 				self.append("services", {
 					"service": shore_handling_item,
 					"remarks": f"Size: {self.container_size}, Destination: {self.destination}, DischargedAt: {self.discharged_at}"
@@ -141,7 +157,7 @@ class ServiceOrder(Document):
 			if not verification_item:
 				frappe.throw("Custom Verification item is not set in ICD TZ Settings, Please set it to continue")
 			
-			if verification_item not in service_names:
+			if verification_item and verification_item not in service_names:
 				self.append("services", {
 					"service": verification_item
 				})
@@ -165,7 +181,7 @@ class ServiceOrder(Document):
 			if not booking_item:
 				frappe.throw("In Yard Booking item is not set in ICD TZ Settings, Please set it to continue")
 			
-			if booking_item not in service_names:
+			if booking_item and booking_item not in service_names:
 				self.append("services", {
 					"service": booking_item
 				})
@@ -186,6 +202,7 @@ class ServiceOrder(Document):
 			container_doc,
 			settings_doc
 		)
+		storage_item = None
 		if container_doc.has_single_charge == 1:
 			if "2" in str(self.container_size)[0]:
 				storage_item = settings_doc.get("storage_item_single_20ft")
@@ -197,7 +214,7 @@ class ServiceOrder(Document):
 				if not storage_item:
 					frappe.throw("Storage item (single) for 40ft container is not set in ICD TZ Settings, Please set it to continue")
 			
-			if storage_item not in service_names:
+			if storage_item and storage_item not in service_names:
 				self.append("services", {
 					"service": storage_item,
 					"remarks": f"Days: {len(single_days)}, Size: {self.container_size}, Destination: {self.destination}"
@@ -214,7 +231,7 @@ class ServiceOrder(Document):
 				if not storage_item:
 					frappe.throw("Storage item (double) for 40ft container is not set in ICD TZ Settings, Please set it to continue")
 			
-			if storage_item not in service_names:
+			if storage_item and storage_item not in service_names:
 				self.append("services", {
 					"service": storage_item,
 					"remarks": f"Days: {len(double_days)}, Size: {self.container_size}, Destination: {self.destination}"
@@ -239,7 +256,7 @@ class ServiceOrder(Document):
 		if not removal_item:
 			frappe.throw("Removal item is not set in ICD TZ Settings, Please set it to continue")
 		
-		if removal_item not in service_names:
+		if removal_item and removal_item not in service_names:
 			self.append("services", {
 				"service": removal_item
 			})
@@ -263,7 +280,7 @@ class ServiceOrder(Document):
 		if not corridor_item:
 			frappe.throw("Corridor Levy item is not set in ICD TZ Settings, Please set it to continue")
 		
-		if corridor_item not in service_names:
+		if corridor_item and corridor_item not in service_names:
 			self.append("services", {
 				"service": corridor_item
 			})
@@ -279,7 +296,7 @@ class ServiceOrder(Document):
 			if d.get("sales_invoice"):
 				continue
 				
-			if d.get("service") not in service_names:
+			if d.get("service") and d.get("service") not in service_names:
 				self.append("services", {
 					"service": d.get("service")
 				})		
@@ -299,21 +316,33 @@ class ServiceOrder(Document):
 		"""
 		Create a Get pass document
 		"""
-		booking_id = frappe.db.get_value(
+		exist_get_pass = frappe.db.get_all(
+			"Gate Pass",
+			filters={
+				"manifest": self.manifest,
+				"container_id": self.container_id
+			}
+		)
+		if len(exist_get_pass) > 0:
+			self.db_set("get_pass", exist_get_pass[0].name)
+			self.reload()
+			return
+
+		inspection_location = frappe.db.get_value(
 			"In Yard Container Booking", 
 			{"container_inspection": self.container_inspection},
-			"name"
+			"inspection_location"
 		)
 		
 		getpass = frappe.new_doc("Gate Pass")
 		getpass.update({
-			"booking_id": booking_id,
-			"service_order": self.name,
+			"manifest": self.manifest,
 			"c_and_f_company": self.c_and_f_company,
 			"clearing_agent": self.clearing_agent,
 			"consignee": self.consignee,
 			"container_id": self.container_id,
 			"container_no": self.container_no,
+			"inspection_location": inspection_location,
 		})
 		getpass.save(ignore_permissions=True)
 		getpass.reload()

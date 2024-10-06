@@ -7,26 +7,25 @@
  "engine": "InnoDB",
  "field_order": [
   "gate_pass_details_section",
-  "booking_id",
+  "manifest",
   "container_id",
   "container_no",
   "inspection_location",
   "column_break_phfzs",
-  "service_order",
   "c_and_f_company",
   "clearing_agent",
   "consignee",
   "column_break_1",
   "quantity",
   "goods_description",
-  "final_carry_out_section",
-  "dues_cleared",
-  "payment_verified",
-  "document_clearance_verified",
   "required_documents_section",
   "invoice_clearance",
   "permits",
   "relevant_authority_approvals",
+  "final_carry_out_section",
+  "dues_cleared",
+  "payment_verified",
+  "document_clearance_verified",
   "security_and_verification_section",
   "id_verification",
   "id_type",
@@ -43,14 +42,6 @@
    "label": "Gate Pass Details"
   },
   {
-   "fieldname": "booking_id",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Booking ID",
-   "options": "In Yard Container Booking",
-   "reqd": 1
-  },
-  {
    "fieldname": "goods_description",
    "fieldtype": "Small Text",
    "label": "Goods Description"
@@ -65,17 +56,15 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "booking_id.inspection_location",
-   "fetch_if_empty": 1,
    "fieldname": "inspection_location",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "label": "Inspection Location",
-   "options": "ICD\nPort",
+   "options": "Container Location",
    "read_only": 1
   },
   {
    "fieldname": "final_carry_out_section",
-   "fieldtype": "Section Break",
+   "fieldtype": "Column Break",
    "label": "Final Carry Out"
   },
   {
@@ -99,21 +88,21 @@
   {
    "fieldname": "required_documents_section",
    "fieldtype": "Section Break",
-   "label": "Required Documents"
+   "label": "Required Documents & Final Carry Out"
   },
   {
    "fieldname": "invoice_clearance",
-   "fieldtype": "Data",
+   "fieldtype": "Attach",
    "label": "Invoice Clearance"
   },
   {
    "fieldname": "permits",
-   "fieldtype": "Data",
+   "fieldtype": "Attach",
    "label": "Permits"
   },
   {
    "fieldname": "relevant_authority_approvals",
-   "fieldtype": "Data",
+   "fieldtype": "Attach",
    "label": "Relevant Authority Approvals"
   },
   {
@@ -186,14 +175,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "service_order",
-   "fieldtype": "Link",
-   "label": "Service Order",
-   "options": "Service Order",
-   "reqd": 1
-  },
-  {
-   "fetch_from": "service_order.clearing_agent",
    "fieldname": "clearing_agent",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -203,18 +184,24 @@
    "reqd": 1
   },
   {
-   "fetch_from": "service_order.consignee",
    "fieldname": "consignee",
    "fieldtype": "Link",
    "label": "Consignee",
    "options": "Consignee"
   },
   {
-   "fetch_from": "booking_id.container_no",
    "fieldname": "container_id",
    "fieldtype": "Link",
    "label": "Container ID",
    "options": "Container",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "manifest",
+   "fieldtype": "Link",
+   "label": "Manifest",
+   "options": "Manifest",
    "read_only": 1
   }
  ],
@@ -222,7 +209,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-06 18:04:40.516248",
+ "modified": "2024-10-06 23:33:35.224819",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Gate Pass",

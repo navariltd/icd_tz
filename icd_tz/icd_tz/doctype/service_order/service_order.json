@@ -8,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_9rl7",
+  "section_break_pd2vw",
   "container_inspection",
   "c_and_f_company",
   "column_break_ifoto",
@@ -49,12 +50,11 @@
    "label": "Details"
   },
   {
-   "allow_in_quick_entry": 1,
    "fieldname": "container_inspection",
    "fieldtype": "Link",
    "label": "Container Inspection",
    "options": "Container Inspection",
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fetch_from": "container_inspection.c_and_f_company",
@@ -62,8 +62,7 @@
    "fieldtype": "Link",
    "label": "C & F Company",
    "options": "Clearing and Forwarding Company",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "column_break_ifoto",
@@ -246,21 +245,25 @@
    "options": "Manifest"
   },
   {
-   "fetch_from": "container_inspection.container_id",
+   "allow_in_quick_entry": 1,
    "fieldname": "container_id",
    "fieldtype": "Link",
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Container ID",
    "options": "Container",
-   "read_only": 1,
    "reqd": 1
+  },
+  {
+   "depends_on": "eval: !doc.__islocal",
+   "fieldname": "section_break_pd2vw",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-06 18:18:05.844518",
+ "modified": "2024-10-07 00:09:43.366189",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Service Order",
