@@ -5,7 +5,7 @@ from frappe.utils import nowdate
 def make_sales_order(doc_type, doc_name):
     doc = frappe.get_doc(doc_type, doc_name)
     settings_doc = frappe.get_doc("ICD TZ Settings")
-    container_doc = frappe.get_doc("Container", doc.get("container_no"))
+    container_doc = frappe.get_doc("Container", doc.get("container_id"))
 
     items = []
     single_days, double_days = get_container_days_to_be_billed(doc, container_doc, settings_doc)

@@ -12,33 +12,38 @@ def update_sales_references(doc):
     if not order_doc.container_no:
         return
     
-    icd_settings = frappe.get_doc("ICD TZ Settings")
+    settings_doc = frappe.get_doc("ICD TZ Settings")
 
     invoice_id = doc.name
     if doc.is_return:
         invoice_id = None
 
     for item in doc.items:
-        if item.item_code == icd_settings.transport_item:
+        if item.item_code == settings_doc.transport_item:
             update_container_rec(doc.container_no, invoice_id, "t_sales_invoice")
         
-        elif item.item_code == icd_settings.shore_handling_item:
+        elif item.item_code == settings_doc.shore_handling_item:
             update_container_rec(doc.container_no, invoice_id, "s_sales_invoice")
         
-        elif item.item_code == icd_settings.in_yard_booking_item:
+        elif item.item_code == settings_doc.in_yard_booking_item:
             update_booking_refs(order_doc.container_inspection, invoice_id, "s_sales_invoice")
         
-        elif item.item_code == icd_settings.custom_verification_item:
+        elif item.item_code == settings_doc.custom_verification_item:
             update_booking_refs(order_doc.container_inspection, invoice_id, "cv_sales_invoice")
         
-        elif item.item_code == icd_settings.removal_item:
-            update_container_refs(doc.container_id, invoice_id, "r_sales_invoice")
+        elif item.item_code == settings_doc.removal_item:
+            update_container_refs(order_doc.container_id, invoice_id, "r_sales_invoice")
         
-        elif item.item_code == icd_settings.corridor_levy_item:
-            update_container_refs(doc.container_id, invoice_id, "c_sales_invoice")
+        elif item.item_code == settings_doc.corridor_levy_item:
+            update_container_refs(order_doc.container_id, invoice_id, "c_sales_invoice")
         
-        elif item.item_code == icd_settings.container_storage_item:
-            update_storage_date_refs(doc.container_id, invoice_id, item.container_child_refs)
+        elif item.item_code in [
+            settings_doc.get("storage_item_single_20ft"),
+            settings_doc.get("storage_item_single_40ft"),
+            settings_doc.get("storage_item_double_20ft"),
+            settings_doc.get("storage_item_double_40ft")
+        ]:
+            update_storage_date_refs(order_doc.container_id, invoice_id, item.container_child_refs)
         
         else:
             update_container_insp(order_doc.container_inspection, item.item_code, invoice_id)
@@ -46,10 +51,10 @@ def update_sales_references(doc):
     order_doc.db_set("sales_invoice", invoice_id)
 
 
-def update_container_rec(container_no, invoice_id, field):
+def update_container_rec(container_id, invoice_id, field):
     container_reception = frappe.db.get_value(
         "Container",
-        container_no,
+        container_id,
         "container_reception"
     )
 
