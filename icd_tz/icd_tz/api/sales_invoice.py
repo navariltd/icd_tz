@@ -22,7 +22,12 @@ def update_sales_references(doc):
         if item.item_code == settings_doc.transport_item:
             update_container_rec(doc.container_no, invoice_id, "t_sales_invoice")
         
-        elif item.item_code == settings_doc.shore_handling_item:
+        elif item.item_code in [
+            settings_doc.get("shore_handling_item_t1_20ft"),
+            settings_doc.get("shore_handling_item_t1_40ft"),
+            settings_doc.get("shore_handling_item_t2_20ft"),
+            settings_doc.get("shore_handling_item_t2_40ft")
+        ]:
             update_container_rec(doc.container_no, invoice_id, "s_sales_invoice")
         
         elif item.item_code == settings_doc.in_yard_booking_item:

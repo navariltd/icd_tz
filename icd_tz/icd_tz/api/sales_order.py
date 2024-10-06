@@ -52,7 +52,7 @@ def make_sales_order(doc_type, doc_name):
     frappe.msgprint(f"Sales Order <b>{sales_order.name}</b> created successfully", alert=True)
     return sales_order.name
 
-def get_container_days_to_be_billed(service_doc, doc, container_doc, settings_doc):
+def get_container_days_to_be_billed(service_doc, container_doc, settings_doc):
     single_days = []
     double_days = []
     no_of_single_days = 0
@@ -74,7 +74,7 @@ def get_container_days_to_be_billed(service_doc, doc, container_doc, settings_do
     for row in container_doc.container_dates:
         if (
             row.is_billable == 1 and
-            doc.has_single_charge == 1 and
+            container_doc.has_single_charge == 1 and
             single_charge_count < no_of_single_days
         ):
             single_days.append(row)
@@ -82,7 +82,7 @@ def get_container_days_to_be_billed(service_doc, doc, container_doc, settings_do
         
         elif (
             row.is_billable == 1 and
-            doc.is_double_charge == 1 and
+            container_doc.hass_double_charge == 1 and
             single_charge_count >= no_of_single_days and
             double_charge_count < no_of_double_days
         ):
