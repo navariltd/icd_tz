@@ -8,13 +8,15 @@ from icd_tz.icd_tz.api.utils import validate_cf_agent, validate_draft_doc
 
 class GatePass(Document):
 	def validate(self):
-		validate_draft_doc("Service Order", self.service_order)
 		validate_cf_agent(self)
 	
 	def before_submit(self):
 		self.validate_container_charges()
 		self.validate_in_yard_booking()
 		self.validate_reception_charges()
+	
+	def on_submit(self):
+		self.update_container_status()
 
 	def validate_container_charges(self):
 		"""Validate the storage payments for the Gate Pass"""
@@ -88,3 +90,14 @@ class GatePass(Document):
 			frappe.throw(
 				"Payment for Shore Handling charge were not done. Please clear the payment before issuing the Gate Pass."
 			)
+
+	def update_container_status(self):
+		if not self.container_id:
+			return
+		
+		frappe.db.set_value(
+			"Container",
+			self.container_id,
+			"customs_status",
+			"Cleared"
+		)
