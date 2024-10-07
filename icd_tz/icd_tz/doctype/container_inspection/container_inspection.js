@@ -28,7 +28,7 @@ frappe.ui.form.on('Container Inspection', {
 				method: "get_custom_verification_services",
 				doc: frm.doc,
 				args: {
-					self: frm.doc,
+					// self: frm.doc,
 					caller: "Front End"
 				},
 				callback: (r) => {
@@ -54,12 +54,6 @@ frappe.ui.form.on('Container Inspection', {
 					"container_no": frm.doc.container_no,
 					"container_location": frm.doc.container_location,
 				}, doc => {
-					if (frm.doc.services.length > 0) {
-						frm.doc.services.forEach((row) => {
-							let new_row = frappe.model.add_child(doc, "services");
-							new_row.service = row.service;
-						});
-					}
 				});
 			}).addClass('btn-primary');
 		}

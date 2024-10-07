@@ -30,7 +30,7 @@ class GatePass(Document):
 
 		if container_info.days_to_be_billed > 0:
 			frappe.throw(
-				f"There are <b>{days_to_be_billed}</b> days to be billed for this container.<br>\
+				f"There are <b>{container_info.days_to_be_billed}</b> days to be billed for this container.<br>\
 				Please clear storage payment dues before issuing the Gate Pass."
 			)
 		

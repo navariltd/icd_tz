@@ -237,7 +237,8 @@
    "reqd": 1
   },
   {
-   "fetch_from": "container_no.consignee",
+   "depends_on": "eval: doc.consignee",
+   "fetch_from": "container_id.consignee",
    "fieldname": "consignee",
    "fieldtype": "Link",
    "label": "Consignee",
@@ -286,7 +287,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-06 22:26:36.408069",
+ "modified": "2024-10-07 16:26:33.646693",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "In Yard Container Booking",

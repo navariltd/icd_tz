@@ -27,11 +27,12 @@
   "payment_verified",
   "document_clearance_verified",
   "security_and_verification_section",
-  "id_verification",
   "id_type",
   "id_number",
+  "column_break_gz2kv",
+  "id_verification",
   "security_check_completed",
-  "section_break_wivrp",
+  "column_break_wiqfk",
   "amended_from",
   "naming_series"
  ],
@@ -63,6 +64,7 @@
    "read_only": 1
   },
   {
+   "bold": 1,
    "fieldname": "final_carry_out_section",
    "fieldtype": "Column Break",
    "label": "Final Carry Out"
@@ -88,7 +90,7 @@
   {
    "fieldname": "required_documents_section",
    "fieldtype": "Section Break",
-   "label": "Required Documents & Final Carry Out"
+   "label": "Documents & Final Carry Out"
   },
   {
    "fieldname": "invoice_clearance",
@@ -171,10 +173,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "section_break_wivrp",
-   "fieldtype": "Section Break"
-  },
-  {
    "fieldname": "clearing_agent",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -203,13 +201,21 @@
    "label": "Manifest",
    "options": "Manifest",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_gz2kv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_wiqfk",
+   "fieldtype": "Column Break"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-06 23:33:35.224819",
+ "modified": "2024-10-07 16:51:55.548648",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Gate Pass",

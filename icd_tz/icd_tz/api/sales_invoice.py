@@ -54,8 +54,7 @@ def update_sales_references(doc):
         ]:
             update_storage_date_refs(order_doc.container_id, invoice_id, item.container_child_refs)
         
-        else:
-            update_container_insp(order_doc.container_inspection, item.item_code, invoice_id)
+        update_container_insp(order_doc.container_inspection, item.item_code, invoice_id)
     
     order_doc.db_set("sales_invoice", invoice_id)
 
@@ -85,7 +84,9 @@ def update_booking_refs(container_inspection, invoice_id, field):
 
 def update_container_refs(container_id, invoice_id, field):
     container_doc = frappe.get_doc("Container", container_id)
-    container_doc[field] = invoice_id
+    container_doc.update({
+        field: invoice_id
+    })
     container_doc.save(ignore_permissions=True)
 
 def update_storage_date_refs(container_id, invoice_id, child_refs):

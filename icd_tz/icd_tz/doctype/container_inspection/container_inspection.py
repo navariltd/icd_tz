@@ -36,10 +36,10 @@ class ContainerInspection(Document):
         )
     
     def update_container_doc(self):
-        if not self.container_no:
+        if not self.container_id:
             return
         
-        container_doc = frappe.get_doc("Container", self.container_no)
+        container_doc = frappe.get_doc("Container", self.container_id)
         container_doc.current_location = self.container_location
         container_doc.save(ignore_permissions=True)
 
@@ -58,9 +58,11 @@ class ContainerInspection(Document):
 		)
 
         if has_custom_verification_charges == "Yes":
-            service_names = [row.get("service") for row in self.get("services")]
             verification_item = frappe.db.get_single_value("ICD TZ Settings", "custom_verification_item")
+            if not verification_item:
+                frappe.throw("Custom Verification item is not set in ICD TZ Settings, Please set it to continue")
             
+            service_names = [row.get("service") for row in self.get("services")]
             if verification_item not in service_names:
                 if caller == "Front End":
                     return verification_item

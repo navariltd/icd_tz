@@ -6,6 +6,17 @@ from icd_tz.icd_tz.api.utils import validate_qty_storage_item
 def before_save(doc, method):
     validate_qty_storage_item(doc)
 
+def on_trash(doc, method):
+    unlink_sales_order(doc)
+
+def unlink_sales_order(doc):
+    if not doc.service_order:
+        return
+    
+    service_order = frappe.get_doc("Service Order", doc.service_order)
+    service_order.db_set("sales_order", None)
+    service_order.reload()
+
 @frappe.whitelist()
 def make_sales_order(doc_type, doc_name):
     doc = frappe.get_doc(doc_type, doc_name)
@@ -16,14 +27,14 @@ def make_sales_order(doc_type, doc_name):
     single_days, double_days = get_container_days_to_be_billed(doc, container_doc, settings_doc)
     for item in doc.get("services"):
         qty = 1
-        container_childs = []
+        container_childs = ""
         if item.get("service") in [settings_doc.get("storage_item_single_20ft"), settings_doc.get("storage_item_single_40ft")]:
             qty = len(single_days)
-            container_childs = single_days
+            container_childs = ",".join(single_days)
         
         elif item.get("service") in [settings_doc.get("storage_item_double_20ft"), settings_doc.get("storage_item_double_40ft")]:
             qty = len(double_days)
-            container_childs = double_days
+            container_childs = ",".join(double_days)
             
         row_item = {
             'item_code': item.get("service"),
@@ -91,7 +102,7 @@ def get_container_days_to_be_billed(service_doc, container_doc, settings_doc):
             single_charge_count >= no_of_single_days and
             double_charge_count < no_of_double_days
         ):
-            double_days.append(row.name)
+            double_days.append(row)
             double_charge_count += 1
     
     single_days = [row.name for row in single_days if not row.sales_invoice]

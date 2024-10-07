@@ -1,4 +1,5 @@
 import frappe
+from frappe.utils import cint, nowdate
 
 def validate_cf_agent(doc):
     """
@@ -29,8 +30,13 @@ def validate_qty_storage_item(doc):
             settings_doc.get("storage_item_double_20ft"),
             settings_doc.get("storage_item_double_40ft")
         ]:
-            if item.qty < len(item.container_child_refs):
-                container_child_refs = item.container_child_refs[:item.qty]
-                item.container_child_refs = container_child_refs
-            elif item.qty > len(item.container_child_refs):
-                frappe.throw(f"Quantity of the item: <b>{item.item_code}</b> cannot be greater than the number of container child references")
+            qty = cint(item.qty)
+            child_references = item.container_child_refs.split(",")
+
+            if qty < len(child_references):
+                container_child_refs = child_references[:qty]
+                item.container_child_refs = ",".join(container_child_refs)
+            
+            elif qty > len(child_references):
+                frappe.throw(f"Qty: {qty} of the item: <b>{item.item_code}</b> cannot be greater than {len(child_references)} of container references")
+        

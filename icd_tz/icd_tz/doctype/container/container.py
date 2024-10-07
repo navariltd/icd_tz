@@ -151,13 +151,13 @@ class Container(Document):
 				if row.is_billable == 0 and row.is_free == 1:
 					no_of_free_days += 1
 					
-				elif row.is_billable == 1 and row.is_free == 0:
+				if row.is_billable == 1 and row.is_free == 0:
 					no_of_billable_days += 1
 				
-				elif row.is_billable == 0 and row.is_free == 0:
+				if row.is_billable == 0 and row.is_free == 0:
 					no_of_writeoff_days += 1
 				
-				elif row.sales_invoice:
+				if row.sales_invoice:
 					no_of_billed_days += 1
 
 			
