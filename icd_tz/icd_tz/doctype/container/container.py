@@ -170,26 +170,37 @@ class Container(Document):
 
 
 def daily_update_date_container_stay():
-	containers = frappe.get_all("Container", filters={"customs_status": ["!=", "Cleared"]})
+    containers = frappe.get_all("Container", filters={"customs_status": ["!=", "Cleared"]})
 
-	for item in containers:
-		try:
-			doc = frappe.get_doc("Container", item.name)
-			container_dates_len = len(doc.container_dates)
-			if container_dates_len > 0:
-				last_row = doc.container_dates[container_dates_len - 1]
-				if getdate(last_row.date) != getdate(nowdate()):
-					new_row = doc.append("container_dates", {})
-					new_row.date = add_days(last_row.date, 1)
-			elif container_dates_len == 0:
-				new_row = doc.append("container_dates", {})
-				new_row.date = doc.arrival_date
-			
-			doc.save(ignore_permissions=True)
-		except Exception:
-			frappe.log_error(
-				str(f"<b>{item.name}</b> Daily Update Container Dates"),
-				frappe.get_traceback()
-			)
-			continue
+    for item in containers:
+        try:
+            doc = frappe.get_doc("Container", item.name)
+            current_date = getdate(nowdate())
+            container_dates_len = len(doc.container_dates)
+
+            if container_dates_len > 0:
+                last_row = doc.container_dates[container_dates_len - 1]
+                last_date = getdate(last_row.date)
+
+                while last_date < current_date:
+                    new_row = doc.append("container_dates", {})
+                    last_date = add_days(last_date, 1)
+                    new_row.date = last_date
+
+            elif container_dates_len == 0:
+                start_date = doc.arrival_date
+                if start_date:
+                    while getdate(start_date) <= current_date:
+                        new_row = doc.append("container_dates", {})
+                        new_row.date = start_date
+                        start_date = add_days(start_date, 1)
+
+            doc.save(ignore_permissions=True)
+
+        except Exception:
+            frappe.log_error(
+                str(f"<b>{item.name}</b> Daily Update Container Dates"),
+                frappe.get_traceback()
+            )
+            continue
 

@@ -42,12 +42,12 @@ class ContainerReception(Document):
 	def create_container(self):
 		"""Create a Container record from the Container Reception"""
 
-		arrival_date = None
-		if self.ship_dc_date and self.received_date:
-			if getdate(add_days(self.ship_dc_date, 2)) <= getdate(self.received_date):
-				arrival_date = self.received_date
-			else:
-				arrival_date = self.ship_dc_date
+		arrival_date = self.received_date
+		# if self.ship_dc_date and self.received_date:
+		# 	if getdate(add_days(self.ship_dc_date, 2)) <= getdate(self.received_date):
+		# 		arrival_date = self.received_date
+		# 	else:
+		# 		arrival_date = self.ship_dc_date
 
 
 		container = frappe.new_doc("Container")
