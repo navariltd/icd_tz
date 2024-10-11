@@ -8,33 +8,74 @@
  "field_order": [
   "gate_pass_details_section",
   "manifest",
+  "sline",
+  "vessel_name",
+  "voyage_no",
+  "arrival_date",
+  "column_break_t0ure",
+  "tpa_d_and_do_no",
+  "custom_ro_no",
+  "loading_order",
+  "transporter",
+  "column_break_5ivl7",
+  "d_and_do_date",
+  "ro_date",
+  "lo_date",
+  "truck",
+  "column_break_8s1tw",
+  "company",
+  "sunmitted_date",
+  "sunmitted_time",
+  "submitted_by",
+  "container_details_section",
   "container_id",
   "container_no",
-  "inspection_location",
+  "column_break_bw5go",
+  "size",
+  "bl_no",
+  "seal_no",
   "column_break_phfzs",
   "c_and_f_company",
-  "clearing_agent",
   "consignee",
   "column_break_1",
-  "quantity",
   "goods_description",
-  "required_documents_section",
-  "invoice_clearance",
-  "permits",
-  "relevant_authority_approvals",
-  "final_carry_out_section",
-  "dues_cleared",
-  "payment_verified",
-  "document_clearance_verified",
   "security_and_verification_section",
-  "id_type",
-  "id_number",
-  "column_break_gz2kv",
-  "id_verification",
-  "security_check_completed",
+  "signed_gate_pass",
   "column_break_wiqfk",
   "amended_from",
-  "naming_series"
+  "naming_series",
+  "section_break_du7gi",
+  "icd_officer_1",
+  "icd_officer_1_name",
+  "icd_officer_1_signature",
+  "column_break_gz2kv",
+  "icd_officer_2",
+  "icd_officer_2_name",
+  "icd_officer_2_signature",
+  "section_break_f0q0d",
+  "clearing_agent",
+  "agent_id",
+  "agent_email",
+  "agent_mob_no",
+  "agent_signature",
+  "column_break_nkmqu",
+  "tra_officer",
+  "tra_officer_id",
+  "tra_email",
+  "tra_mob_no",
+  "tra_officer_signature",
+  "section_break_crgow",
+  "driver",
+  "lisence",
+  "driver_email",
+  "driver_mob_no",
+  "driver_signature",
+  "column_break_vlg4m",
+  "security_officer",
+  "security_id",
+  "security_email",
+  "security_mob_no",
+  "security_signature"
  ],
  "fields": [
   {
@@ -48,92 +89,13 @@
    "label": "Goods Description"
   },
   {
-   "fieldname": "quantity",
-   "fieldtype": "Int",
-   "label": "Quantity"
-  },
-  {
    "fieldname": "column_break_1",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "inspection_location",
-   "fieldtype": "Link",
-   "label": "Inspection Location",
-   "options": "Container Location",
-   "read_only": 1
-  },
-  {
-   "bold": 1,
-   "fieldname": "final_carry_out_section",
-   "fieldtype": "Column Break",
-   "label": "Final Carry Out"
-  },
-  {
-   "default": "0",
-   "fieldname": "dues_cleared",
-   "fieldtype": "Check",
-   "label": "Dues Cleared"
-  },
-  {
-   "default": "0",
-   "fieldname": "payment_verified",
-   "fieldtype": "Check",
-   "label": "Payment Verified"
-  },
-  {
-   "default": "0",
-   "fieldname": "document_clearance_verified",
-   "fieldtype": "Check",
-   "label": "Document Clearance Verified"
-  },
-  {
-   "fieldname": "required_documents_section",
-   "fieldtype": "Section Break",
-   "label": "Documents & Final Carry Out"
-  },
-  {
-   "fieldname": "invoice_clearance",
-   "fieldtype": "Attach",
-   "label": "Invoice Clearance"
-  },
-  {
-   "fieldname": "permits",
-   "fieldtype": "Attach",
-   "label": "Permits"
-  },
-  {
-   "fieldname": "relevant_authority_approvals",
-   "fieldtype": "Attach",
-   "label": "Relevant Authority Approvals"
-  },
-  {
    "fieldname": "security_and_verification_section",
-   "fieldtype": "Section Break",
+   "fieldtype": "Tab Break",
    "label": "Security and Verification"
-  },
-  {
-   "default": "0",
-   "fieldname": "id_verification",
-   "fieldtype": "Check",
-   "label": "ID Verification"
-  },
-  {
-   "fieldname": "id_type",
-   "fieldtype": "Select",
-   "label": "ID Type",
-   "options": "\nNational ID\nDriver's License\nPassport"
-  },
-  {
-   "fieldname": "id_number",
-   "fieldtype": "Data",
-   "label": "ID Number"
-  },
-  {
-   "default": "0",
-   "fieldname": "security_check_completed",
-   "fieldtype": "Check",
-   "label": "Security Check Completed"
   },
   {
    "fieldname": "amended_from",
@@ -209,13 +171,327 @@
   {
    "fieldname": "column_break_wiqfk",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sline",
+   "fieldtype": "Data",
+   "label": "Sline"
+  },
+  {
+   "fetch_from": "manifest.vessel_name",
+   "fieldname": "vessel_name",
+   "fieldtype": "Data",
+   "label": "Vessel Name"
+  },
+  {
+   "fetch_from": "manifest.voyage_no",
+   "fieldname": "voyage_no",
+   "fieldtype": "Data",
+   "label": "Voyage No"
+  },
+  {
+   "fetch_from": "manifest.arrival_date",
+   "fieldname": "arrival_date",
+   "fieldtype": "Date",
+   "label": "Arrival Date"
+  },
+  {
+   "fieldname": "column_break_t0ure",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tpa_d_and_do_no",
+   "fieldtype": "Data",
+   "label": "TPA D and DO No"
+  },
+  {
+   "fieldname": "custom_ro_no",
+   "fieldtype": "Data",
+   "label": "Custom RO No"
+  },
+  {
+   "fieldname": "loading_order",
+   "fieldtype": "Data",
+   "label": "Loading Order"
+  },
+  {
+   "fieldname": "column_break_5ivl7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "d_and_do_date",
+   "fieldtype": "Date",
+   "label": "D and DO Date"
+  },
+  {
+   "fieldname": "ro_date",
+   "fieldtype": "Date",
+   "label": "RO Date"
+  },
+  {
+   "fieldname": "lo_date",
+   "fieldtype": "Date",
+   "label": "LO Date"
+  },
+  {
+   "fieldname": "column_break_8s1tw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sunmitted_date",
+   "fieldtype": "Date",
+   "label": "Sunmitted Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sunmitted_time",
+   "fieldtype": "Time",
+   "label": "Sunmitted Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "submitted_by",
+   "fieldtype": "Data",
+   "label": "Submitted By",
+   "read_only": 1
+  },
+  {
+   "fieldname": "container_details_section",
+   "fieldtype": "Section Break",
+   "label": "Container Details"
+  },
+  {
+   "fieldname": "column_break_bw5go",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "container_id.size",
+   "fieldname": "size",
+   "fieldtype": "Data",
+   "label": "Size"
+  },
+  {
+   "fetch_from": "container_id.m_bl_no",
+   "fieldname": "bl_no",
+   "fieldtype": "Data",
+   "label": "BL No"
+  },
+  {
+   "fetch_from": "container_id.seal_no_1",
+   "fieldname": "seal_no",
+   "fieldtype": "Data",
+   "label": "Seal No"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_du7gi",
+   "fieldtype": "Section Break",
+   "label": "Internal Officers"
+  },
+  {
+   "fieldname": "icd_officer_1",
+   "fieldtype": "Link",
+   "label": "ICD Officer",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "icd_officer_1.employee_name",
+   "fieldname": "icd_officer_1_name",
+   "fieldtype": "Data",
+   "label": "ICD Officer Name"
+  },
+  {
+   "fieldname": "icd_officer_1_signature",
+   "fieldtype": "Signature",
+   "label": "Signature"
+  },
+  {
+   "fieldname": "icd_officer_2",
+   "fieldtype": "Link",
+   "label": "ICD Officer",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "icd_officer_2.employee_name",
+   "fieldname": "icd_officer_2_name",
+   "fieldtype": "Data",
+   "label": "ICD Officer Name"
+  },
+  {
+   "fieldname": "icd_officer_2_signature",
+   "fieldtype": "Signature",
+   "label": "Signature"
+  },
+  {
+   "bold": 1,
+   "fieldname": "signed_gate_pass",
+   "fieldtype": "Attach",
+   "label": "Signed Gate Pass"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_f0q0d",
+   "fieldtype": "Section Break",
+   "label": "TRA & Agent Officer"
+  },
+  {
+   "fetch_from": "clearing_agent.agent_id",
+   "fetch_if_empty": 1,
+   "fieldname": "agent_id",
+   "fieldtype": "Data",
+   "label": "Agent ID"
+  },
+  {
+   "fetch_from": "clearing_agent.email",
+   "fetch_if_empty": 1,
+   "fieldname": "agent_email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fetch_from": "clearing_agent.phone",
+   "fetch_if_empty": 1,
+   "fieldname": "agent_mob_no",
+   "fieldtype": "Data",
+   "label": "Mobile No",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "agent_signature",
+   "fieldtype": "Signature",
+   "label": "SIgnature"
+  },
+  {
+   "fieldname": "column_break_nkmqu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tra_officer",
+   "fieldtype": "Data",
+   "label": "TRA Officer Name"
+  },
+  {
+   "fieldname": "tra_email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "tra_mob_no",
+   "fieldtype": "Data",
+   "label": "Mobile No",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "tra_officer_signature",
+   "fieldtype": "Signature",
+   "label": "Signature"
+  },
+  {
+   "fieldname": "driver",
+   "fieldtype": "Link",
+   "label": "Driver",
+   "options": "Driver"
+  },
+  {
+   "fetch_from": "driver.license_number",
+   "fetch_if_empty": 1,
+   "fieldname": "lisence",
+   "fieldtype": "Data",
+   "label": "LIsence"
+  },
+  {
+   "fieldname": "driver_email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fetch_from": "driver.license_number",
+   "fetch_if_empty": 1,
+   "fieldname": "driver_mob_no",
+   "fieldtype": "Data",
+   "label": "Mobile No",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "driver_signature",
+   "fieldtype": "Signature",
+   "label": "Signature"
+  },
+  {
+   "fieldname": "column_break_vlg4m",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "security_officer",
+   "fieldtype": "Link",
+   "label": "Security officer",
+   "options": "Security officer"
+  },
+  {
+   "fetch_from": "security_officer.email",
+   "fetch_if_empty": 1,
+   "fieldname": "security_email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fetch_from": "security_officer.phone_no",
+   "fetch_if_empty": 1,
+   "fieldname": "security_mob_no",
+   "fieldtype": "Data",
+   "label": "Mobile No",
+   "options": "Phone"
+  },
+  {
+   "fieldname": "security_signature",
+   "fieldtype": "Signature",
+   "label": "Signature"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_crgow",
+   "fieldtype": "Section Break",
+   "label": "Driver & Security Officer"
+  },
+  {
+   "fieldname": "transporter",
+   "fieldtype": "Link",
+   "label": "Transporter",
+   "options": "Transporter"
+  },
+  {
+   "fieldname": "truck",
+   "fieldtype": "Link",
+   "label": "Truck",
+   "options": "Vehicle"
+  },
+  {
+   "fetch_from": "manifest.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "security_id",
+   "fieldtype": "Data",
+   "label": "Security ID"
+  },
+  {
+   "fieldname": "tra_officer_id",
+   "fieldtype": "Data",
+   "label": "TRA Officer ID"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-07 16:51:55.548648",
+ "modified": "2024-10-11 15:34:31.611158",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Gate Pass",

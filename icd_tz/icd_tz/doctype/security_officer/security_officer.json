@@ -9,8 +9,11 @@
  "engine": "InnoDB",
  "field_order": [
   "full_name",
+  "employee_id",
   "column_break_xddg",
-  "employee_id"
+  "disabled",
+  "email",
+  "phone_no"
  ],
  "fields": [
   {
@@ -37,11 +40,29 @@
    "label": "Full Name",
    "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "options": "Email"
+  },
+  {
+   "fieldname": "phone_no",
+   "fieldtype": "Data",
+   "label": "Phone No",
+   "options": "Phone"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-12 14:26:37.542439",
+ "modified": "2024-10-11 15:28:49.330744",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Security officer",
