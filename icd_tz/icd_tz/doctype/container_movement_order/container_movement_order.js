@@ -22,6 +22,20 @@ frappe.ui.form.on("Container Movement Order", {
                 }
             };
         });
+        frm.set_query("driver", () => {
+            return {
+                filters: {
+                    "status": "Active"
+                }
+            }
+        });
+        frm.set_query("transporter", () => {
+            return {
+                filters: {
+                    "disabled": 0
+                }
+            }
+        });
     },
     manifest: (frm) => {
         if (frm.doc.manifest) {

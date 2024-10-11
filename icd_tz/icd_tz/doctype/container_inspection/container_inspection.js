@@ -18,6 +18,20 @@ frappe.ui.form.on('Container Inspection', {
 				}
 			};
 		});
+        frm.set_query("driver_name", () => {
+            return {
+                filters: {
+                    "status": "Active"
+                }
+            }
+        });
+        frm.set_query("in_yard_container_booking", () => {
+            return {
+                filters: {
+                    "docstatus": 1
+                }
+            }
+        });
 	},
 	in_yard_container_booking: (frm) => {
 		frm.trigger("get_container_custom_verification");

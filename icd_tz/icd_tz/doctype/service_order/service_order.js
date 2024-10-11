@@ -17,6 +17,13 @@ frappe.ui.form.on('Service Order', {
 				}
 			};
 		});
+		frm.set_query("container_id", () => {
+			return {
+				filters: {
+					"status": "In Yard",
+				}
+			};
+		});
 	},
 	make_sales_order: (frm) => {
 		if (!frm.doc.sales_order && frm.doc.docstatus == 1) {

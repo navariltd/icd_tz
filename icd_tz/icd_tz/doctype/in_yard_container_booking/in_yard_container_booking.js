@@ -26,7 +26,14 @@ frappe.ui.form.on("In Yard Container Booking", {
 			return {
 				filters: {
 					"disabled": 0,
-					"c_and_f_company": frm.doc.c_and_f_company
+					"c_and_f_company": frm.doc.c_and_f_company || ""
+				}
+			};
+		});
+		frm.set_query("container_id", () => {
+			return {
+				filters: {
+					"status": "In Yard",
 				}
 			};
 		});

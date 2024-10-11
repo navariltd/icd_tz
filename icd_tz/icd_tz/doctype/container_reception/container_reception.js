@@ -24,6 +24,20 @@ frappe.ui.form.on('Container Reception', {
                 }
             };
         });
+        frm.set_query("cleck", () => {
+            return {
+                filters: {
+                    "status": "Active"
+                }
+            }
+        });
+        frm.set_query("security_officer", () => {
+            return {
+                filters: {
+                    "disabled": 0
+                }
+            }
+        });
     },
     container_no: (frm) => {
         if (frm.doc.manifest && frm.doc.container_no) {
