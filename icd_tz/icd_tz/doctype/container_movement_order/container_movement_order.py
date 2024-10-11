@@ -17,6 +17,9 @@ class ContainerMovementOrder(Document):
 		if self.container_no:
 			self.validate_container_is_in_manifest()
 			self.validate_duplicate_cmo_per_container_number()
+	
+	def before_submit(self):
+		self.validate_signature()
 
 	def on_submit(self):
 		self.update_container_has_order()
@@ -59,7 +62,15 @@ class ContainerMovementOrder(Document):
 				{"parent": self.manifest, "container_no": self.container_no},
 				"has_order", 1
 			)
-
+	
+	def validate_signature(self):
+		settings_doc = frappe.get_doc("ICD Settings")
+		if settings_doc.enable_signature_validation == 1:
+			if (
+				not self.driver_signature or
+				not self.gate_no_signature
+			):
+				frappe.throw("Please ensure all signatures are provided before submitting this document.")
 
 @frappe.whitelist()
 def get_manifest_details(manifest):
