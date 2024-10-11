@@ -19,11 +19,10 @@
   "container_no",
   "cargo_description",
   "inspection_scheduling_section",
+  "inspection_location",
+  "column_break_qyov",
   "inspection_date",
   "inspection_time",
-  "column_break_qyov",
-  "inspection_location",
-  "verification_area",
   "handling_and_charges_section",
   "has_stripping_charges",
   "s_sales_invoice",
@@ -69,6 +68,7 @@
    "reqd": 1
   },
   {
+   "fetch_from": "container_id.cargo_description",
    "fieldname": "cargo_description",
    "fieldtype": "Small Text",
    "label": "Cargo Description"
@@ -102,12 +102,6 @@
    "fieldtype": "Time",
    "label": "Inspection Time",
    "reqd": 1
-  },
-  {
-   "fieldname": "verification_area",
-   "fieldtype": "Select",
-   "label": "Verification Area",
-   "options": "Area A\nArea B\nArea C"
   },
   {
    "fieldname": "handling_and_charges_section",
@@ -287,7 +281,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-07 16:26:33.646693",
+ "modified": "2024-10-11 16:30:04.710337",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "In Yard Container Booking",

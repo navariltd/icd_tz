@@ -58,11 +58,11 @@
   },
   {
    "fetch_from": "container_inspection.c_and_f_company",
+   "fetch_if_empty": 1,
    "fieldname": "c_and_f_company",
    "fieldtype": "Link",
    "label": "C & F Company",
-   "options": "Clearing and Forwarding Company",
-   "read_only": 1
+   "options": "Clearing and Forwarding Company"
   },
   {
    "fieldname": "column_break_ifoto",
@@ -70,11 +70,11 @@
   },
   {
    "fetch_from": "container_inspection.clearing_agent",
+   "fetch_if_empty": 1,
    "fieldname": "clearing_agent",
    "fieldtype": "Link",
    "label": "Clearing Agent",
-   "options": "Clearing Agent",
-   "read_only": 1
+   "options": "Clearing Agent"
   },
   {
    "fieldname": "column_break_bu4nq",
@@ -272,7 +272,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-07 19:24:15.378420",
+ "modified": "2024-10-11 16:33:50.907195",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Service Order",

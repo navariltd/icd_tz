@@ -140,6 +140,7 @@ class Manifest(Document):
             masterbi.oil_type = row[5]
             masterbi.port_of_loading = row[6]
             masterbi.number_of_containers = row[7]
+            masterbi.cargo_description = row[8]
             masterbi.number_of_package = row[9]
             masterbi.package_unit = row[10]  # Ensure this field is of type 'Text' in Frappe
             masterbi.gross_weight = row[11]

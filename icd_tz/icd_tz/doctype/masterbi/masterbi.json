@@ -15,6 +15,7 @@
   "oil_type",
   "port_of_loading",
   "number_of_containers",
+  "cargo_description",
   "number_of_package",
   "package_unit",
   "gross_weight",
@@ -256,12 +257,17 @@
    "fieldname": "number_of_containers",
    "fieldtype": "Data",
    "label": "Number of Containers"
+  },
+  {
+   "fieldname": "cargo_description",
+   "fieldtype": "Small Text",
+   "label": "Cargo Description"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-09-25 11:50:07.024317",
+ "modified": "2024-10-11 16:19:45.746010",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "MasterBI",

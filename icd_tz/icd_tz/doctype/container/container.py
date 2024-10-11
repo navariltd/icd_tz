@@ -50,7 +50,7 @@ class Container(Document):
 		container_info = frappe.db.get_value(
 			"Containers Detail", 
 			{"parent": container_reception.manifest, "container_no": self.container_no}, 
-			["type_of_container", "m_bl_no", "freight_indicator", "no_of_packages", "package_unit", "volume_unit", "weight_unit"],
+			["type_of_container", "m_bl_no", "freight_indicator", "no_of_packages", "package_unit", "volume_unit", "weight_unit", "cargo_description"],
 			as_dict=True
 		)
 
@@ -71,6 +71,8 @@ class Container(Document):
 				self.volume_unit = container_info.volume_unit
 			if not self.weight_unit:
 				self.weight_unit = container_info.weight_unit
+			if not self.cargo_description:
+				self.cargo_description = container_info.cargo_description
 		
 		if container_info.m_bl_no:
 			masterbi_info = frappe.db.get_value(
