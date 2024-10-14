@@ -41,6 +41,11 @@ class ContainerInspection(Document):
         
         container_doc = frappe.get_doc("Container", self.container_id)
         container_doc.current_location = self.container_location
+        
+        for row in self.services:
+            if row.status_changed_to and row.status_changed_to != container_doc.freight_indicator:
+                container_doc.freight_indicator = row.status_changed_to
+        
         container_doc.save(ignore_permissions=True)
 
     @frappe.whitelist()
