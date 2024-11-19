@@ -24,9 +24,6 @@ class Manifest(Document):
     def before_submit(self):
         if not self.port:
             frappe.throw("Please fill the <b>Port</b> before submitting.")
-        
-        if not self.discharged_at:
-            frappe.throw("Please Select the <b>Discharged At</b> before submitting.")
 
     def on_submit(self):
         self.create_consignees()
