@@ -64,7 +64,7 @@ class ContainerMovementOrder(Document):
 			)
 	
 	def validate_signature(self):
-		settings_doc = frappe.get_doc("ICD Settings")
+		settings_doc = frappe.get_doc("ICD TZ Settings")
 		if settings_doc.enable_signature_validation == 1:
 			if (
 				not self.driver_signature or
@@ -99,9 +99,23 @@ def get_manifest_details(manifest):
 def get_container_size_from_manifest(manifest, container_no):
 	"""Get the size of the container from the manifest"""
 	
-	size = frappe.db.get_value(
+	container_info = frappe.db.get_value(
 		"Containers Detail",
 		{"parent": manifest, "container_no": container_no},
-		"container_size"
+		["container_size", "m_bl_no"],
+		as_dict=True
 	)
-	return size
+
+	if container_info.m_bl_no:
+		cargo_classification = frappe.db.get_value(
+			"MasterBI",
+			{"parent": manifest, "m_bl_no": container_info.m_bl_no},
+			"cargo_classification",
+		)
+
+		if cargo_classification == "IM":
+			container_info["cargo_classification"] = "Local"
+		elif cargo_classification == "TR":
+			container_info["cargo_classification"] = "Transit"
+
+	return container_info

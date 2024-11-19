@@ -18,17 +18,23 @@
   "company",
   "shipment_details_section",
   "ship",
+  "port",
   "voyage_no",
   "column_break_sjzfz",
-  "port",
-  "column_break_bvub",
   "movement_date",
   "received_date",
+  "cargo_classification",
+  "column_break_bvub",
+  "icd_time_in",
+  "port_time_out",
   "transport_details_section",
   "transporter",
   "column_break_xoba",
   "driver",
-  "truck_name",
+  "driver_license",
+  "column_break_aiey3",
+  "truck",
+  "trailer",
   "signatures_and_time_tab",
   "driver_signature",
   "driver_time",
@@ -53,7 +59,8 @@
    "fetch_from": "manifest.voyage_no",
    "fieldname": "voyage_no",
    "fieldtype": "Data",
-   "label": "Voyage No"
+   "label": "Voyage No",
+   "read_only": 1
   },
   {
    "fetch_from": "manifest.arrival_date",
@@ -65,8 +72,11 @@
   {
    "fetch_from": "manifest.port",
    "fieldname": "port",
-   "fieldtype": "Data",
-   "label": "Port"
+   "fieldtype": "Select",
+   "label": "Port",
+   "options": "\nDP WORLD\nTEAGTL",
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "movement_date",
@@ -103,16 +113,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "truck_name",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Truck Name",
-   "options": "Vehicle",
-   "reqd": 1
-  },
-  {
    "depends_on": "eval: doc.container_no",
    "fieldname": "size",
    "fieldtype": "Select",
@@ -132,7 +132,8 @@
   {
    "fieldname": "driver_time",
    "fieldtype": "Time",
-   "label": "Driver Time"
+   "label": "Driver Time",
+   "read_only": 1
   },
   {
    "fieldname": "gate_no_signature",
@@ -142,7 +143,8 @@
   {
    "fieldname": "gate_no_time",
    "fieldtype": "Time",
-   "label": "Gate No Time"
+   "label": "Gate No Time",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_bvub",
@@ -185,7 +187,8 @@
    "in_standard_filter": 1,
    "label": "Manifest",
    "options": "Manifest",
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fieldname": "column_break_tnol5",
@@ -210,23 +213,77 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Container No",
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fetch_from": "manifest.vessel_name",
    "fieldname": "ship",
    "fieldtype": "Data",
-   "label": "Ship"
+   "label": "Ship",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_sjzfz",
    "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "driver.license_number",
+   "fieldname": "driver_license",
+   "fieldtype": "Data",
+   "label": "Driver License",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_aiey3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "truck",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Truck",
+   "options": "Vehicle",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "trailer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Trailer",
+   "options": "Vehicle",
+   "search_index": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "icd_time_in",
+   "fieldtype": "Time",
+   "label": "ICD Time In",
+   "reqd": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "port_time_out",
+   "fieldtype": "Time",
+   "label": "Port Time Out",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cargo_classification",
+   "fieldtype": "Data",
+   "label": "Cargo Classification",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-11 16:39:37.926717",
+ "modified": "2024-11-19 15:16:05.993275",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Movement Order",
@@ -246,7 +303,7 @@
    "write": 1
   }
  ],
- "search_fields": "manifest, container_no, movement_date, received_date, transporter, driver, truck_name",
+ "search_fields": "manifest, container_no, movement_date, received_date, transporter, driver, driver_license, truck, trailer",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

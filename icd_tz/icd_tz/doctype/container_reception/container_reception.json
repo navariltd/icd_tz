@@ -22,8 +22,8 @@
   "ship_dc_date",
   "received_date",
   "column_break_azrq",
+  "icd_time_in",
   "port_time_out",
-  "discharged_at",
   "handling_and_charges_section",
   "has_transport_charges",
   "t_sales_invoice",
@@ -32,18 +32,23 @@
   "s_sales_invoice",
   "container_particulars_tab",
   "container_no",
-  "truck_name",
   "size",
+  "truck",
+  "trailer",
   "column_break_zcgxx",
   "volume",
   "weight",
   "weight_unit",
   "column_break_twjr",
+  "transporter",
+  "driver",
+  "driver_lisence",
   "seal_no_1",
   "seal_no_2",
   "seal_no_3",
   "column_break_y5zga",
   "container_location",
+  "cargo_classification",
   "abbr_for_destination",
   "country_of_destination",
   "section_break_fvbx",
@@ -74,8 +79,11 @@
    "fetch_if_empty": 1,
    "fieldname": "received_date",
    "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Received Date",
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fetch_from": "movement_order.voyage_no",
@@ -87,18 +95,25 @@
   {
    "fetch_from": "movement_order.port",
    "fieldname": "port",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Port",
-   "read_only": 1
+   "options": "\nDP WORLD\nTEAGTL",
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "column_break_azrq",
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "movement_order.port_time_out",
    "fieldname": "port_time_out",
    "fieldtype": "Time",
-   "label": "Port Time Out"
+   "label": "Port Time Out",
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "container_particulars_tab",
@@ -119,14 +134,6 @@
    "fieldtype": "Select",
    "label": "Container Size (FT)",
    "options": "\n20\n40\n45\n22G1\n45G1"
-  },
-  {
-   "fetch_from": "movement_order.truck_name",
-   "fieldname": "truck_name",
-   "fieldtype": "Link",
-   "label": "Truck Name",
-   "options": "Vehicle",
-   "read_only": 1
   },
   {
    "fieldname": "weight",
@@ -183,9 +190,12 @@
    "fieldname": "movement_order",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Movement Order",
    "options": "Container Movement Order",
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fieldname": "column_break_kepu",
@@ -249,9 +259,12 @@
    "fetch_from": "movement_order.manifest",
    "fieldname": "manifest",
    "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Manifest",
    "options": "Manifest",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "naming_series",
@@ -302,7 +315,11 @@
    "fetch_from": "movement_order.movement_date",
    "fieldname": "ship_dc_date",
    "fieldtype": "Date",
-   "label": "Ship D/C Date"
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Ship D/C Date",
+   "search_index": 1
   },
   {
    "fetch_from": "clerk.employee_name",
@@ -342,14 +359,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "manifest.discharged_at",
-   "fieldname": "discharged_at",
-   "fieldtype": "Select",
-   "label": "Discharged At",
-   "options": "\nTerminal 1\nTerminal 2",
-   "read_only": 1
-  },
-  {
    "description": "Invoice for shore handling charges",
    "fieldname": "s_sales_invoice",
    "fieldtype": "Data",
@@ -383,12 +392,68 @@
    "fieldtype": "Select",
    "label": "Country of Destination",
    "reqd": 1
+  },
+  {
+   "fetch_from": "movement_order.icd_time_in",
+   "fieldname": "icd_time_in",
+   "fieldtype": "Time",
+   "label": "ICD Time In",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "movement_order.truck",
+   "fieldname": "truck",
+   "fieldtype": "Link",
+   "label": "Truck",
+   "options": "Vehicle",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "movement_order.trailer",
+   "fieldname": "trailer",
+   "fieldtype": "Link",
+   "label": "Trailer",
+   "options": "Vehicle",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "movement_order.driver",
+   "fieldname": "driver",
+   "fieldtype": "Link",
+   "label": "Driver",
+   "options": "Driver",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "movement_order.driver_license",
+   "fieldname": "driver_lisence",
+   "fieldtype": "Data",
+   "label": "Driver Lisence",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "movement_order.cargo_classification",
+   "fieldname": "cargo_classification",
+   "fieldtype": "Data",
+   "label": "Cargo Classification",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "movement_order.transporter",
+   "fieldname": "transporter",
+   "fieldtype": "Link",
+   "label": "Transporter",
+   "options": "Transporter",
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-08 09:58:48.233611",
+ "modified": "2024-11-19 17:08:23.316440",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",
@@ -408,7 +473,7 @@
    "write": 1
   }
  ],
- "search_fields": "movement_order, ship_dc_date, received_date, ship, port, voyage_no, container_no, truck_name",
+ "search_fields": "movement_order, ship_dc_date, received_date, ship, port, voyage_no, container_no, truck, trailer",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
