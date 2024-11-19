@@ -34,7 +34,6 @@ class ServiceOrder(Document):
 			self.port = container_reception_doc.port
 			self.destination = container_reception_doc.country_of_destination
 			self.manifest = container_reception_doc.manifest
-			self.discharged_at = container_reception_doc.discharged_at
 
 			self.container_inspection = frappe.db.get_value(
 				"Container Inspection",
@@ -111,7 +110,7 @@ class ServiceOrder(Document):
 
 		shore_handling_item = None
 		settings_doc = frappe.get_doc("ICD TZ Settings")
-		if self.discharged_at == "Terminal 1":
+		if self.port == "DP WORLD":
 			if "2" in str(self.container_size)[0]:
 				shore_handling_item = settings_doc.get("shore_handling_item_t1_20ft")
 				if not shore_handling_item:
@@ -122,7 +121,7 @@ class ServiceOrder(Document):
 				if not shore_handling_item:
 					frappe.throw("Shore Handling Item (t1) for 40ft container is not set in ICD TZ setting, Please set it to continue")
 
-		if self.discharged_at == "Terminal 2":
+		if self.port == "TEAGTL":
 			if "2" in str(self.container_size)[0]:
 				shore_handling_item = settings_doc.get("shore_handling_item_t2_20ft")
 				if not shore_handling_item:
@@ -137,7 +136,7 @@ class ServiceOrder(Document):
 		if shore_handling_item and shore_handling_item not in service_names:
 			self.append("services", {
 				"service": shore_handling_item,
-				"remarks": f"Size: {self.container_size}, Destination: {self.destination}, DischargedAt: {self.discharged_at}"
+				"remarks": f"Size: {self.container_size}, Destination: {self.destination}, Port: {self.port}"
 			})
 	
 	def get_custom_verification_services(self):
@@ -308,12 +307,12 @@ class ServiceOrder(Document):
 		if not self.container_inspection:
 			return
 		
-		frappe.db.set_value(
-			"Container Inspection",
-			self.container_inspection,
-			"service_order",
-			self.name
-		)
+		# frappe.db.set_value(
+		# 	"Container Inspection",
+		# 	self.container_inspection,
+		# 	"service_order",
+		# 	self.name
+		# )
 	
 	def create_getpass(self):
 		"""
