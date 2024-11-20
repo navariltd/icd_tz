@@ -11,7 +11,6 @@ frappe.ui.form.on('Container Reception', {
 	onload: (frm) => {
         if (!frm.doc.company) {
             frm.set_value("company", frappe.defaults.get_user_default("Company"));
-            console.log("Company: ", frm.doc.company);
         }
 
 		frm.trigger("set_queries");
@@ -35,6 +34,30 @@ frappe.ui.form.on('Container Reception', {
             return {
                 filters: {
                     "disabled": 0
+                }
+            }
+        });
+        frm.set_query("driver", () => {
+            return {
+                filters: {
+                    "status": "Active",
+                    "vehicle_owner": frm.doc.transporter
+                }
+            }
+        });
+        frm.set_query("truck", () => {
+            return {
+                filters: {
+                    "disabled": 0,
+                    "vehicle_owner": frm.doc.transporter
+                }
+            }
+        });
+        frm.set_query("trailer", () => {
+            return {
+                filters: {
+                    "disabled": 0,
+                    "vehicle_owner": frm.doc.transporter
                 }
             }
         });
@@ -71,8 +94,6 @@ frappe.ui.form.on('Container Reception', {
             method: "icd_tz.icd_tz.doctype.container_reception.container_reception.get_country_of_destination",
             args: {},
             callback: (r) => {
-                console.log(r)
-
                 if (r.message) {
                     frm.set_df_property("country_of_destination", "options", r.message);
                     frm.refresh_field("country_of_destination");

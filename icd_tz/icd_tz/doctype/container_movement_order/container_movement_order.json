@@ -103,6 +103,7 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval: doc.transporter",
    "fieldname": "driver",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -239,6 +240,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval: doc.transporter",
    "fieldname": "truck",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -250,6 +252,7 @@
    "search_index": 1
   },
   {
+   "depends_on": "eval: doc.transporter",
    "fieldname": "trailer",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -283,7 +286,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-11-19 15:16:05.993275",
+ "modified": "2024-11-20 14:13:10.719504",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Movement Order",
