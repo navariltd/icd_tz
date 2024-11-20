@@ -22,17 +22,34 @@ frappe.ui.form.on("Container Movement Order", {
                 }
             };
         });
-        frm.set_query("driver", () => {
-            return {
-                filters: {
-                    "status": "Active"
-                }
-            }
-        });
         frm.set_query("transporter", () => {
             return {
                 filters: {
                     "disabled": 0
+                }
+            }
+        });
+        frm.set_query("driver", () => {
+            return {
+                filters: {
+                    "status": "Active",
+                    "vehicle_owner": frm.doc.transporter
+                }
+            }
+        });
+        frm.set_query("truck", () => {
+            return {
+                filters: {
+                    "disabled": 0,
+                    "vehicle_owner": frm.doc.transporter
+                }
+            }
+        });
+        frm.set_query("trailer", () => {
+            return {
+                filters: {
+                    "disabled": 0,
+                    "vehicle_owner": frm.doc.transporter
                 }
             }
         });
