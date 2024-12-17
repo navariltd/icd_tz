@@ -106,7 +106,7 @@ class GatePass(Document):
 		)
 	
 	def validate_signature(self):
-		settings_doc = frappe.get_doc("ICD Settings")
+		settings_doc = frappe.get_doc("ICD TZ Settings")
 		if settings_doc.enable_signature_validation == 1:
 			if (
 				not self.icd_officer_1_signature or
