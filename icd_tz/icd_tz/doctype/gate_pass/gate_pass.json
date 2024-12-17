@@ -10,18 +10,9 @@
   "manifest",
   "sline",
   "vessel_name",
+  "column_break_t0ure",
   "voyage_no",
   "arrival_date",
-  "column_break_t0ure",
-  "tpa_d_and_do_no",
-  "custom_ro_no",
-  "loading_order",
-  "transporter",
-  "column_break_5ivl7",
-  "d_and_do_date",
-  "ro_date",
-  "lo_date",
-  "truck",
   "column_break_8s1tw",
   "company",
   "sunmitted_date",
@@ -39,6 +30,12 @@
   "consignee",
   "column_break_1",
   "goods_description",
+  "section_break_hn92e",
+  "transporter",
+  "column_break_5ivl7",
+  "truck",
+  "column_break_5lxto",
+  "trailer",
   "security_and_verification_section",
   "signed_gate_pass",
   "column_break_wiqfk",
@@ -201,38 +198,8 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "tpa_d_and_do_no",
-   "fieldtype": "Data",
-   "label": "TPA D and DO No"
-  },
-  {
-   "fieldname": "custom_ro_no",
-   "fieldtype": "Data",
-   "label": "Custom RO No"
-  },
-  {
-   "fieldname": "loading_order",
-   "fieldtype": "Data",
-   "label": "Loading Order"
-  },
-  {
    "fieldname": "column_break_5ivl7",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "d_and_do_date",
-   "fieldtype": "Date",
-   "label": "D and DO Date"
-  },
-  {
-   "fieldname": "ro_date",
-   "fieldtype": "Date",
-   "label": "RO Date"
-  },
-  {
-   "fieldname": "lo_date",
-   "fieldtype": "Date",
-   "label": "LO Date"
   },
   {
    "fieldname": "column_break_8s1tw",
@@ -275,7 +242,7 @@
    "fetch_from": "container_id.m_bl_no",
    "fieldname": "bl_no",
    "fieldtype": "Data",
-   "label": "BL No"
+   "label": "M BL No"
   },
   {
    "fetch_from": "container_id.seal_no_1",
@@ -486,13 +453,28 @@
    "fieldname": "tra_officer_id",
    "fieldtype": "Data",
    "label": "TRA Officer ID"
+  },
+  {
+   "fieldname": "section_break_hn92e",
+   "fieldtype": "Section Break",
+   "label": "Transport Details"
+  },
+  {
+   "fieldname": "column_break_5lxto",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "trailer",
+   "fieldtype": "Link",
+   "label": "Trailer",
+   "options": "Vehicle"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-11 16:32:43.228565",
+ "modified": "2024-12-17 17:53:57.889957",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Gate Pass",
