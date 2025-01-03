@@ -80,7 +80,7 @@ def get_container_days_to_be_billed(service_doc, container_doc, settings_doc):
         return single_days, double_days
 
     for d in settings_doc.storage_days:
-        if d.destination == service_doc.destination:
+        if d.destination == service_doc.place_of_destination:
             if d.charge == "Single":
                 no_of_single_days = d.get("to") - d.get("from")
 
