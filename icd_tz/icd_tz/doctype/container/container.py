@@ -12,6 +12,7 @@ class Container(Document):
 		
 		self.update_billed_days()
 		self.update_billed_details()
+		self.check_corridor_levy_eligibility()
 
 	def update_container_details(self):
 		"""Update the container details from the Container Reception, Containers Detail and Container Movement Order"""
@@ -42,6 +43,8 @@ class Container(Document):
 			self.original_location = container_reception.container_location
 		if not self.current_location:
 			self.current_location = container_reception.container_location
+		if not self.place_of_destination:
+			self.place_of_destination = container_reception.place_of_destination
 		if not self.country_of_destination:
 			self.country_of_destination = container_reception.country_of_destination
 		if not self.company:
@@ -80,8 +83,8 @@ class Container(Document):
 				as_dict=True
 			)
 			if masterbi_info:
-				if not self.place_of_destination:
-					self.place_of_destination = masterbi_info.place_of_destination
+				if not self.abbr_for_destination:
+					self.abbr_for_destination = masterbi_info.place_of_destination
 				if not self.place_of_delivery:
 					self.place_of_delivery = masterbi_info.place_of_delivery
 				if not self.port_of_loading:
@@ -104,7 +107,7 @@ class Container(Document):
 		no_of_single_days = 0
 		no_of_double_days = 0
 		for d in setting_doc.storage_days:
-			if d.destination == self.country_of_destination:
+			if d.destination == self.place_of_destination:
 				if d.charge == "Free":
 					no_of_free_days = d.get("to") - d.get("from")
 
@@ -170,6 +173,33 @@ class Container(Document):
 			self.no_of_billed_days = no_of_billed_days
 			self.days_to_be_billed = no_of_billable_days - no_of_billed_days	
 
+	def check_corridor_levy_eligibility(self):
+		"""Check if the container is eligible for Corridor Levy payments"""
+
+		if not self.country_of_destination:
+			self.has_corridor_levy_charges = "No"
+			return
+		
+		is_eligible_for_corridor_levy_payments = False
+		icd_settings = frappe.get_doc("ICD TZ Settings")
+		for row in icd_settings.countries:
+			if row.country == self.country_of_destination:
+				is_eligible_for_corridor_levy_payments = True
+				break
+		
+		if is_eligible_for_corridor_levy_payments:
+			if self.c_sales_invoice:
+				self.has_corridor_levy_charges = "No"
+			elif self.days_to_be_billed > 0:
+				self.has_corridor_levy_charges = "Yes"
+			elif self.days_to_be_billed <= 0:
+				if self.has_single_charge == 1 or self.has_double_charge == 1:
+					self.has_corridor_levy_charges = "Yes"
+				else:
+					self.has_corridor_levy_charges = "No"
+		else:
+			self.has_corridor_levy_charges = "No"
+		
 
 def daily_update_date_container_stay():
     containers = frappe.get_all("Container", filters={"customs_status": ["!=", "Cleared"]})
