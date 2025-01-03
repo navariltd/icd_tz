@@ -50,6 +50,7 @@
   "container_location",
   "cargo_classification",
   "abbr_for_destination",
+  "place_of_destination",
   "country_of_destination",
   "section_break_fvbx",
   "top",
@@ -388,9 +389,11 @@
    "read_only": 1
   },
   {
+   "description": "for corridor levy validation",
    "fieldname": "country_of_destination",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "label": "Country of Destination",
+   "options": "Country",
    "reqd": 1
   },
   {
@@ -448,12 +451,18 @@
    "options": "Transporter",
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "description": "for storage charges validation",
+   "fieldname": "place_of_destination",
+   "fieldtype": "Select",
+   "label": "Place of Destination"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-11-19 17:08:23.316440",
+ "modified": "2025-01-03 14:53:29.491748",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",

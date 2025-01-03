@@ -22,7 +22,10 @@
   "manifest",
   "vessel_name",
   "port",
-  "destination",
+  "column_break_l0qms",
+  "m_bl_no",
+  "place_of_destination",
+  "country_of_destination",
   "column_break_nlrcd",
   "container_id",
   "container_no",
@@ -249,12 +252,6 @@
   },
   {
    "depends_on": "eval: doc.container_id",
-   "fieldname": "destination",
-   "fieldtype": "Data",
-   "label": "Destination"
-  },
-  {
-   "depends_on": "eval: doc.container_id",
    "fieldname": "manifest",
    "fieldtype": "Link",
    "in_preview": 1,
@@ -277,12 +274,37 @@
    "depends_on": "eval: !doc.__islocal",
    "fieldname": "section_break_pd2vw",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_l0qms",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "description": "for storage charge validation",
+   "fieldname": "place_of_destination",
+   "fieldtype": "Data",
+   "label": "Place of Destination"
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "description": "for corridor levy validation",
+   "fieldname": "country_of_destination",
+   "fieldtype": "Data",
+   "label": "Country of Destination"
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "fetch_from": "container_id.m_bl_no",
+   "fieldname": "m_bl_no",
+   "fieldtype": "Data",
+   "label": "M B/L No"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-11-19 14:52:00.861784",
+ "modified": "2025-01-03 15:18:57.474162",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Service Order",
