@@ -30,10 +30,11 @@ class ServiceOrder(Document):
 			container_reception = frappe.db.get_value("Container", self.container_id, "container_reception")
 			container_reception_doc = frappe.get_doc("Container Reception", container_reception)
 
+			self.manifest = container_reception_doc.manifest
 			self.vessel_name = container_reception_doc.ship
 			self.port = container_reception_doc.port
-			self.destination = container_reception_doc.country_of_destination
-			self.manifest = container_reception_doc.manifest
+			self.place_of_destination = container_reception_doc.place_of_destination
+			self.country_of_destination = container_reception_doc.country_of_destination
 
 			self.container_inspection = frappe.db.get_value(
 				"Container Inspection",
