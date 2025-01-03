@@ -251,9 +251,6 @@ class ServiceOrder(Document):
 		if container_doc.r_sales_invoice:
 			return
 
-		if container_doc.days_to_be_billed <= 0:
-			return
-		
 		service_names = [row.get("service") for row in self.get("services")]
 		removal_item = frappe.db.get_single_value("ICD TZ Settings", "removal_item")
 		if not removal_item:
@@ -273,9 +270,6 @@ class ServiceOrder(Document):
 			return
 		
 		if container_doc.c_sales_invoice:
-			return
-		
-		if container_doc.days_to_be_billed <= 0:
 			return
 		
 		service_names = [row.get("service") for row in self.get("services")]
