@@ -13,6 +13,7 @@ class Container(Document):
 		self.update_billed_days()
 		self.update_billed_details()
 		self.check_corridor_levy_eligibility()
+		self.check_removal_charges_elibility()
 
 	def update_container_details(self):
 		"""Update the container details from the Container Reception, Containers Detail and Container Movement Order"""
@@ -172,6 +173,20 @@ class Container(Document):
 			self.no_of_writeoff_days = no_of_writeoff_days
 			self.no_of_billed_days = no_of_billed_days
 			self.days_to_be_billed = no_of_billable_days - no_of_billed_days	
+
+	def check_removal_charges_elibility(self):
+		"""Check if the container is eligible to remove charges"""
+
+		if self.r_sales_invoice:
+			self.has_removal_charges = "No"
+		elif self.days_to_be_billed > 0:
+			self.has_removal_charges = "No"
+		elif self.days_to_be_billed <= 0:
+			if self.has_single_charge == 1 or self.has_double_charge == 1:
+				self.has_removal_charges = "Yes"
+			else:
+				self.has_removal_charges = "No"
+
 
 	def check_corridor_levy_eligibility(self):
 		"""Check if the container is eligible for Corridor Levy payments"""
