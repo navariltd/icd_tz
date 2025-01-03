@@ -3,7 +3,7 @@
 
 frappe.ui.form.on('Container Reception', {
     setup: (frm) => {
-        frm.trigger("get_countries_of_destination");
+        frm.trigger("get_places_of_destination");
     },
 	refresh: (frm) => {
 		frm.trigger("set_queries");
@@ -89,14 +89,14 @@ frappe.ui.form.on('Container Reception', {
             });
         }
     },
-    get_countries_of_destination: (frm) => {
+    get_places_of_destination: (frm) => {
         frappe.call({
-            method: "icd_tz.icd_tz.doctype.container_reception.container_reception.get_country_of_destination",
+            method: "icd_tz.icd_tz.doctype.container_reception.container_reception.get_place_of_destination",
             args: {},
             callback: (r) => {
                 if (r.message) {
-                    frm.set_df_property("country_of_destination", "options", r.message);
-                    frm.refresh_field("country_of_destination");
+                    frm.set_df_property("place_of_destination", "options", r.message);
+                    frm.refresh_field("place_of_destination");
                 }
             }
         });
