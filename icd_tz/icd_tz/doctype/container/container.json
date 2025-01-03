@@ -34,9 +34,10 @@
   "customs_status",
   "column_break_6s4dw",
   "consignee",
+  "abbr_for_destination",
+  "place_of_delivery",
   "place_of_destination",
   "country_of_destination",
-  "place_of_delivery",
   "column_break_jhhs",
   "cargo_description",
   "movement_details_section",
@@ -337,6 +338,7 @@
    "options": "Consignee"
   },
   {
+   "description": "for storage charges validation",
    "fieldname": "place_of_destination",
    "fieldtype": "Data",
    "label": "Place of Destination"
@@ -387,6 +389,7 @@
    "read_only": 1
   },
   {
+   "description": "for corridor levy validation",
    "fieldname": "country_of_destination",
    "fieldtype": "Data",
    "label": "Country of Destination"
@@ -425,12 +428,17 @@
    "fieldtype": "Select",
    "label": "Naming Series",
    "options": "ICD-C-.YYYY.-"
+  },
+  {
+   "fieldname": "abbr_for_destination",
+   "fieldtype": "Data",
+   "label": "Abbr for Destination"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-06 17:42:39.180092",
+ "modified": "2025-01-03 14:59:31.945708",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",
