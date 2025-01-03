@@ -35,12 +35,19 @@ class ServiceOrder(Document):
 			self.port = container_reception_doc.port
 			self.place_of_destination = container_reception_doc.place_of_destination
 			self.country_of_destination = container_reception_doc.country_of_destination
+			self.m_bl_no = container_reception_doc.m_bl_no
 
-			self.container_inspection = frappe.db.get_value(
+			(
+				self.container_inspection,
+				self.c_and_f_company,
+				self.clearing_agent,
+				self.consignee
+			) = frappe.db.get_value(
 				"Container Inspection",
 				{"container_id": self.container_id},
-				"name"
+				["name", "c_and_f_company", "clearing_agent", "consignee"]
 			)
+
 			if not self.container_inspection:
 				booking_info = frappe.db.get_value(
 					"In Yard Container Booking",
