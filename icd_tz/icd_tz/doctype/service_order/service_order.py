@@ -361,3 +361,21 @@ class ServiceOrder(Document):
 
 		self.db_set("get_pass", getpass.name)
 		self.reload()
+	
+	@frappe.whitelist()
+	def get_service_orders_by_m_bl_no(self):
+		filters = {
+			"manifest": self.manifest,
+			"m_bl_no": self.m_bl_no,
+			"docstatus": 1,
+			"name": ["!=", self.name]
+		}
+		orders = frappe.db.get_all(
+			"Service Order",
+			filters=filters	
+		)
+
+		if len(orders) > 0:
+			return True
+		
+		return False
