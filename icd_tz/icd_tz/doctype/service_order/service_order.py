@@ -35,7 +35,7 @@ class ServiceOrder(Document):
 			self.port = container_reception_doc.port
 			self.place_of_destination = container_reception_doc.place_of_destination
 			self.country_of_destination = container_reception_doc.country_of_destination
-			self.m_bl_no = container_reception_doc.m_bl_no
+			self.m_bl_no = frappe.get_cached_value("Container", self.container_id, "m_bl_no")
 
 			(
 				self.container_inspection,
@@ -144,7 +144,7 @@ class ServiceOrder(Document):
 		if shore_handling_item and shore_handling_item not in service_names:
 			self.append("services", {
 				"service": shore_handling_item,
-				"remarks": f"Size: {self.container_size}, Destination: {self.destination}, Port: {self.port}"
+				"remarks": f"Size: {self.container_size}, Destination: {self.place_of_destination}, Port: {self.port}"
 			})
 	
 	def get_custom_verification_services(self):
@@ -224,10 +224,14 @@ class ServiceOrder(Document):
 				if not storage_item:
 					frappe.throw("Storage item (single) for 40ft container is not set in ICD TZ Settings, Please set it to continue")
 			
-			if storage_item and storage_item not in service_names:
+			if (
+				storage_item and
+				len(single_days) > 0 and
+				storage_item not in service_names
+			):
 				self.append("services", {
 					"service": storage_item,
-					"remarks": f"Days: {len(single_days)}, Size: {self.container_size}, Destination: {self.destination}"
+					"remarks": f"Days: {len(single_days)}, Size: {self.container_size}, Destination: {self.place_of_destination}"
 				})
 		
 		if container_doc.has_double_charge == 1:
@@ -241,10 +245,14 @@ class ServiceOrder(Document):
 				if not storage_item:
 					frappe.throw("Storage item (double) for 40ft container is not set in ICD TZ Settings, Please set it to continue")
 			
-			if storage_item and storage_item not in service_names:
+			if (
+				storage_item and
+				len(double_days) > 0 and
+				storage_item not in service_names
+			):
 				self.append("services", {
 					"service": storage_item,
-					"remarks": f"Days: {len(double_days)}, Size: {self.container_size}, Destination: {self.destination}"
+					"remarks": f"Days: {len(double_days)}, Size: {self.container_size}, Destination: {self.place_of_destination}"
 				})
 	
 	def get_removal_services(self):
