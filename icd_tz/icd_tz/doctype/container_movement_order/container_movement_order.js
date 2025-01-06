@@ -41,7 +41,8 @@ frappe.ui.form.on("Container Movement Order", {
             return {
                 filters: {
                     "disabled": 0,
-                    "vehicle_owner": frm.doc.transporter
+                    "vehicle_owner": frm.doc.transporter,
+                    "is_truck": 1
                 }
             }
         });
@@ -49,7 +50,8 @@ frappe.ui.form.on("Container Movement Order", {
             return {
                 filters: {
                     "disabled": 0,
-                    "vehicle_owner": frm.doc.transporter
+                    "vehicle_owner": frm.doc.transporter,
+                    "is_trailer": 1
                 }
             }
         });
