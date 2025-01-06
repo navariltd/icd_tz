@@ -260,6 +260,7 @@
    "in_standard_filter": 1,
    "label": "Trailer",
    "options": "Vehicle",
+   "reqd": 1,
    "search_index": 1
   },
   {
@@ -286,7 +287,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-11-20 14:13:10.719504",
+ "modified": "2025-01-05 20:36:11.462418",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Movement Order",

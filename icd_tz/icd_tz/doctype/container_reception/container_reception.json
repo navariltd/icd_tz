@@ -39,6 +39,7 @@
   "volume",
   "weight",
   "weight_unit",
+  "cargo_classification",
   "column_break_twjr",
   "transporter",
   "driver",
@@ -48,7 +49,6 @@
   "seal_no_3",
   "column_break_y5zga",
   "container_location",
-  "cargo_classification",
   "abbr_for_destination",
   "place_of_destination",
   "country_of_destination",
@@ -456,13 +456,14 @@
    "description": "for storage charges validation",
    "fieldname": "place_of_destination",
    "fieldtype": "Select",
-   "label": "Place of Destination"
+   "label": "Place of Destination",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-03 14:53:29.491748",
+ "modified": "2025-01-05 21:57:27.172087",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",
