@@ -180,7 +180,7 @@ class Container(Document):
 		if self.r_sales_invoice:
 			self.has_removal_charges = "No"
 		elif self.days_to_be_billed > 0:
-			self.has_removal_charges = "No"
+			self.has_removal_charges = "Yes"
 		elif self.days_to_be_billed <= 0:
 			if self.has_single_charge == 1 or self.has_double_charge == 1:
 				self.has_removal_charges = "Yes"
