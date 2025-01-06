@@ -10,12 +10,19 @@ def on_trash(doc, method):
     unlink_sales_order(doc)
 
 def unlink_sales_order(doc):
-    if not doc.service_order:
+    if not doc.m_bl_no:
         return
     
-    service_order = frappe.get_doc("Service Order", doc.service_order)
-    service_order.db_set("sales_order", None)
-    service_order.reload()
+    service_orders = frappe.db.get_all("Service Order", filters={"sales_order": doc.name})
+    if len(service_orders) > 0:
+        for row in service_orders:
+            frappe.db.set_value(
+                "Service Order",
+                row.name,
+                "sales_order",
+                "",
+                update_modified=False
+            )
 
 @frappe.whitelist()
 def make_sales_order(doc_type, doc_name, m_bl_no=None, manifest=None):
