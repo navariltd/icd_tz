@@ -10,10 +10,10 @@
   "m_bl_no",
   "cargo_classification",
   "bl_type",
+  "port_of_loading",
   "place_of_destination",
   "place_of_delivery",
   "oil_type",
-  "port_of_loading",
   "number_of_containers",
   "cargo_description",
   "number_of_package",
@@ -76,7 +76,6 @@
   {
    "fieldname": "place_of_delivery",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Place of Delivery"
   },
   {
@@ -256,6 +255,7 @@
   {
    "fieldname": "number_of_containers",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Number of Containers"
   },
   {
@@ -267,7 +267,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-10-11 16:19:45.746010",
+ "modified": "2025-01-12 17:18:12.184003",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "MasterBI",
