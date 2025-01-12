@@ -20,13 +20,14 @@
   "submitted_by",
   "container_details_section",
   "container_id",
-  "container_no",
-  "column_break_bw5go",
-  "size",
   "bl_no",
+  "column_break_bw5go",
+  "container_no",
+  "size",
   "seal_no",
   "column_break_phfzs",
   "c_and_f_company",
+  "clearing_agent",
   "consignee",
   "column_break_1",
   "goods_description",
@@ -34,8 +35,10 @@
   "transporter",
   "column_break_5ivl7",
   "truck",
-  "column_break_5lxto",
   "trailer",
+  "column_break_5lxto",
+  "driver_name",
+  "license_no",
   "security_and_verification_section",
   "signed_gate_pass",
   "column_break_wiqfk",
@@ -50,7 +53,6 @@
   "icd_officer_2_name",
   "icd_officer_2_signature",
   "section_break_f0q0d",
-  "clearing_agent",
   "agent_id",
   "agent_email",
   "agent_mob_no",
@@ -109,7 +111,11 @@
    "fetch_from": "container_id.container_no",
    "fieldname": "container_no",
    "fieldtype": "Data",
-   "label": "container No"
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "container No",
+   "search_index": 1
   },
   {
    "fieldname": "column_break_phfzs",
@@ -119,10 +125,13 @@
    "fieldname": "c_and_f_company",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "C & F Company",
    "options": "Clearing and Forwarding Company",
    "read_only": 1,
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "default": "ICD-GP-.YYYY.-",
@@ -136,31 +145,43 @@
    "fieldname": "clearing_agent",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Clearing Agent",
    "options": "Clearing Agent",
    "read_only": 1,
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fieldname": "consignee",
    "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Consignee",
-   "options": "Consignee"
+   "options": "Consignee",
+   "search_index": 1
   },
   {
    "fieldname": "container_id",
    "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Container ID",
    "options": "Container",
    "read_only": 1,
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fieldname": "manifest",
    "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Manifest",
    "options": "Manifest",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "column_break_gz2kv",
@@ -242,7 +263,11 @@
    "fetch_from": "container_id.m_bl_no",
    "fieldname": "bl_no",
    "fieldtype": "Data",
-   "label": "M BL No"
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "M BL No",
+   "search_index": 1
   },
   {
    "fetch_from": "container_id.seal_no_1",
@@ -427,15 +452,13 @@
   },
   {
    "fieldname": "transporter",
-   "fieldtype": "Link",
-   "label": "Transporter",
-   "options": "Transporter"
+   "fieldtype": "Data",
+   "label": "Transporter"
   },
   {
    "fieldname": "truck",
-   "fieldtype": "Link",
-   "label": "Truck",
-   "options": "Vehicle"
+   "fieldtype": "Data",
+   "label": "Truck"
   },
   {
    "fetch_from": "manifest.company",
@@ -465,16 +488,25 @@
   },
   {
    "fieldname": "trailer",
-   "fieldtype": "Link",
-   "label": "Trailer",
-   "options": "Vehicle"
+   "fieldtype": "Data",
+   "label": "Trailer"
+  },
+  {
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "label": "Driver Name"
+  },
+  {
+   "fieldname": "license_no",
+   "fieldtype": "Data",
+   "label": "License No"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-12-17 17:53:57.889957",
+ "modified": "2025-01-12 16:50:47.297781",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Gate Pass",
