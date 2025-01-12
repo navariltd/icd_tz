@@ -16,6 +16,7 @@ class GatePass(Document):
 		self.validate_in_yard_booking()
 		self.validate_reception_charges()
 		self.validate_signature()
+		self.validate_mandatory_fields()
 		self.update_submitted_info()
 	
 	def on_submit(self):
@@ -126,3 +127,13 @@ class GatePass(Document):
 		self.submitted_by = get_fullname(frappe.session.user)
 		self.submitted_date = nowdate()
 		self.submitted_time = nowtime()
+	
+	def validate_mandatory_fields(self):
+		fields_str = ""
+		fields = ["transporter", "truck", "trailer", "driver_name", "license_no"]
+		for field in fields:
+			if not self.get(field):
+				fields_str += f"{self.meta.get_label(field)}, "
+		
+		if fields_str:
+			frappe.throw(f"Please ensure the following fields are filled before submitting this document: <b>{fields_str}</b>")
