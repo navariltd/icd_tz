@@ -314,6 +314,7 @@
   },
   {
    "fetch_from": "movement_order.movement_date",
+   "fetch_if_empty": 1,
    "fieldname": "ship_dc_date",
    "fieldtype": "Date",
    "in_list_view": 1,
@@ -463,7 +464,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-05 21:57:27.172087",
+ "modified": "2025-01-12 14:36:13.664991",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",
