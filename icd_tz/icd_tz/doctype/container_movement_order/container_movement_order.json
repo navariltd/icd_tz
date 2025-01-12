@@ -10,12 +10,13 @@
  "field_order": [
   "details_tab",
   "manifest",
+  "company",
   "column_break_wyva",
+  "m_bl_no",
   "container_no",
   "column_break_tnol5",
   "size",
-  "column_break_iuhrd",
-  "company",
+  "container_count",
   "shipment_details_section",
   "ship",
   "port",
@@ -184,6 +185,7 @@
   {
    "fieldname": "manifest",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Manifest",
@@ -201,10 +203,6 @@
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"
-  },
-  {
-   "fieldname": "column_break_iuhrd",
-   "fieldtype": "Column Break"
   },
   {
    "depends_on": "eval: doc.manifest",
@@ -282,12 +280,30 @@
    "fieldtype": "Data",
    "label": "Cargo Classification",
    "read_only": 1
+  },
+  {
+   "fieldname": "m_bl_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "M B/L No",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "container_count",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Container Count",
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-05 20:36:11.462418",
+ "modified": "2025-01-12 17:09:22.950479",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Movement Order",

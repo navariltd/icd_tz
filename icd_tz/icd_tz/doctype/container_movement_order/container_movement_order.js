@@ -88,20 +88,23 @@ frappe.ui.form.on("Container Movement Order", {
                     container_no: frm.doc.container_no
                 },
                 callback: (r) => {
-                    console.log(r.message);
                     if (r.message) {
                         let container_info = r.message;
+                        frm.set_value("m_bl_no", container_info.m_bl_no);
                         frm.set_value("size", container_info.container_size);
                         frm.set_value("cargo_classification", container_info.cargo_classification);
                         frm.refresh_field("size");
+                        frm.refresh_field("m_bl_no");
                         frm.refresh_field("cargo_classification");
                     }
                 }
             });
         } else if (!frm.doc.container_no) {
             frm.set_value("size", "");
+            frm.set_value("m_bl_no", "");
             frm.set_value("cargo_classification", "");
             frm.refresh_field("size");
+            frm.refresh_field("m_bl_no");
             frm.refresh_field("cargo_classification");
         }
     },
@@ -123,6 +126,8 @@ frappe.ui.form.on("Container Movement Order", {
                     "driver_license": frm.doc.driver_license,
                     "transporter": frm.doc.transporter,
                     "cargo_classification": frm.doc.cargo_classification,
+                    "m_bl_no": frm.doc.m_bl_no,
+                    "container_count": frm.doc.container_count
                 }, doc => {});
             }).addClass('btn-primary');
         }

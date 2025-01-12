@@ -9,6 +9,9 @@ from frappe.utils import get_url_to_form, cint
 cmo = DocType("Container Movement Order")
 
 class ContainerMovementOrder(Document):
+	def before_insert(self):
+		self.update_container_count()
+	
 	def before_save(self):
 		if not self.company:
 			self.company = frappe.defaults.get_user_default("Company")
@@ -71,6 +74,29 @@ class ContainerMovementOrder(Document):
 				not self.gate_no_signature
 			):
 				frappe.throw("Please ensure all signatures are provided before submitting this document.")
+
+	def update_container_count(self):
+		"""Update the container count based on the manifest and m_bl_no"""
+
+		if (
+			self.manifest and 
+			self.m_bl_no and
+			not self.container_count
+		):
+			total_count = frappe.db.get_value(
+				"MasterBI",
+				{"parent": self.manifest, "m_bl_no": self.m_bl_no},
+				"number_of_containers"
+			)
+
+			current_count = frappe.db.count(
+				"Container Movement Order",
+				{"manifest": self.manifest, "m_bl_no": self.m_bl_no}
+			)
+
+			self.container_count = f"{current_count + 1}/{total_count}"
+
+
 
 @frappe.whitelist()
 def get_manifest_details(manifest):
