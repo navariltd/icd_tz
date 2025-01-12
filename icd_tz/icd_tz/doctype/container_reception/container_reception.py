@@ -14,12 +14,16 @@ class ContainerReception(Document):
 			self.company = frappe.defaults.get_user_default("Company")
 		
 	def validate(self):
-		self.validate_duplicate_cmo()
+		self.validate_duplicate_cr()
+	
+	def before_submit(self):
+		if not self.clerk:
+			frappe.throw("Clerk is missing, Please select clerk to proceed..!")
 	
 	def on_submit(self):
 		self.create_container()
 
-	def validate_duplicate_cmo(self):
+	def validate_duplicate_cr(self):
 		"""Validate that there is no duplicate Container Reception based on Container Movement Order (CMO)"""
 		if self.movement_order:
 			duplicates = (
