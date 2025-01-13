@@ -2,6 +2,9 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Container Movement Order", {
+    setup: (frm) => {
+        frm.trigger("get_containers");
+    },
 	refresh: (frm) => {
         frm.trigger("set_queries");
         frm.trigger("create_container_reception");
@@ -57,6 +60,37 @@ frappe.ui.form.on("Container Movement Order", {
         });
     },
     manifest: (frm) => {
+        frm.trigger("get_containers");
+        frm.trigger("get_container_info");
+    },
+    container_no: (frm) => {
+        frm.trigger("get_container_info");
+    },
+    create_container_reception: (frm) => {
+        if (frm.doc.docstatus == 1) {
+            frm.add_custom_button(__('Create Container Reception'), () => {
+                frappe.new_doc('Container Reception', {
+                    "movement_order": frm.doc.name,
+                    "manifest": frm.doc.manifest,
+                    "ship": frm.doc.ship,
+                    "ship_dc_date": frm.doc.received_date,
+                    "voyage_no": frm.doc.voyage_no,
+                    "port": frm.doc.port,
+                    "container_no": frm.doc.container_no,
+                    "size": frm.doc.size,
+                    "truck": frm.doc.truck,
+                    "trailer": frm.doc.trailer,
+                    "driver": frm.doc.driver,
+                    "driver_license": frm.doc.driver_license,
+                    "transporter": frm.doc.transporter,
+                    "cargo_classification": frm.doc.cargo_classification,
+                    "m_bl_no": frm.doc.m_bl_no,
+                    "container_count": frm.doc.container_count
+                }, doc => {});
+            }).addClass('btn-primary');
+        }
+    },
+    get_containers: (frm) => {
         if (frm.doc.manifest) {
             frappe.call({
                 method: "icd_tz.icd_tz.doctype.container_movement_order.container_movement_order.get_manifest_details",
@@ -79,7 +113,7 @@ frappe.ui.form.on("Container Movement Order", {
             });
         }
     },
-    container_no: (frm) => {
+    get_container_info: (frm) => {
         if (frm.doc.manifest && frm.doc.container_no) {
             frappe.call({
                 method: "icd_tz.icd_tz.doctype.container_movement_order.container_movement_order.get_container_size_from_manifest",
@@ -106,30 +140,6 @@ frappe.ui.form.on("Container Movement Order", {
             frm.refresh_field("size");
             frm.refresh_field("m_bl_no");
             frm.refresh_field("cargo_classification");
-        }
-    },
-    create_container_reception: (frm) => {
-        if (frm.doc.docstatus == 1) {
-            frm.add_custom_button(__('Create Container Reception'), () => {
-                frappe.new_doc('Container Reception', {
-                    "movement_order": frm.doc.name,
-                    "manifest": frm.doc.manifest,
-                    "ship": frm.doc.ship,
-                    "ship_dc_date": frm.doc.received_date,
-                    "voyage_no": frm.doc.voyage_no,
-                    "port": frm.doc.port,
-                    "container_no": frm.doc.container_no,
-                    "size": frm.doc.size,
-                    "truck": frm.doc.truck,
-                    "trailer": frm.doc.trailer,
-                    "driver": frm.doc.driver,
-                    "driver_license": frm.doc.driver_license,
-                    "transporter": frm.doc.transporter,
-                    "cargo_classification": frm.doc.cargo_classification,
-                    "m_bl_no": frm.doc.m_bl_no,
-                    "container_count": frm.doc.container_count
-                }, doc => {});
-            }).addClass('btn-primary');
         }
     }
 });
