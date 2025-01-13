@@ -129,6 +129,7 @@
   {
    "fieldname": "driver_signature",
    "fieldtype": "Signature",
+   "hidden": 1,
    "label": "Driver Signature"
   },
   {
@@ -140,6 +141,7 @@
   {
    "fieldname": "gate_no_signature",
    "fieldtype": "Signature",
+   "hidden": 1,
    "label": "Gate No Signature"
   },
   {
@@ -303,7 +305,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-12 17:09:22.950479",
+ "modified": "2025-01-13 13:15:40.031994",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Movement Order",
