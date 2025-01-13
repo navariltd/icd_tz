@@ -22,6 +22,7 @@ class ContainerReception(Document):
 	
 	def on_submit(self):
 		self.create_container()
+		self.update_container_storage_days()
 
 	def validate_duplicate_cr(self):
 		"""Validate that there is no duplicate Container Reception based on Container Movement Order (CMO)"""
@@ -70,6 +71,50 @@ class ContainerReception(Document):
 		container.save(ignore_permissions=True)
 
 		return container.name
+	
+	def update_container_storage_days(self):
+		"""Update the storage days of the containers based on the current received date and m_bl_no"""
+
+		records = (
+			frappe.qb.from_(cr)
+			.select(
+				cr.name
+			)
+			.where(
+				(cr.name != self.name)
+				& (cr.m_bl_no == self.m_bl_no)
+				& (cr.manifest == self.manifest)
+				& (cr.received_date != self.received_date)
+			)
+		).run(as_dict=True)
+
+		if len(records) == 0:
+			return
+		
+		for record in records:
+			frappe.db.set_value(
+				"Container Reception",
+				record.name,
+				"received_date",
+				self.received_date,
+				update_modified=False
+			)
+
+			container_id = frappe.db.get_value(
+				"Container",
+				{"container_reception": record.name},
+				"name"
+			)
+			if not container_id:
+				continue
+
+			container_doc = frappe.get_doc("Container", container_id)
+			container_doc.container_dates = []
+			container_doc.append("container_dates", {
+				"date": self.received_date,
+			})
+			container_doc.save(ignore_permissions=True)
+
 
 @frappe.whitelist()
 def get_container_details(manifest, container_no):
