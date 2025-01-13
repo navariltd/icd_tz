@@ -114,13 +114,13 @@ class Container(Document):
 		for d in setting_doc.storage_days:
 			if d.destination == self.place_of_destination:
 				if d.charge == "Free":
-					no_of_free_days = d.get("to") - d.get("from")
+					no_of_free_days = d.get("to") - d.get("from") + 1
 
 				elif d.charge == "Single":
-					no_of_single_days = d.get("to") - d.get("from")
+					no_of_single_days = d.get("to") - d.get("from") + 1
 
 				elif d.charge == "Double":
-					no_of_double_days = d.get("to") - d.get("from")
+					no_of_double_days = d.get("to") - d.get("from") + 1
 		
 		free_count = 0
 		charge_count = 0
