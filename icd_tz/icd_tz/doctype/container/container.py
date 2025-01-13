@@ -4,24 +4,28 @@
 import frappe
 from frappe.model.document import Document
 from frappe.utils import nowdate, getdate, add_days
+from icd_tz.icd_tz.doctype.container_reception.container_reception import get_place_of_destination
 
 class Container(Document):
 	def before_save(self):
 		if self.container_no and self.container_reception:
-			self.update_container_details()
+			container_reception = frappe.get_doc("Container Reception", self.container_reception)
+
+			self.update_container_details(container_reception)
+			self.validate_place_of_destination()
+			self.update_container_reception(container_reception)
 		
 		self.update_billed_days()
 		self.update_billed_details()
 		self.check_corridor_levy_eligibility()
 		self.check_removal_charges_elibility()
 
-	def update_container_details(self):
+	def update_container_details(self, container_reception):
 		"""Update the container details from the Container Reception, Containers Detail and Container Movement Order"""
 
 		if self.customs_status == "Cleared":
 			return
 
-		container_reception = frappe.get_doc("Container Reception", self.container_reception)
 		if not self.customs_status:
 			self.customs_status = "Pending"
 		if not self.status:
@@ -214,7 +218,22 @@ class Container(Document):
 					self.has_corridor_levy_charges = "No"
 		else:
 			self.has_corridor_levy_charges = "No"
+	
+	def update_container_reception(self, container_reception):
+		if self.place_of_destination and self.place_of_destination != container_reception.place_of_destination:
+			container_reception.db_set("place_of_destination", self.place_of_destination)
 		
+		if self.country_of_destination and self.country_of_destination != container_reception.country_of_destination:
+			container_reception.db_set("country_of_destination", self.country_of_destination)
+		
+	def validate_place_of_destination(self):
+		if not self.place_of_destination:
+			return
+		
+		places = get_place_of_destination()
+		places_str = ", ".join(places)
+		if self.place_of_destination not in places:
+			frappe.throw(f"Invalid Place of Destination <b>{self.place_of_destination}</b>, valid places are: <b>{places_str}</b>")
 
 def daily_update_date_container_stay():
     containers = frappe.get_all("Container", filters={"customs_status": ["!=", "Cleared"]})
