@@ -15,7 +15,6 @@ class GatePass(Document):
 		self.validate_container_charges()
 		self.validate_in_yard_booking()
 		self.validate_reception_charges()
-		self.validate_signature()
 		self.validate_mandatory_fields()
 		self.update_submitted_info()
 	
@@ -105,23 +104,6 @@ class GatePass(Document):
 			"customs_status",
 			"Cleared"
 		)
-	
-	def validate_signature(self):
-		settings_doc = frappe.get_doc("ICD TZ Settings")
-		if settings_doc.enable_signature_validation == 1:
-			if (
-				not self.icd_officer_1_signature or
-				not self.icd_officer_2_signature or
-				not self.agent_signature or
-				not self.tra_officer_signature or
-				not self.driver_signature or
-				not self.security_signature
-			):
-				frappe.throw("Please ensure all signatures are provided before submitting this document.")
-		
-		# Check if the Gate Pass is signed and attached
-		elif not self.signed_gate_pass:
-			frappe.throw("Please ensure the Gate Pass is signed and attached before submitting this document.")
 
 	def update_submitted_info(self):
 		self.submitted_by = get_fullname(frappe.session.user)
