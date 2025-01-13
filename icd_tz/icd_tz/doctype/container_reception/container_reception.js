@@ -14,6 +14,7 @@ frappe.ui.form.on('Container Reception', {
         }
 
 		frm.trigger("set_queries");
+        frm.trigger("get_places_of_destination");
 	},
     set_queries: (frm) => {
         frm.set_query("movement_order", () => {
@@ -63,6 +64,8 @@ frappe.ui.form.on('Container Reception', {
         });
     },
     container_no: (frm) => {
+        frm.trigger("get_places_of_destination");
+
         if (frm.doc.manifest && frm.doc.container_no) {
             frappe.call({
                 method: "icd_tz.icd_tz.doctype.container_reception.container_reception.get_container_details",
@@ -88,6 +91,9 @@ frappe.ui.form.on('Container Reception', {
                 }
             });
         }
+    },
+    container_location: (frm) => {
+        frm.trigger("get_places_of_destination");
     },
     get_places_of_destination: (frm) => {
         frappe.call({
