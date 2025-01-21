@@ -9,7 +9,6 @@
  "field_order": [
   "section_break_9rl7",
   "in_yard_container_booking",
-  "movement_date",
   "driver_name",
   "column_break_bu4nq",
   "c_and_f_company",
@@ -17,12 +16,12 @@
   "consignee",
   "column_break_aamu",
   "container_id",
+  "m_bl_no",
   "container_no",
-  "original_location",
   "column_break_d1lgj",
-  "posting_date",
-  "posting_time",
   "company",
+  "posting_datetime",
+  "current_container_location",
   "inspection_details_section",
   "inspector_name",
   "inspection_results",
@@ -30,7 +29,7 @@
   "inspection_date",
   "inspection_comments",
   "post_inspection_location",
-  "container_location",
+  "new_container_location",
   "column_break_gdea",
   "additional_note",
   "services_tab",
@@ -45,15 +44,10 @@
    "label": "Details"
   },
   {
-   "default": "now",
-   "fieldname": "movement_date",
-   "fieldtype": "Datetime",
-   "label": "Movement Date"
-  },
-  {
    "fieldname": "in_yard_container_booking",
    "fieldtype": "Link",
-   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "In Yard Container Booking",
    "options": "In Yard Container Booking",
    "reqd": 1
@@ -61,13 +55,6 @@
   {
    "fieldname": "column_break_aamu",
    "fieldtype": "Column Break"
-  },
-  {
-   "fetch_from": "container_id.original_location",
-   "fieldname": "original_location",
-   "fieldtype": "Link",
-   "label": "Original Location",
-   "options": "Container Location"
   },
   {
    "fieldname": "driver_name",
@@ -87,7 +74,7 @@
   },
   {
    "fieldname": "inspection_results",
-   "fieldtype": "Text Editor",
+   "fieldtype": "Small Text",
    "label": "Inspection Results"
   },
   {
@@ -101,7 +88,7 @@
   },
   {
    "fieldname": "inspection_comments",
-   "fieldtype": "Text Editor",
+   "fieldtype": "Small Text",
    "label": "Inspection Comments"
   },
   {
@@ -156,32 +143,25 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "now",
-   "fieldname": "posting_date",
-   "fieldtype": "Date",
-   "label": "Posting Date"
-  },
-  {
-   "default": "now",
-   "fieldname": "posting_time",
-   "fieldtype": "Time",
-   "label": "Posting Time"
-  },
-  {
    "fetch_from": "in_yard_container_booking.clearing_agent",
    "fieldname": "clearing_agent",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Clearing Agent",
    "options": "Clearing Agent",
    "read_only": 1
   },
   {
+   "columns": 1,
    "fetch_from": "container_id.container_no",
    "fieldname": "container_no",
    "fieldtype": "Data",
    "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Container No",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fetch_from": "in_yard_container_booking.company",
@@ -191,15 +171,10 @@
    "options": "Company"
   },
   {
-   "fieldname": "container_location",
-   "fieldtype": "Link",
-   "label": "Container Location",
-   "options": "Container Location"
-  },
-  {
    "fetch_from": "in_yard_container_booking.c_and_f_company",
    "fieldname": "c_and_f_company",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "C & F Company",
    "options": "Clearing and Forwarding Company",
    "read_only": 1
@@ -208,6 +183,7 @@
    "fetch_from": "in_yard_container_booking.consignee",
    "fieldname": "consignee",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Consignee",
    "options": "Consignee"
   },
@@ -215,16 +191,50 @@
    "fetch_from": "in_yard_container_booking.container_id",
    "fieldname": "container_id",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Container ID",
    "options": "Container",
    "read_only": 1,
    "reqd": 1
+  },
+  {
+   "columns": 1,
+   "fetch_from": "container_id.m_bl_no",
+   "fieldname": "m_bl_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "M BL No",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "default": "now",
+   "fieldname": "posting_datetime",
+   "fieldtype": "Datetime",
+   "label": "Posting Datetime",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "container_id.original_location",
+   "fieldname": "current_container_location",
+   "fieldtype": "Link",
+   "label": "Current Container Location",
+   "options": "Container Location",
+   "read_only": 1
+  },
+  {
+   "fieldname": "new_container_location",
+   "fieldtype": "Link",
+   "label": "New Container Location",
+   "options": "Container Location"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-07 10:00:20.033857",
+ "modified": "2025-01-22 01:06:10.270536",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Inspection",

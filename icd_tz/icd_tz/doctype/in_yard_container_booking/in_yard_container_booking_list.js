@@ -56,7 +56,6 @@ var show_dialog = (listview) => {
         size: "large",
         primary_action_label: 'Create Bookings',
         primary_action(values) {
-            console.log(values);
             if (values) {
                 frappe.call({
                     method: 'icd_tz.icd_tz.doctype.in_yard_container_booking.in_yard_container_booking.create_bulk_bookings',
