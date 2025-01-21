@@ -8,7 +8,7 @@ def validate_cf_agent(doc):
     if doc.c_and_f_company and doc.clearing_agent:
         cf_company = frappe.get_cached_value("Clearing Agent", doc.clearing_agent, "c_and_f_company")
         if doc.c_and_f_company != cf_company:
-            frappe.throw(f"The selected Clearing Agent: <b>{doc.clearing_agent}</b> does not belong to the selected Clearing and Forwarding Company: <b>{self.c_and_f_company}</b>")
+            frappe.throw(f"The selected Clearing Agent: <b>{doc.clearing_agent}</b> does not belong to the selected Clearing and Forwarding Company: <b>{doc.c_and_f_company}</b>")
 
 def validate_draft_doc(doctype, docname):
     """
