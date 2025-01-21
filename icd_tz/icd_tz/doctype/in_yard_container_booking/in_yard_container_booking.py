@@ -42,6 +42,9 @@ def create_bulk_bookings(data):
 		},
 		pluck="name"
 	)
+	if len(containers) == 0:
+		frappe.msgprint(f"No Containers found for M BL No: <b>{data.get('m_bl_no')}</b>")
+		return
 
 	count = 0
 	for container_id in containers:

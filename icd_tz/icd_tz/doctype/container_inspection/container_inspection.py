@@ -40,7 +40,8 @@ class ContainerInspection(Document):
             return
         
         container_doc = frappe.get_doc("Container", self.container_id)
-        container_doc.current_location = self.container_location
+        if self.new_container_location:
+            container_doc.current_location = self.new_container_location
         
         for row in self.services:
             if row.status_changed_to and row.status_changed_to != container_doc.freight_indicator:
@@ -75,3 +76,37 @@ class ContainerInspection(Document):
                     self.append("services", {
                         "service": verification_item
                     })
+
+
+@frappe.whitelist()
+def create_bulk_inspections(data):
+    data = frappe.parse_json(data)
+    bookings = frappe.db.get_all(
+		"In Yard Container Booking",
+		filters={
+            "docstatus": 1,
+			"m_bl_no": data.get("m_bl_no"),
+            "container_inspection": ("is", "not set")
+		},
+        fields=["name", "container_id", "inspection_datetime"]
+	)
+    if len(bookings) == 0:
+        frappe.msgprint(f"No submitted Container Bookings found for M BL No: <b>{data.get('m_bl_no')}</b>")
+        return
+    
+    count = 0
+    for booking in bookings:
+        doc = frappe.new_doc("Container Inspection")
+        doc.in_yard_container_booking = booking.name
+        doc.container_id = booking.container_id
+        doc.inspector_name = data.get("inspector_name")
+        doc.inspection_date = booking.inspection_datetime
+        
+        doc.flags.ignore_permissions = True
+        doc.insert()
+        doc.reload()
+
+        if doc.get("name"):
+            count += 1
+
+    return count
