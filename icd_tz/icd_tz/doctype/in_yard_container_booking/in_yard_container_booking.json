@@ -8,21 +8,22 @@
  "field_order": [
   "booking_details_section",
   "company",
-  "booking_date",
-  "booking_time",
+  "posting_datetime",
   "column_break_qpoo6",
   "c_and_f_company",
   "clearing_agent",
   "consignee",
   "column_break_1",
   "container_id",
+  "m_bl_no",
   "container_no",
+  "column_break_qpxpn",
+  "container_size",
   "cargo_description",
   "inspection_scheduling_section",
-  "inspection_location",
+  "inspection_datetime",
   "column_break_qyov",
-  "inspection_date",
-  "inspection_time",
+  "inspection_location",
   "handling_and_charges_section",
   "has_stripping_charges",
   "s_sales_invoice",
@@ -51,27 +52,11 @@
    "label": "Booking Details"
   },
   {
-   "fieldname": "booking_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Booking Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "booking_time",
-   "fieldtype": "Time",
-   "in_list_view": 1,
-   "in_preview": 1,
-   "label": "Booking Time",
-   "reqd": 1
-  },
-  {
    "fetch_from": "container_id.cargo_description",
    "fieldname": "cargo_description",
    "fieldtype": "Small Text",
-   "label": "Cargo Description"
+   "label": "Cargo Description",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_1",
@@ -80,6 +65,8 @@
   {
    "fieldname": "inspection_location",
    "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Inspection Location",
    "options": "Container Location"
   },
@@ -87,21 +74,6 @@
    "fieldname": "inspection_scheduling_section",
    "fieldtype": "Section Break",
    "label": "Inspection Scheduling"
-  },
-  {
-   "fieldname": "inspection_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Inspection Date",
-   "reqd": 1
-  },
-  {
-   "fieldname": "inspection_time",
-   "fieldtype": "Time",
-   "label": "Inspection Time",
-   "reqd": 1
   },
   {
    "fieldname": "handling_and_charges_section",
@@ -132,12 +104,12 @@
   },
   {
    "fieldname": "inspection_log",
-   "fieldtype": "Text",
+   "fieldtype": "Small Text",
    "label": "Inspection Log"
   },
   {
    "fieldname": "movement_log",
-   "fieldtype": "Text",
+   "fieldtype": "Small Text",
    "label": "Movement Log"
   },
   {
@@ -149,8 +121,7 @@
    "fieldname": "documents",
    "fieldtype": "Table",
    "label": "Documents",
-   "options": "Document Attachment",
-   "reqd": 1
+   "options": "Document Attachment"
   },
   {
    "fieldname": "column_break_qyov",
@@ -183,6 +154,9 @@
    "fetch_from": "container_id.container_no",
    "fieldname": "container_no",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Container No",
    "read_only": 1
   },
@@ -213,6 +187,8 @@
   {
    "fieldname": "c_and_f_company",
    "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "C & F company",
    "options": "Clearing and Forwarding Company",
    "reqd": 1
@@ -226,6 +202,8 @@
   {
    "fieldname": "clearing_agent",
    "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Clearing Agent",
    "options": "Clearing Agent",
    "reqd": 1
@@ -235,6 +213,8 @@
    "fetch_from": "container_id.consignee",
    "fieldname": "consignee",
    "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Consignee",
    "options": "Consignee"
   },
@@ -276,12 +256,46 @@
    "label": "Container ID",
    "options": "Container",
    "reqd": 1
+  },
+  {
+   "fieldname": "posting_datetime",
+   "fieldtype": "Datetime",
+   "label": "Posting Datetime",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "container_id.m_bl_no",
+   "fieldname": "m_bl_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "M BL No",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_qpxpn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "inspection_datetime",
+   "fieldtype": "Datetime",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Inspection Datetime"
+  },
+  {
+   "fetch_from": "container_id.size",
+   "fieldname": "container_size",
+   "fieldtype": "Data",
+   "label": "Container Size",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-11 16:30:04.710337",
+ "modified": "2025-01-21 17:35:38.116189",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "In Yard Container Booking",
