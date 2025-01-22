@@ -1,4 +1,7 @@
 frappe.listview_settings['Container Inspection'] = {
+    add_fields: [],
+    hide_name_column: true,
+    
     onload: (listview) => {
         listview.page.add_inner_button(__("Create Bulk Inspections"), () => {
             show_dialog(listview);
@@ -31,7 +34,6 @@ var show_dialog = (listview) => {
         size: "large",
         primary_action_label: 'Create Inspections',
         primary_action(values) {
-            console.log(values);
             if (values) {
                 frappe.call({
                     method: 'icd_tz.icd_tz.doctype.container_inspection.container_inspection.create_bulk_inspections',

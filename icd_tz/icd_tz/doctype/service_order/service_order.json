@@ -16,8 +16,7 @@
   "consignee",
   "column_break_bu4nq",
   "company",
-  "posting_date",
-  "posting_time",
+  "posting_datetime",
   "container_details_section",
   "manifest",
   "vessel_name",
@@ -96,18 +95,6 @@
    "options": "Company"
   },
   {
-   "default": "now",
-   "fieldname": "posting_date",
-   "fieldtype": "Date",
-   "label": "Posting Date"
-  },
-  {
-   "default": "now",
-   "fieldname": "posting_time",
-   "fieldtype": "Time",
-   "label": "Posting Time"
-  },
-  {
    "fieldname": "container_details_section",
    "fieldtype": "Section Break",
    "label": "Container Details"
@@ -122,7 +109,6 @@
    "depends_on": "eval: doc.container_id",
    "fieldname": "port",
    "fieldtype": "Select",
-   "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Port",
@@ -304,12 +290,19 @@
    "in_standard_filter": 1,
    "label": "M B/L No",
    "search_index": 1
+  },
+  {
+   "default": "now",
+   "fieldname": "posting_datetime",
+   "fieldtype": "Datetime",
+   "label": "Posting Datetime",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-12 16:24:17.885095",
+ "modified": "2025-01-22 02:09:40.900414",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Service Order",
