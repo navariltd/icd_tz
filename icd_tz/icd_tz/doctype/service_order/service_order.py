@@ -5,6 +5,7 @@ import frappe
 from frappe.model.document import Document
 from icd_tz.icd_tz.api.utils import validate_cf_agent, validate_draft_doc
 from icd_tz.icd_tz.api.sales_order import get_container_days_to_be_billed
+from icd_tz.icd_tz.api.sales_order import make_sales_order
 
 class ServiceOrder(Document):
 	def before_insert(self):
@@ -382,6 +383,7 @@ class ServiceOrder(Document):
 		
 		return False
 
+
 @frappe.whitelist()
 def create_bulk_service_orders(data):
 	data = frappe.parse_json(data)
@@ -412,3 +414,30 @@ def create_bulk_service_orders(data):
 			count += 1
 
 	return count
+
+
+@frappe.whitelist()
+def create_sales_order(data):
+	data = frappe.parse_json(data)
+	service_orders = frappe.db.get_all(
+		"Service Order",
+		filters={
+			"m_bl_no": data.get("m_bl_no"),
+		},
+        fields=["name", "docstatus", "manifest"]
+	)
+	if len(service_orders) == 0:
+		frappe.msgprint(f"No submitted Sarvice Order found for M BL No: <b>{data.get('m_bl_no')}</b>")
+		return
+	
+	draft_service_orders = [order for order in service_orders if order.docstatus == 0]
+	if len(draft_service_orders) > 0:
+		frappe.msgprint(f"Please submit all draft Service Orders for M BL No: <b>{data.get('m_bl_no')}</b>")
+		return
+
+	return make_sales_order(
+		"Service Order",
+		service_orders[0].name,
+		data.get("m_bl_no"),
+		service_orders[0].manifest
+	)
