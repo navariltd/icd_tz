@@ -1,4 +1,7 @@
 frappe.listview_settings['In Yard Container Booking'] = {
+    add_fields: [],
+    hide_name_column: true,
+    
     onload: (listview) => {
         listview.page.add_inner_button(__("Create Bulk Bookings"), () => {
             show_dialog(listview);
