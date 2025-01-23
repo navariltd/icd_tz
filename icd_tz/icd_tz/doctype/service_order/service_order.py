@@ -5,6 +5,7 @@ import frappe
 from frappe.model.document import Document
 from icd_tz.icd_tz.api.utils import validate_cf_agent, validate_draft_doc
 from icd_tz.icd_tz.api.sales_order import get_container_days_to_be_billed
+from icd_tz.icd_tz.api.sales_order import make_sales_order
 
 class ServiceOrder(Document):
 	def before_insert(self):
@@ -35,18 +36,20 @@ class ServiceOrder(Document):
 			self.port = container_reception_doc.port
 			self.place_of_destination = container_reception_doc.place_of_destination
 			self.country_of_destination = container_reception_doc.country_of_destination
-			self.m_bl_no = frappe.get_cached_value("Container", self.container_id, "m_bl_no")
+			self.m_bl_no = container_reception_doc.m_bl_no
 
-			(
-				self.container_inspection,
-				self.c_and_f_company,
-				self.clearing_agent,
-				self.consignee
-			) = frappe.db.get_value(
-				"Container Inspection",
-				{"container_id": self.container_id},
-				["name", "c_and_f_company", "clearing_agent", "consignee"]
-			)
+
+			if not self.container_inspection:
+				(
+					self.container_inspection,
+					self.c_and_f_company,
+					self.clearing_agent,
+					self.consignee
+				) = frappe.db.get_value(
+					"Container Inspection",
+					{"container_id": self.container_id},
+					["name", "c_and_f_company", "clearing_agent", "consignee"]
+				)
 
 			if not self.container_inspection:
 				booking_info = frappe.db.get_value(
@@ -379,3 +382,62 @@ class ServiceOrder(Document):
 			return True
 		
 		return False
+
+
+@frappe.whitelist()
+def create_bulk_service_orders(data):
+	data = frappe.parse_json(data)
+	inspections = frappe.db.get_all(
+		"Container Inspection",
+		filters={
+            "docstatus": 1,
+			"m_bl_no": data.get("m_bl_no"),
+		},
+        fields=["name", "container_id"]
+	)
+	if len(inspections) == 0:
+		frappe.msgprint(f"No submitted Container Inspection found for M BL No: <b>{data.get('m_bl_no')}</b>")
+		return
+    
+	count = 0
+	for inspection in inspections:
+		doc = frappe.new_doc("Service Order")
+		doc.container_inspection = inspection.name
+		doc.container_id = inspection.container_id
+		doc.m_bl_no = data.get("m_bl_no")
+        
+		doc.flags.ignore_permissions = True
+		doc.save()
+		doc.reload()
+
+		if doc.get("name"):
+			count += 1
+
+	return count
+
+
+@frappe.whitelist()
+def create_sales_order(data):
+	data = frappe.parse_json(data)
+	service_orders = frappe.db.get_all(
+		"Service Order",
+		filters={
+			"m_bl_no": data.get("m_bl_no"),
+		},
+        fields=["name", "docstatus", "manifest"]
+	)
+	if len(service_orders) == 0:
+		frappe.msgprint(f"No submitted Sarvice Order found for M BL No: <b>{data.get('m_bl_no')}</b>")
+		return
+	
+	draft_service_orders = [order for order in service_orders if order.docstatus == 0]
+	if len(draft_service_orders) > 0:
+		frappe.msgprint(f"Please submit all draft Service Orders for M BL No: <b>{data.get('m_bl_no')}</b>")
+		return
+
+	return make_sales_order(
+		"Service Order",
+		service_orders[0].name,
+		data.get("m_bl_no"),
+		service_orders[0].manifest
+	)
