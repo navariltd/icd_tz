@@ -9,7 +9,7 @@
  "engine": "InnoDB",
  "field_order": [
   "c_and_f_company",
-  "agent_id",
+  "tafer_id",
   "agent_name",
   "column_break_mdjeq",
   "email",
@@ -24,7 +24,6 @@
    "allow_in_quick_entry": 1,
    "fieldname": "agent_name",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Agent Full Name",
@@ -33,7 +32,7 @@
   {
    "allow_in_quick_entry": 1,
    "fieldname": "other_details",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Other details"
   },
   {
@@ -76,16 +75,6 @@
    "label": "Introduction Letter"
   },
   {
-   "allow_in_quick_entry": 1,
-   "fieldname": "agent_id",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Agent ID",
-   "reqd": 1
-  },
-  {
    "fieldname": "column_break_uzkpn",
    "fieldtype": "Column Break"
   },
@@ -95,11 +84,21 @@
    "fieldname": "disabled",
    "fieldtype": "Check",
    "label": "DIsabled"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "tafer_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Tafer ID",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-18 18:48:37.139414",
+ "modified": "2025-01-22 09:16:18.680721",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Clearing Agent",
