@@ -15,8 +15,8 @@
   "arrival_date",
   "column_break_8s1tw",
   "company",
-  "sunmitted_date",
-  "sunmitted_time",
+  "submitted_date",
+  "submitted_time",
   "submitted_by",
   "container_details_section",
   "container_id",
@@ -180,18 +180,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "sunmitted_date",
-   "fieldtype": "Date",
-   "label": "Sunmitted Date",
-   "read_only": 1
-  },
-  {
-   "fieldname": "sunmitted_time",
-   "fieldtype": "Time",
-   "label": "Sunmitted Time",
-   "read_only": 1
-  },
-  {
    "fieldname": "submitted_by",
    "fieldtype": "Data",
    "label": "Submitted By",
@@ -268,13 +256,25 @@
    "fieldname": "license_no",
    "fieldtype": "Data",
    "label": "License No"
+  },
+  {
+   "fieldname": "submitted_date",
+   "fieldtype": "Date",
+   "label": "Submitted Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "submitted_time",
+   "fieldtype": "Time",
+   "label": "Submitted Time",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-13 13:21:06.890642",
+ "modified": "2025-01-24 21:07:19.227064",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Gate Pass",
