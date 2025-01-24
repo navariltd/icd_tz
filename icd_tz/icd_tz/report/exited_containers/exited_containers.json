@@ -9,8 +9,9 @@
  "filters": [],
  "idx": 0,
  "is_standard": "Yes",
+ "javascript": "",
  "letter_head": "",
- "modified": "2025-01-22 06:41:18.092240",
+ "modified": "2025-01-24 09:42:06.599639",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Exited Containers",
@@ -19,5 +20,9 @@
  "ref_doctype": "Gate Pass",
  "report_name": "Exited Containers",
  "report_type": "Script Report",
- "roles": []
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ]
 }
