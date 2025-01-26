@@ -2,8 +2,8 @@
 # For license information, please see license.txt
 
 import frappe
-from frappe.utils import now_datetime
 from frappe.model.document import Document
+from frappe.utils import now_datetime, nowdate
 
 
 class InYardContainerBooking(Document):
@@ -19,6 +19,12 @@ class InYardContainerBooking(Document):
 	
 	def before_submit(self):
 		self.posting_datetime = now_datetime()
+	
+	def on_submit(self):
+		frappe.db.set_value("Container", self.container_id, {
+			# "status": "Booked"
+			"booking_date": nowdate()
+		})
 
 
 def validate_cf_agent(c_and_f_company, clearing_agent):
