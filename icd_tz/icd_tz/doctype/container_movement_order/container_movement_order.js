@@ -2,9 +2,6 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Container Movement Order", {
-    setup: (frm) => {
-        frm.trigger("get_containers");
-    },
 	refresh: (frm) => {
         frm.trigger("set_queries");
         frm.trigger("create_container_reception");
@@ -69,7 +66,7 @@ frappe.ui.form.on("Container Movement Order", {
                     "movement_order": frm.doc.name,
                     "manifest": frm.doc.manifest,
                     "ship": frm.doc.ship,
-                    "ship_dc_date": frm.doc.received_date,
+                    "ship_dc_date": frm.doc.ship_dc_date,
                     "voyage_no": frm.doc.voyage_no,
                     "port": frm.doc.port,
                     "container_no": frm.doc.container_no,
@@ -81,7 +78,7 @@ frappe.ui.form.on("Container Movement Order", {
                     "transporter": frm.doc.transporter,
                     "cargo_type": frm.doc.cargo_type,
                     "m_bl_no": frm.doc.m_bl_no,
-                    "container_count": frm.doc.container_count
+                    "container_count": frm.doc.container_count,
                 }, doc => {});
             }).addClass('btn-primary');
         }
@@ -101,7 +98,7 @@ frappe.ui.form.on("Container Movement Order", {
                         frm.set_value("company", data[0].company);
                         frm.set_value("ship", data[0].vessel_name);
                         frm.set_value("voyage_no", data[0].voyage_no);
-                        frm.set_value("received_date", data[0].arrival_date);
+                        frm.set_value("ship_dc_date", data[0].arrival_date);
 
                         frm.refresh_fields();
 

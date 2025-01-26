@@ -19,8 +19,8 @@
   "port",
   "voyage_no",
   "column_break_75qur",
-  "ship_dc_date",
   "received_date",
+  "ship_dc_date",
   "column_break_azrq",
   "icd_time_in",
   "port_time_out",
@@ -35,13 +35,13 @@
   "container_no",
   "size",
   "container_count",
+  "seal_no_2",
   "column_break_zcgxx",
   "volume",
   "weight",
   "weight_unit",
-  "cargo_classification",
+  "cargo_type",
   "seal_no_1",
-  "seal_no_2",
   "seal_no_3",
   "column_break_twjr",
   "transporter",
@@ -78,7 +78,8 @@
    "label": "Details"
   },
   {
-   "fetch_from": "movement_order.received_date",
+   "description": "Carry in Date",
+   "fetch_from": "movement_order.ship_dc_date",
    "fetch_if_empty": 1,
    "fieldname": "received_date",
    "fieldtype": "Date",
@@ -139,9 +140,9 @@
    "fetch_from": "movement_order.size",
    "fetch_if_empty": 1,
    "fieldname": "size",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
    "label": "Container Size (FT)",
-   "options": "\n20\n40\n45\n22G1\n45G1"
+   "read_only": 1
   },
   {
    "fieldname": "weight",
@@ -319,13 +320,14 @@
    "read_only": 1
   },
   {
-   "fetch_from": "movement_order.movement_date",
-   "fetch_if_empty": 1,
+   "description": "Ship Arrival Date",
+   "fetch_from": "movement_order.ship_dc_date",
    "fieldname": "ship_dc_date",
    "fieldtype": "Date",
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Ship D/C Date",
+   "read_only": 1,
    "search_index": 1
   },
   {
@@ -442,14 +444,6 @@
    "read_only": 1
   },
   {
-   "fetch_from": "movement_order.cargo_classification",
-   "fieldname": "cargo_classification",
-   "fieldtype": "Data",
-   "label": "Cargo Classification",
-   "read_only": 1,
-   "search_index": 1
-  },
-  {
    "fetch_from": "movement_order.transporter",
    "fieldname": "transporter",
    "fieldtype": "Link",
@@ -485,12 +479,19 @@
    "label": "Container Count",
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fetch_from": "movement_order.cargo_type",
+   "fieldname": "cargo_type",
+   "fieldtype": "Data",
+   "label": "Cargo Type",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-12 21:56:05.025132",
+ "modified": "2025-01-27 01:11:34.765062",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",

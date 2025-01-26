@@ -11,7 +11,6 @@
   "container_details_section",
   "container_no",
   "m_bl_no",
-  "company",
   "type_of_container",
   "no_of_packages",
   "column_break_iq9ob",
@@ -26,32 +25,47 @@
   "weight_unit",
   "column_break_gwgiu",
   "size",
-  "package_unit",
+  "cargo_type",
+  "container_count",
   "cargo_details_section",
+  "consignee",
   "sline",
+  "sline_code",
+  "ship",
+  "voyage_no",
+  "column_break_6s4dw",
   "port_of_loading",
   "port_of_destination",
-  "customs_status",
-  "column_break_6s4dw",
-  "consignee",
   "abbr_for_destination",
   "place_of_delivery",
+  "column_break_jhhs",
   "place_of_destination",
   "country_of_destination",
-  "column_break_jhhs",
+  "package_unit",
+  "column_break_vdbo",
   "cargo_description",
-  "movement_details_section",
-  "status",
-  "original_location",
-  "current_location",
-  "container_reception",
-  "column_break_lduxs",
+  "date_reference_section",
   "arrival_date",
   "departure_date",
-  "column_break_qkrn",
+  "column_break_votc",
+  "received_date",
+  "booking_date",
+  "column_break_ztec",
   "last_inspection_date",
-  "next_inspection_date",
+  "movement_details_section",
+  "original_location",
+  "current_location",
+  "column_break_lduxs",
+  "status",
+  "customs_status",
+  "column_break_qkrn",
   "naming_series",
+  "references_section",
+  "manifest",
+  "movement_order",
+  "column_break_uxlo",
+  "container_reception",
+  "company",
   "tab_break_edoll",
   "total_days",
   "column_break_dlhui",
@@ -139,6 +153,7 @@
    "options": "\nIn Yard\nIn Transit\nAt Port\nDelivered\nOn Hold"
   },
   {
+   "description": "Ship D/C Date",
    "fieldname": "arrival_date",
    "fieldtype": "Date",
    "label": "Arrival Date"
@@ -156,12 +171,6 @@
    "fieldname": "last_inspection_date",
    "fieldtype": "Date",
    "label": "Last Inspection Date"
-  },
-  {
-   "fieldname": "next_inspection_date",
-   "fieldtype": "Date",
-   "label": "Next Inspection Date",
-   "read_only": 1
   },
   {
    "fieldname": "container_no",
@@ -188,9 +197,9 @@
   {
    "fieldname": "container_reception",
    "fieldtype": "Link",
-   "hidden": 1,
    "label": "Container Reception",
-   "options": "Container Reception"
+   "options": "Container Reception",
+   "read_only": 1
   },
   {
    "fieldname": "seal_no_3",
@@ -257,7 +266,8 @@
    "fieldtype": "Link",
    "hidden": 1,
    "label": "Company",
-   "options": "Company"
+   "options": "Company",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_gwgiu",
@@ -434,12 +444,94 @@
    "fieldname": "abbr_for_destination",
    "fieldtype": "Data",
    "label": "Abbr for Destination"
+  },
+  {
+   "description": "Carry In Date",
+   "fieldname": "received_date",
+   "fieldtype": "Date",
+   "label": "Received Date",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "date_reference_section",
+   "fieldtype": "Section Break",
+   "label": "Date Reference"
+  },
+  {
+   "fieldname": "column_break_votc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "booking_date",
+   "fieldtype": "Date",
+   "label": "Booking Date"
+  },
+  {
+   "fieldname": "column_break_ztec",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cargo_type",
+   "fieldtype": "Data",
+   "label": "Cargo Type"
+  },
+  {
+   "fieldname": "container_count",
+   "fieldtype": "Data",
+   "label": "Container Count"
+  },
+  {
+   "fieldname": "column_break_vdbo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "references_section",
+   "fieldtype": "Section Break",
+   "label": "References"
+  },
+  {
+   "fetch_from": "container_reception.manifest",
+   "fieldname": "manifest",
+   "fieldtype": "Link",
+   "label": "Manifest",
+   "options": "Manifest",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "container_reception.movement_order",
+   "fieldname": "movement_order",
+   "fieldtype": "Link",
+   "label": "Movement Order",
+   "options": "Container Movement Order",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_uxlo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sline_code",
+   "fieldtype": "Data",
+   "label": "Sline Code"
+  },
+  {
+   "fetch_from": "movement_order.ship",
+   "fieldname": "ship",
+   "fieldtype": "Data",
+   "label": "Ship"
+  },
+  {
+   "fetch_from": "movement_order.voyage_no",
+   "fieldname": "voyage_no",
+   "fieldtype": "Data",
+   "label": "Voyage No"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-22 11:12:20.403517",
+ "modified": "2025-01-27 01:57:12.586805",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",
