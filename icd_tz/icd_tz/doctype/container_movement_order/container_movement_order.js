@@ -111,6 +111,9 @@ frappe.ui.form.on("Container Movement Order", {
             });
         }
     },
+    select_container: (frm) => {
+        frm.trigger("get_containers");
+    },
 });
 
 
