@@ -91,6 +91,14 @@ frappe.ui.form.on('Container Reception', {
                 }
             });
         }
+        if (frm.doc.container_no) {
+            if (frm.doc.cargo_type == 'Local') {
+                frm.set_value("place_of_destination", "Local");
+                frm.set_value("country_of_destination", "Local");
+                frm.refresh_field("place_of_destination");
+                frm.refresh_field("country_of_destination");
+            }
+        }
     },
     container_location: (frm) => {
         frm.trigger("get_places_of_destination");
