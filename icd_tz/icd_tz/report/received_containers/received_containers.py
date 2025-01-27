@@ -21,6 +21,12 @@ def get_columns():
     """Define columns for the report"""
     return [
         {
+            "fieldname": "bl_no",
+            "label": _("B/L No."),
+            "fieldtype": "Data",
+            "width": 120
+        },
+        {
             "fieldname": "discharge_date",
             "label": _("Discharge Date"),
             "fieldtype": "Date",
@@ -45,12 +51,7 @@ def get_columns():
             "fieldtype": "Data",
             "width": 120
         },
-        {
-            "fieldname": "bl_no",
-            "label": _("B/L No."),
-            "fieldtype": "Data",
-            "width": 120
-        },
+        
         {
             "fieldname": "size",
             "label": _("Size"),
@@ -103,6 +104,7 @@ def get_data(filters):
             c.consignee AS consignee_name,
             c.cargo_description AS description_of_goods,
             c.sline AS shipping_line,
+            cr.cargo_classification AS cargo_type,
             cr.ship AS vessel
         FROM 
             `tabContainer` c
@@ -117,24 +119,11 @@ def get_data(filters):
     return data
 
 def get_conditions(filters):
-    """
-    Generate SQL conditions based on filters
-    Args:
-        filters (dict): Filter parameters
-    Returns:
-        str: SQL WHERE conditions
-    """
     conditions = []
-
     if filters.get("from_date"):
         conditions.append("cr.ship_dc_date >= %(from_date)s")
     if filters.get("to_date"):
         conditions.append("cr.ship_dc_date <= %(to_date)s")
-    if filters.get("container_no"):
-        conditions.append("c.container_no = %(container_no)s")
-    if filters.get("shipping_line"):
-        conditions.append("c.sline = %(shipping_line)s")
-    if filters.get("vessel"):
-        conditions.append("cr.ship = %(vessel)s")
-
+    if filters.get("bl_no"):
+        conditions.append("c.m_bl_no = %(bl_no)s")
     return " AND " + " AND ".join(conditions) if conditions else ""

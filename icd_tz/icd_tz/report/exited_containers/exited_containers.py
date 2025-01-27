@@ -15,7 +15,9 @@ def execute(filters=None):
     Returns:
         tuple: (columns, data)
     """
-    return get_columns(), get_data(filters)
+    columns=get_columns()
+    data= get_data(filters)
+    return columns, data
 
 def get_columns():
     """
@@ -85,40 +87,7 @@ def get_columns():
             "width": 120
         }
     ]
-
-def get_conditions(filters):
-    """
-    Generate SQL conditions based on filters
-    Args:
-        filters (dict): Filter parameters
-    Returns:
-        str: SQL WHERE conditions
-    """
-    if not filters:
-        return ""
-        
-    conditions = []
     
-    if filters.get("from_date"):
-        conditions.append("c.arrival_date >= %(from_date)s")
-        
-    if filters.get("to_date"):
-        conditions.append("c.departure_date <= %(to_date)s")
-        
-    if filters.get("container_no"):
-        conditions.append("c.container_no = %(container_no)s")
-        
-    if filters.get("shipping_line"):
-        conditions.append("c.sline = %(shipping_line)s")
-        
-    if filters.get("vessel_name"):
-        conditions.append("gp.vessel_name = %(vessel_name)s")
-        
-    if filters.get("bl_no"):
-        conditions.append("c.m_bl_no = %(bl_no)s")
-        
-    return " AND " + " AND ".join(conditions) if conditions else ""
-
 def get_data(filters):
     """
     Fetch and return report data for Exited Containers
@@ -127,56 +96,55 @@ def get_data(filters):
     Returns:
         list: List of dictionaries containing report data
     """
-    try:
-        conditions = get_conditions(filters)
-        
-        query = """
-            SELECT DISTINCT
-                c.m_bl_no as bl_no,
-                c.container_no,
-                # c.type_of_container,
-                c.arrival_date,
-                c.departure_date,
-                c.port_of_destination,
-                IFNULL(c.consignee, gp.consignee) as consignee_name,
-                IFNULL(gp.goods_description, c.cargo_description) as goods_description,
-                IFNULL(c.sline, gp.sline) as shipping_line,
-                gp.vessel_name
-            FROM 
-                `tabContainer` c
-            INNER JOIN 
-                `tabGate Pass` gp ON c.name = gp.container_id
-            WHERE 
-                gp.docstatus = 1 
-                {conditions}
-            ORDER BY 
-                c.modified DESC
-        """.format(conditions=conditions)
-        
-        return frappe.db.sql(query, filters, as_dict=1)
-        
-    except Exception as e:
-        frappe.log_error(
-            message=f"Error in Exited Containers Report: {str(e)}\nQuery: {query}",
-            title="Exited Containers Report Error"
-        )
-        return []
-
-def validate_data_exists():
-    """
-    Validate that data exists in required tables
-    Returns:
-        bool: True if data exists, False otherwise
-    """
-    gate_pass_count = frappe.db.count('Gate Pass', {'docstatus': 1})
-    container_count = frappe.db.count('Container')
     
-    if not gate_pass_count:
-        frappe.msgprint(_("No submitted Gate Pass records found"))
-        return False
+    conditions = get_conditions(filters)
         
-    if not container_count:
-        frappe.msgprint(_("No Container records found"))
-        return False
+    query = f"""
+        SELECT
+            c.m_bl_no as bl_no,
+            c.container_no,
+            # c.type_of_container,
+            c.arrival_date,
+            c.departure_date,
+            c.port_of_destination,
+            IFNULL(c.consignee, gp.consignee) as consignee_name,
+            IFNULL(gp.goods_description, c.cargo_description) as goods_description,
+            IFNULL(c.sline, gp.sline) as shipping_line,
+            gp.vessel_name
+        FROM 
+            `tabContainer` c
+        LEFT JOIN
+            `tabGate Pass` gp ON c.name = gp.container_id
+        WHERE 
+            gp.docstatus = 1 
+            {conditions}
+        ORDER BY 
+            c.modified DESC
+    """.format(conditions=conditions)
         
-    return True
+    data=frappe.db.sql(query, filters, as_dict=1)
+    return data
+        
+
+def get_conditions(filters):
+    """
+    Generate SQL conditions based on filters
+    Args:
+        filters (dict): Filter parameters
+    Returns:
+        str: SQL WHERE conditions
+    """    
+    conditions = []
+    
+    if filters.get("from_date"):
+        conditions.append("c.arrival_date >= %(from_date)s")
+        
+    if filters.get("to_date"):
+        conditions.append("c.departure_date <= %(to_date)s")
+    
+    if filters.get("bl_no"):
+        conditions.append("c.m_bl_no = %(bl_no)s")
+        
+    return " AND " + " AND ".join(conditions) if conditions else ""
+
+
