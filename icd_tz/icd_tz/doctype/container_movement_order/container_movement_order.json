@@ -14,17 +14,18 @@
   "column_break_wyva",
   "m_bl_no",
   "container_no",
+  "select_container",
   "column_break_tnol5",
   "size",
   "container_count",
+  "cargo_type",
   "shipment_details_section",
   "ship",
   "port",
   "voyage_no",
   "column_break_sjzfz",
   "movement_date",
-  "received_date",
-  "cargo_classification",
+  "ship_dc_date",
   "column_break_bvub",
   "icd_time_in",
   "port_time_out",
@@ -62,13 +63,6 @@
    "fieldtype": "Data",
    "label": "Voyage No",
    "read_only": 1
-  },
-  {
-   "fetch_from": "manifest.arrival_date",
-   "fetch_if_empty": 1,
-   "fieldname": "received_date",
-   "fieldtype": "Date",
-   "label": "Received Date"
   },
   {
    "fetch_from": "manifest.port",
@@ -117,9 +111,10 @@
   {
    "depends_on": "eval: doc.container_no",
    "fieldname": "size",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
+   "in_preview": 1,
    "label": "Size (FT)",
-   "options": "\n20\n40\n45\n22G1\n45G1"
+   "read_only": 1
   },
   {
    "fieldname": "signatures_and_time_tab",
@@ -209,7 +204,7 @@
   {
    "depends_on": "eval: doc.manifest",
    "fieldname": "container_no",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
@@ -278,12 +273,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "cargo_classification",
-   "fieldtype": "Data",
-   "label": "Cargo Classification",
-   "read_only": 1
-  },
-  {
    "fieldname": "m_bl_no",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -300,32 +289,45 @@
    "label": "Container Count",
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "cargo_type",
+   "fieldtype": "Data",
+   "label": "Cargo Type",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "depends_on": "eval: doc.docstatus == 0;",
+   "fieldname": "select_container",
+   "fieldtype": "Button",
+   "label": "Select Container"
+  },
+  {
+   "description": "Ship Arrival Date",
+   "fetch_from": "manifest.arrival_date",
+   "fetch_if_empty": 1,
+   "fieldname": "ship_dc_date",
+   "fieldtype": "Date",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Ship D/C Date",
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-13 13:15:40.031994",
+ "modified": "2025-01-27 01:12:51.345052",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Movement Order",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
- "search_fields": "manifest, container_no, movement_date, received_date, transporter, driver, driver_license, truck, trailer",
+ "permissions": [],
+ "search_fields": "manifest, container_no, movement_date, ship_dc_date, transporter, driver, driver_license, truck, trailer",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

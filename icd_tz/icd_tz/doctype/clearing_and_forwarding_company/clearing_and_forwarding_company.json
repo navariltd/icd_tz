@@ -12,7 +12,7 @@
   "phone",
   "email",
   "column_break_lrm7o",
-  "tafer_id",
+  "license_no",
   "tin",
   "vrn",
   "column_break_jaxj",
@@ -37,7 +37,6 @@
    "allow_in_quick_entry": 1,
    "fieldname": "company_name",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Company Name",
@@ -48,7 +47,6 @@
    "allow_in_quick_entry": 1,
    "fieldname": "phone",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "in_preview": 1,
    "label": "Phone",
    "options": "Phone",
@@ -58,7 +56,6 @@
    "allow_in_quick_entry": 1,
    "fieldname": "email",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "in_preview": 1,
    "label": "Email",
    "options": "Email",
@@ -67,13 +64,6 @@
   {
    "fieldname": "column_break_lrm7o",
    "fieldtype": "Column Break"
-  },
-  {
-   "allow_in_quick_entry": 1,
-   "fieldname": "tafer_id",
-   "fieldtype": "Data",
-   "label": "Tafer ID",
-   "reqd": 1
   },
   {
    "allow_in_quick_entry": 1,
@@ -156,11 +146,21 @@
    "label": "Customer",
    "options": "Customer",
    "read_only": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "license_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "License No",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-18 17:07:21.901355",
+ "modified": "2025-01-22 09:13:44.570947",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Clearing and Forwarding Company",

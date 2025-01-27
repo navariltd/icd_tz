@@ -6,6 +6,9 @@ from frappe.query_builder import DocType
 from frappe.model.document import Document
 from frappe.utils import get_url_to_form, cint
 
+mf = DocType("Manifest")
+mb = DocType("MasterBI")
+cd = DocType("Containers Detail")
 cmo = DocType("Container Movement Order")
 
 class ContainerMovementOrder(Document):
@@ -97,51 +100,44 @@ class ContainerMovementOrder(Document):
 			self.container_count = f"{current_count + 1}/{total_count}"
 
 
-
 @frappe.whitelist()
-def get_manifest_details(manifest):
-	"""Get details of a manifest"""
+def get_manifest_details(manifest, m_bl_no=None):
+	"""Get details of a manifest and container information"""
 	
-	details = frappe.db.get_value(
-		"Manifest",
-		manifest,
-		["mrn", "vessel_name", "tpa_uid", "voyage_no", "arrival_date", "departure_date", "call_sign", "company"], 
-		as_dict=True
-	)
-
-	containers = frappe.db.get_all(
-		"Containers Detail",
-		filters={"parent": manifest, "has_order": 0},
-		fields=["container_no"],
-		pluck="container_no"
-	)
-
-	if len(containers) > 0:
-		details["containers"] = containers
-
-	return details
-
-@frappe.whitelist()
-def get_container_size_from_manifest(manifest, container_no):
-	"""Get the size of the container from the manifest"""
-	
-	container_info = frappe.db.get_value(
-		"Containers Detail",
-		{"parent": manifest, "container_no": container_no},
-		["container_size", "m_bl_no"],
-		as_dict=True
-	)
-
-	if container_info.m_bl_no:
-		cargo_classification = frappe.db.get_value(
-			"MasterBI",
-			{"parent": manifest, "m_bl_no": container_info.m_bl_no},
-			"cargo_classification",
+	query = (
+        frappe.qb.from_(mf)
+		.inner_join(cd)
+		.on(mf.name == cd.parent)
+        .inner_join(mb)
+        .on(cd.m_bl_no == mb.m_bl_no)
+        .select(
+			mf.mrn,
+			mf.vessel_name,
+			mf.tpa_uid,
+			mf.voyage_no,
+			mf.arrival_date,
+			mf.departure_date,
+			mf.call_sign,
+			mf.company,
+            cd.container_no,
+            cd.m_bl_no,
+            cd.container_size,
+            mb.cargo_classification.as_("cargo_type")
+        )
+        .where(
+			(mf.name == manifest)
+			& (cd.has_order == 0)
+			& (cd.parent == manifest)
+			& (mb.parent == manifest)
 		)
+    )
 
-		if cargo_classification == "IM":
-			container_info["cargo_classification"] = "Local"
-		elif cargo_classification == "TR":
-			container_info["cargo_classification"] = "Transit"
-
-	return container_info
+	if m_bl_no:
+		query = query.where(
+			(mb.m_bl_no == m_bl_no)
+			& (cd.m_bl_no == m_bl_no)
+		)
+	
+	details = query.run(as_dict=True)
+	
+	return details

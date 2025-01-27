@@ -1,12 +1,6 @@
 # Copyright (c) 2025, elius mgani and contributors
 # For license information, please see license.txt
 
-# import frappe
-
-
-## Copyright (c) 2024, ICD TZ and contributors
-# For license information, please see license.txt
-
 import frappe
 from frappe import _
 

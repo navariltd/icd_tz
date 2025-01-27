@@ -56,13 +56,17 @@ class ContainerReception(Document):
 		container.seal_no_1 = self.seal_no_1
 		container.seal_no_2 = self.seal_no_2
 		container.seal_no_3 = self.seal_no_3
-		container.port_of_origin = self.port
 		container.port_of_destination = self.port
-		container.arrival_date = self.received_date
+		container.arrival_date = self.ship_dc_date
+		container.received_date = self.received_date
 		container.original_location = self.container_location
 		container.current_location = self.container_location
 		container.place_of_destination = self.place_of_destination
 		container.country_of_destination = self.country_of_destination
+		container.manifest = self.manifest
+		container.movement_order = self.movement_order
+		container.m_bl_no = self.m_bl_no
+		container.container_count = self.container_count
 		container.status = "In Yard"
 
 		container.append("container_dates", {
