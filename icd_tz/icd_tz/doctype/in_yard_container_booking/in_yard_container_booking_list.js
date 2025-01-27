@@ -7,6 +7,9 @@ frappe.listview_settings['In Yard Container Booking'] = {
             show_dialog(listview);
         }).removeClass("btn-default").addClass("btn-info btn-sm");
 
+        listview.page.add_inner_button(__("View Booking Report"), () => {
+            frappe.set_route("query-report", "Container Booking");
+        }).removeClass("btn-default").addClass("btn-secondary btn-sm");
     },
     button: {
         show: function(doc) {
