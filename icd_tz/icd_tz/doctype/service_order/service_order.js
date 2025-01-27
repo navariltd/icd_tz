@@ -4,13 +4,9 @@
 frappe.ui.form.on('Service Order', {
 	refresh: (frm) =>{
 		frm.trigger("set_filters");
-		frm.trigger("make_sales_order_for_single_service_order");
-		frm.trigger("make_sales_order_for_multilple_service_order");
 	},
 	onload: (frm) => {
 		frm.trigger("set_filters");
-		frm.trigger("make_sales_order_for_single_service_order");
-		frm.trigger("make_sales_order_for_multilple_service_order");
 	},
 	set_filters: (frm) => {
 		frm.set_query("service", "services", () => {
