@@ -40,3 +40,14 @@ def validate_qty_storage_item(doc):
             elif qty > len(child_references):
                 frappe.throw(f"Qty: {qty} of the item: <b>{item.item_code}</b> cannot be greater than {len(child_references)} of container references")
         
+
+@frappe.whitelist()
+def submit_doc(doc_type, doc_name):
+    """
+    Submit the document
+    """
+
+    doc = frappe.get_doc(doc_type, doc_name)
+    doc.submit()
+
+    return True
