@@ -7,7 +7,38 @@ frappe.listview_settings['Container Inspection'] = {
             show_dialog(listview);
         }).removeClass("btn-default").addClass("btn-info btn-sm");
 
-    }
+    },
+    button: {
+        show: function(doc) {
+            return doc.docstatus === 0;
+        },
+        get_label: function() {
+          return __("<strong>Submit</strong>");
+        },
+        get_description: function(doc) {
+          return __("Submit {0}", [
+            `${__(doc.name)}: ${doc.container_no}`
+          ]);
+        },
+        action: function(doc) {
+            frappe.call({
+                method: 'icd_tz.icd_tz.api.utils.submit_doc',
+                args: {
+                    doc_type: 'Container Inspection',
+                    doc_name: doc.name
+                },
+                freeze: true,
+                freeze_message: __('<i class="fa fa-spinner fa-spin fa-4x"></i>'),
+                callback: function(response) {
+                    if (response.message) {
+                        frappe.show_alert(__("Container Inspection: {0} submitted successfully.", [doc.name]), 5);
+                    } else {
+                        frappe.show_alert(__("Failed to submit Container Inspection {0}.", [doc.name]), 5);
+                    }
+                }
+            });
+        },
+    },
 }
 
 var show_dialog = (listview) => {

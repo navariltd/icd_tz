@@ -47,6 +47,7 @@ class ContainerInspection(Document):
             if row.status_changed_to and row.status_changed_to != container_doc.freight_indicator:
                 container_doc.freight_indicator = row.status_changed_to
         
+        container_doc.last_inspection_date = nowdate()
         container_doc.save(ignore_permissions=True)
 
     @frappe.whitelist()
