@@ -32,6 +32,7 @@ app_license = "MIT"
 doctype_list_js = {
     "Custom Field": "icd_tz/patches/custom_field.js",
     "Property Setter": "icd_tz/patches/property_setter.js",
+    "Sales Order": "icd_tz/api/sales_order_list.js"
 }
 
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
