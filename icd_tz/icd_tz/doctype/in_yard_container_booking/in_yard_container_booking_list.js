@@ -1,5 +1,5 @@
 frappe.listview_settings['In Yard Container Booking'] = {
-    add_fields: [],
+    add_fields: ['container_no', 'doctype'],
     hide_name_column: true,
     
     onload: (listview) => {
@@ -7,7 +7,38 @@ frappe.listview_settings['In Yard Container Booking'] = {
             show_dialog(listview);
         }).removeClass("btn-default").addClass("btn-info btn-sm");
 
-    }
+    },
+    button: {
+        show: function(doc) {
+            return doc.docstatus === 0;
+        },
+        get_label: function() {
+          return __("Submit");
+        },
+        get_description: function(doc) {
+          return __("Submit {0}", [
+            `${__(doc.name)}: ${doc.container_no}`
+          ]);
+        },
+        action: function(doc) {
+            frappe.call({
+                method: 'icd_tz.icd_tz.api.utils.submit_doc',
+                args: {
+                    doc_type: 'In Yard Container Booking',
+                    doc_name: doc.name
+                },
+                freeze: true,
+                freeze_message: __('<i class="fa fa-spinner fa-spin fa-4x"></i>'),
+                callback: function(response) {
+                    if (response.message) {
+                        frappe.show_alert(__("Booking: {0} submitted successfully.", [doc.name]), 5);
+                    } else {
+                        frappe.show_alert(__("Failed to submit Booking {0}.", [doc.name]), 5);
+                    }
+                }
+            });
+        },
+    },
 }
 
 var show_dialog = (listview) => {
