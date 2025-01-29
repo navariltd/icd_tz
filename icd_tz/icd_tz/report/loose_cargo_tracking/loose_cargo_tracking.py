@@ -14,7 +14,7 @@ def get_columns(filters):
     report_type = filters.get('report_type', 'Current Loose Stock')
     
     base_columns = [
-        {"label": "B/L Number", "fieldname": "bl_no", "fieldtype": "Data", "width": 150},
+        {"label": "M B/L Number", "fieldname": "bl_no", "fieldtype": "Data", "width": 150},
         {"label": "Discharge Date", "fieldname": "arrival_date", "fieldtype": "Date", "width": 120},
         {"label": "Carry In Date", "fieldname": "carry_in_date", "fieldtype": "Date", "width": 120},
         {"label": "Stripped Date", "fieldname": "last_inspection_date", "fieldtype": "Date", "width": 120},

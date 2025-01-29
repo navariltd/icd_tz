@@ -28,7 +28,7 @@ def get_columns():
     return [
         {
             "fieldname": "bl_no",
-            "label": _("B/L No"),
+            "label": _("M B/L No"),
             "fieldtype": "Data", 
             "width": 120
         },
@@ -140,7 +140,7 @@ def get_conditions(filters):
         conditions.append("c.arrival_date >= %(from_date)s")
         
     if filters.get("to_date"):
-        conditions.append("c.departure_date <= %(to_date)s")
+        conditions.append("c.arrival_date <= %(to_date)s")
     
     if filters.get("bl_no"):
         conditions.append("c.m_bl_no = %(bl_no)s")

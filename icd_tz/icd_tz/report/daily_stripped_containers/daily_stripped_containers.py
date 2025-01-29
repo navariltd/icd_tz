@@ -13,7 +13,7 @@ def execute(filters=None):
 
 def get_columns():
     return [
-        {"label": "B/L Number", "fieldname": "bl_no", "fieldtype": "Data", "width": 150},
+        {"label": "M B/L Number", "fieldname": "bl_no", "fieldtype": "Data", "width": 150},
         {"label": "Container No", "fieldname": "container_no", "fieldtype": "Data", "width": 150},
         {"label": "Size", "fieldname": "size", "fieldtype": "Data", "width": 100},
         {"label": "Discharged Date", "fieldname": "arrival_date", "fieldtype": "Date", "width": 120},
