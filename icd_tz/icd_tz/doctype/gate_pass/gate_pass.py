@@ -101,8 +101,8 @@ class GatePass(Document):
 		frappe.db.set_value(
 			"Container",
 			self.container_id,
-			"customs_status",
-			"Cleared"
+			"status",
+			"Delivered"
 		)
 
 	def update_submitted_info(self):

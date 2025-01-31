@@ -10,6 +10,14 @@ class InYardContainerBooking(Document):
 	def before_insert(self):
 		self.posting_datetime = now_datetime()
 	
+	def after_insert(self):
+		frappe.db.set_value(
+			"Container",
+			self.container_id,
+			"status",
+			"At Booking"
+		)
+	
 	def before_save(self):
 		if not self.company:
 			self.company = frappe.defaults.get_user_default("Company")
@@ -22,7 +30,6 @@ class InYardContainerBooking(Document):
 	
 	def on_submit(self):
 		frappe.db.set_value("Container", self.container_id, {
-			# "status": "Booked"
 			"booking_date": nowdate()
 		})
 
@@ -42,8 +49,7 @@ def create_bulk_bookings(data):
 	containers = frappe.db.get_all(
 		"Container", 
 		filters={
-			"status": "In Yard",
-			"customs_status": "Pending",
+			"status": ["in", ["In Yard", "At Booking"]],
 			"m_bl_no": data.get("m_bl_no")
 		},
 		pluck="name"

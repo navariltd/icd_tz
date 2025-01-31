@@ -113,6 +113,7 @@ def update_container_refs(container_id, invoice_id, field):
     container_doc.update({
         field: invoice_id
     })
+    container_doc.status = "At Gatepass"
     container_doc.save(ignore_permissions=True)
 
 
@@ -122,6 +123,7 @@ def update_storage_date_refs(container_id, invoice_id, child_refs):
         if child.name in child_refs:
             child.sales_invoice = invoice_id
     
+    container_doc.status = "At Gatepass"
     container_doc.save(ignore_permissions=True)
 
 
