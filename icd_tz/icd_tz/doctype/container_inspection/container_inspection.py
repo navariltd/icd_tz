@@ -12,6 +12,12 @@ class ContainerInspection(Document):
     
     def after_insert(self):
         self.update_in_yard_booking()
+        frappe.db.set_value(
+            "Container",
+            self.container_id,
+            "status",
+            "At Inspection"
+        )
     
     def before_save(self):
         if not self.company:

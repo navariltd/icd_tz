@@ -13,6 +13,12 @@ class ServiceOrder(Document):
 	
 	def after_insert(self):
 		self.update_container_inspection()
+		frappe.db.set_value(
+            "Container",
+            self.container_id,
+            "status",
+            "At Payments"
+        )
 
 	def before_save(self):
 		if not self.company:

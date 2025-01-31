@@ -23,11 +23,9 @@ class Container(Document):
 	def update_container_details(self, container_reception):
 		"""Update the container details from the Container Reception, Containers Detail and Container Movement Order"""
 
-		if self.customs_status == "Cleared":
+		if self.status == "Delivered":
 			return
 
-		if not self.customs_status:
-			self.customs_status = "Pending"
 		if not self.status:
 			self.status = "In Yard"
 		if not self.size:
@@ -152,7 +150,7 @@ class Container(Document):
 	def update_billed_details(self):
 		"""Update the billed days of the container"""
 		
-		if self.customs_status == "Cleared":
+		if self.status == "Delivered":
 			return
 		
 		if len(self.container_dates) > 0:
@@ -240,7 +238,7 @@ class Container(Document):
 			frappe.throw(f"Invalid Place of Destination <b>{self.place_of_destination}</b>, valid places are: <b>{places_str}</b>")
 
 def daily_update_date_container_stay():
-    containers = frappe.get_all("Container", filters={"customs_status": ["!=", "Cleared"]})
+    containers = frappe.get_all("Container", filters={"status": ["!=", "Delivered"]})
 
     for item in containers:
         try:
