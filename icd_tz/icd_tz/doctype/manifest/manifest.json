@@ -1,0 +1,226 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2024-07-19 11:45:24.758478",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "manifest",
+  "column_break_ejvcs",
+  "company",
+  "vessel_information_section",
+  "mrn",
+  "vessel_name",
+  "tpa_uid",
+  "voyage_no",
+  "column_break_0ml7u",
+  "arrival_date",
+  "port",
+  "call_sign",
+  "section_break_w7oqg",
+  "amended_from",
+  "column_break_qoth5",
+  "naming_series",
+  "containers_section_section",
+  "containers",
+  "section_break_xni6w",
+  "hbicontainers",
+  "section_break_y3pib",
+  "masterbi",
+  "section_break_sm463",
+  "housebi"
+ ],
+ "fields": [
+  {
+   "fieldname": "manifest",
+   "fieldtype": "Attach",
+   "in_list_view": 1,
+   "label": "Upload Manifest"
+  },
+  {
+   "fieldname": "vessel_information_section",
+   "fieldtype": "Section Break",
+   "label": "Vessel Information "
+  },
+  {
+   "fieldname": "mrn",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "MRN",
+   "search_index": 1
+  },
+  {
+   "fieldname": "vessel_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Vessel Name",
+   "search_index": 1
+  },
+  {
+   "fieldname": "tpa_uid",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "TPA UID",
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_0ml7u",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "arrival_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Arrival date",
+   "permlevel": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "call_sign",
+   "fieldtype": "Data",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Call Sign",
+   "search_index": 1
+  },
+  {
+   "fieldname": "containers_section_section",
+   "fieldtype": "Tab Break",
+   "label": "Containers section"
+  },
+  {
+   "fieldname": "containers",
+   "fieldtype": "Table",
+   "label": "Containers",
+   "options": "Containers Detail"
+  },
+  {
+   "fieldname": "section_break_xni6w",
+   "fieldtype": "Tab Break",
+   "label": "HBIContainers"
+  },
+  {
+   "fieldname": "hbicontainers",
+   "fieldtype": "Table",
+   "label": "HBIContainers",
+   "options": "HBIContainer"
+  },
+  {
+   "fieldname": "section_break_y3pib",
+   "fieldtype": "Tab Break",
+   "label": "MasterBI"
+  },
+  {
+   "fieldname": "section_break_sm463",
+   "fieldtype": "Tab Break",
+   "label": "HouseBI"
+  },
+  {
+   "fieldname": "housebi",
+   "fieldtype": "Table",
+   "label": "HouseBI",
+   "options": "HouseBI"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Manifest",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "masterbi",
+   "fieldtype": "Table",
+   "label": "MasterBI",
+   "options": "MasterBI"
+  },
+  {
+   "default": "ICD-M-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "ICD-M-.YYYY.-",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_ejvcs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "voyage_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Voyage No",
+   "search_index": 1
+  },
+  {
+   "fieldname": "port",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Port",
+   "options": "\nDP WORLD\nTEAGTL",
+   "search_index": 1
+  },
+  {
+   "fieldname": "section_break_w7oqg",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_qoth5",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-01-12 14:19:51.178331",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Manifest",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "mrn, vessel_name, tpa_uid, voyage_no, arrival_date, call_sign, port",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

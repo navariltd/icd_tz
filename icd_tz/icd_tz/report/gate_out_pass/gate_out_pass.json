@@ -1,0 +1,28 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2025-01-24 17:35:24.522114",
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "SEL",
+ "letterhead": null,
+ "modified": "2025-01-24 17:35:24.522114",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Gate Out Pass",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Gate Pass",
+ "report_name": "Gate Out Pass",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ],
+ "timeout": 0
+}

@@ -1,0 +1,519 @@
+{
+ "actions": [],
+ "allow_events_in_timeline": 1,
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2024-06-26 09:42:10.321625",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "details_tab",
+  "movement_order",
+  "manifest",
+  "company",
+  "column_break_ytg9x",
+  "ship",
+  "port",
+  "voyage_no",
+  "column_break_75qur",
+  "received_date",
+  "ship_dc_date",
+  "column_break_azrq",
+  "icd_time_in",
+  "port_time_out",
+  "handling_and_charges_section",
+  "has_transport_charges",
+  "t_sales_invoice",
+  "column_break_eqvx2",
+  "has_shore_handling_charges",
+  "s_sales_invoice",
+  "container_particulars_tab",
+  "m_bl_no",
+  "container_no",
+  "size",
+  "container_count",
+  "seal_no_2",
+  "column_break_zcgxx",
+  "volume",
+  "weight",
+  "weight_unit",
+  "cargo_type",
+  "seal_no_1",
+  "seal_no_3",
+  "column_break_twjr",
+  "transporter",
+  "truck",
+  "trailer",
+  "driver",
+  "driver_lisence",
+  "column_break_y5zga",
+  "container_location",
+  "abbr_for_destination",
+  "place_of_destination",
+  "country_of_destination",
+  "section_break_fvbx",
+  "top",
+  "bottom",
+  "column_break_iath",
+  "front",
+  "rear",
+  "column_break_woyo",
+  "right_side",
+  "left_side",
+  "personnel_and_security_tab",
+  "clerk",
+  "cleck_name",
+  "column_break_kepu",
+  "security_officer",
+  "naming_series",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Details"
+  },
+  {
+   "description": "Carry in Date",
+   "fetch_from": "movement_order.ship_dc_date",
+   "fetch_if_empty": 1,
+   "fieldname": "received_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Received Date",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "movement_order.voyage_no",
+   "fieldname": "voyage_no",
+   "fieldtype": "Data",
+   "label": "Voyage No",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "movement_order.port",
+   "fieldname": "port",
+   "fieldtype": "Select",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Port",
+   "options": "\nDP WORLD\nTEAGTL",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_azrq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "movement_order.port_time_out",
+   "fieldname": "port_time_out",
+   "fieldtype": "Time",
+   "label": "Port Time Out",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "container_particulars_tab",
+   "fieldtype": "Tab Break",
+   "label": "Container Particulars"
+  },
+  {
+   "fetch_from": "movement_order.container_no",
+   "fieldname": "container_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Container No",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "movement_order.size",
+   "fetch_if_empty": 1,
+   "fieldname": "size",
+   "fieldtype": "Data",
+   "label": "Container Size (FT)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "weight",
+   "fieldtype": "Data",
+   "label": "Weight",
+   "read_only": 1
+  },
+  {
+   "fieldname": "weight_unit",
+   "fieldtype": "Select",
+   "label": "Weight Unit",
+   "options": "KG\nTON",
+   "read_only": 1
+  },
+  {
+   "fieldname": "seal_no_1",
+   "fieldtype": "Data",
+   "label": "Seal No. 1",
+   "read_only": 1
+  },
+  {
+   "fieldname": "seal_no_2",
+   "fieldtype": "Data",
+   "label": "Seal No. 2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "personnel_and_security_tab",
+   "fieldtype": "Tab Break",
+   "label": "Personnel and Security"
+  },
+  {
+   "fieldname": "clerk",
+   "fieldtype": "Link",
+   "label": "Clerk",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "security_officer",
+   "fieldtype": "Link",
+   "label": "Security Officer",
+   "options": "Security officer"
+  },
+  {
+   "fieldname": "column_break_twjr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_fvbx",
+   "fieldtype": "Section Break",
+   "label": "Container Condition"
+  },
+  {
+   "fieldname": "movement_order",
+   "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Movement Order",
+   "options": "Container Movement Order",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_kepu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "top",
+   "fieldtype": "Table MultiSelect",
+   "label": "Top",
+   "options": "Condition state"
+  },
+  {
+   "fieldname": "front",
+   "fieldtype": "Table MultiSelect",
+   "label": "Front",
+   "options": "Condition state"
+  },
+  {
+   "fieldname": "rear",
+   "fieldtype": "Table MultiSelect",
+   "label": "Rear",
+   "options": "Condition state"
+  },
+  {
+   "fieldname": "bottom",
+   "fieldtype": "Table MultiSelect",
+   "label": "Bottom",
+   "options": "Condition state"
+  },
+  {
+   "fieldname": "left_side",
+   "fieldtype": "Table MultiSelect",
+   "label": "Left side",
+   "options": "Condition state"
+  },
+  {
+   "fieldname": "right_side",
+   "fieldtype": "Table MultiSelect",
+   "label": " Right side",
+   "options": "Condition state"
+  },
+  {
+   "fieldname": "column_break_iath",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_woyo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Container Reception",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "movement_order.manifest",
+   "fieldname": "manifest",
+   "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Manifest",
+   "options": "Manifest",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "ICD-CR-.YYYY.-",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_75qur",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zcgxx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "movement_order.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "volume",
+   "fieldtype": "Data",
+   "label": "Volume (CBM)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "seal_no_3",
+   "fieldtype": "Data",
+   "label": "Seal No. 3",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_ytg9x",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "movement_order.ship",
+   "fieldname": "ship",
+   "fieldtype": "Data",
+   "label": "Ship",
+   "read_only": 1
+  },
+  {
+   "description": "Ship Arrival Date",
+   "fetch_from": "movement_order.ship_dc_date",
+   "fieldname": "ship_dc_date",
+   "fieldtype": "Date",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Ship D/C Date",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "clerk.employee_name",
+   "fieldname": "cleck_name",
+   "fieldtype": "Data",
+   "label": "Cleck Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_y5zga",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "container_location",
+   "fieldtype": "Link",
+   "label": "Container Location",
+   "options": "Container Location",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval: !doc.__islocal",
+   "fieldname": "handling_and_charges_section",
+   "fieldtype": "Section Break",
+   "label": "Handling and Charges"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Yes",
+   "fieldname": "has_transport_charges",
+   "fieldtype": "Select",
+   "label": "Has Transport Charges",
+   "options": "Yes\nNo",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "column_break_eqvx2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Invoice for shore handling charges",
+   "fieldname": "s_sales_invoice",
+   "fieldtype": "Data",
+   "label": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "description": "Invoice for transport charges",
+   "fieldname": "t_sales_invoice",
+   "fieldtype": "Data",
+   "label": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Yes",
+   "fieldname": "has_shore_handling_charges",
+   "fieldtype": "Select",
+   "label": "Has Shore Handling Charges",
+   "options": "Yes\nNo",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "abbr_for_destination",
+   "fieldtype": "Data",
+   "label": "Abbr for Destination",
+   "read_only": 1
+  },
+  {
+   "description": "for corridor levy validation",
+   "fieldname": "country_of_destination",
+   "fieldtype": "Link",
+   "label": "Country of Destination",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "movement_order.icd_time_in",
+   "fieldname": "icd_time_in",
+   "fieldtype": "Time",
+   "label": "ICD Time In",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "movement_order.truck",
+   "fieldname": "truck",
+   "fieldtype": "Link",
+   "label": "Truck",
+   "options": "Vehicle",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "movement_order.trailer",
+   "fieldname": "trailer",
+   "fieldtype": "Link",
+   "label": "Trailer",
+   "options": "Vehicle",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "movement_order.driver",
+   "fieldname": "driver",
+   "fieldtype": "Link",
+   "label": "Driver",
+   "options": "Driver",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "movement_order.driver_license",
+   "fieldname": "driver_lisence",
+   "fieldtype": "Data",
+   "label": "Driver Lisence",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "movement_order.transporter",
+   "fieldname": "transporter",
+   "fieldtype": "Link",
+   "label": "Transporter",
+   "options": "Transporter",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "description": "for storage charges validation",
+   "fieldname": "place_of_destination",
+   "fieldtype": "Select",
+   "label": "Place of Destination",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "movement_order.m_bl_no",
+   "fieldname": "m_bl_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "M B/L No",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "description": "Based on M B/L No",
+   "fetch_from": "movement_order.container_count",
+   "fieldname": "container_count",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Container Count",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "movement_order.cargo_type",
+   "fieldname": "cargo_type",
+   "fieldtype": "Data",
+   "label": "Cargo Type",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-01-27 01:11:34.765062",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Container Reception",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "movement_order, ship_dc_date, received_date, ship, port, voyage_no, container_no, truck, trailer",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,332 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2024-09-20 11:18:02.636141",
+ "default_view": "List",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_9rl7",
+  "section_break_pd2vw",
+  "container_inspection",
+  "c_and_f_company",
+  "column_break_ifoto",
+  "clearing_agent",
+  "consignee",
+  "column_break_bu4nq",
+  "company",
+  "posting_datetime",
+  "container_details_section",
+  "manifest",
+  "vessel_name",
+  "port",
+  "column_break_l0qms",
+  "m_bl_no",
+  "place_of_destination",
+  "country_of_destination",
+  "column_break_nlrcd",
+  "container_id",
+  "container_no",
+  "container_seal",
+  "column_break_aamu",
+  "container_size",
+  "container_status",
+  "container_location",
+  "services_tab",
+  "services",
+  "section_break_vfatw",
+  "sales_order",
+  "sales_invoice",
+  "column_break_fz5ad",
+  "get_pass",
+  "column_break_vrwdx",
+  "naming_series",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_9rl7",
+   "fieldtype": "Tab Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "container_inspection",
+   "fieldtype": "Link",
+   "label": "Container Inspection",
+   "options": "Container Inspection",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "container_inspection.c_and_f_company",
+   "fetch_if_empty": 1,
+   "fieldname": "c_and_f_company",
+   "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "C & F Company",
+   "options": "Clearing and Forwarding Company",
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_ifoto",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "container_inspection.clearing_agent",
+   "fetch_if_empty": 1,
+   "fieldname": "clearing_agent",
+   "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Clearing Agent",
+   "options": "Clearing Agent",
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_bu4nq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "container_inspection.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "container_details_section",
+   "fieldtype": "Section Break",
+   "label": "Container Details"
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "fieldname": "vessel_name",
+   "fieldtype": "Data",
+   "label": "Vessel Name"
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "fieldname": "port",
+   "fieldtype": "Select",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Port",
+   "options": "\nDP WORLD\nTEAGTL",
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_nlrcd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "fetch_from": "container_id.container_no",
+   "fieldname": "container_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Container No",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "fetch_from": "container_id.seal_no_1",
+   "fieldname": "container_seal",
+   "fieldtype": "Data",
+   "label": "Container Seal"
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "fetch_from": "container_id.current_location",
+   "fieldname": "container_location",
+   "fieldtype": "Link",
+   "label": "Container Location",
+   "options": "Container Location"
+  },
+  {
+   "fieldname": "column_break_aamu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "fetch_from": "container_id.freight_indicator",
+   "fieldname": "container_status",
+   "fieldtype": "Data",
+   "label": "Container Status"
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "fetch_from": "container_id.size",
+   "fieldname": "container_size",
+   "fieldtype": "Data",
+   "label": "Container Size"
+  },
+  {
+   "fieldname": "services_tab",
+   "fieldtype": "Tab Break",
+   "label": "Service Details"
+  },
+  {
+   "fieldname": "section_break_vfatw",
+   "fieldtype": "Section Break",
+   "label": "References"
+  },
+  {
+   "fieldname": "sales_order",
+   "fieldtype": "Data",
+   "label": "Sales Order",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Data",
+   "label": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_vrwdx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "ICD-SO-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "ICD-SO-.YYYY.-",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Service Order",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "fieldname": "services",
+   "fieldtype": "Table",
+   "label": "services",
+   "options": "Service Order Detail"
+  },
+  {
+   "fieldname": "column_break_fz5ad",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "get_pass",
+   "fieldtype": "Link",
+   "label": "Get Pass",
+   "options": "Gate Pass",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "container_inspection.consignee",
+   "fieldname": "consignee",
+   "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Consignee",
+   "options": "Consignee",
+   "search_index": 1
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "fieldname": "manifest",
+   "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Manifest",
+   "options": "Manifest",
+   "search_index": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "container_id",
+   "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Container ID",
+   "options": "Container",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "depends_on": "eval: !doc.__islocal",
+   "fieldname": "section_break_pd2vw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_l0qms",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "description": "for storage charge validation",
+   "fieldname": "place_of_destination",
+   "fieldtype": "Data",
+   "label": "Place of Destination"
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "description": "for corridor levy validation",
+   "fieldname": "country_of_destination",
+   "fieldtype": "Data",
+   "label": "Country of Destination"
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "fetch_from": "container_id.m_bl_no",
+   "fieldname": "m_bl_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "M B/L No",
+   "search_index": 1
+  },
+  {
+   "default": "now",
+   "fieldname": "posting_datetime",
+   "fieldtype": "Datetime",
+   "label": "Posting Datetime",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-01-22 02:09:40.900414",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Service Order",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "show_preview_popup": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

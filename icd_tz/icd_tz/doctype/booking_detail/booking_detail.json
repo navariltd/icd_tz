@@ -1,0 +1,82 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-06-27 13:45:05.734686",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "booking_id",
+  "booking_date",
+  "booking_time",
+  "container_number",
+  "cargo_description",
+  "column_break_sqsy",
+  "c_and_f_agent",
+  "customer",
+  "inspection_location"
+ ],
+ "fields": [
+  {
+   "fieldname": "booking_id",
+   "fieldtype": "Data",
+   "label": "Booking ID"
+  },
+  {
+   "fieldname": "booking_date",
+   "fieldtype": "Date",
+   "label": "Booking date"
+  },
+  {
+   "fieldname": "booking_time",
+   "fieldtype": "Time",
+   "label": "Booking time"
+  },
+  {
+   "fieldname": "container_number",
+   "fieldtype": "Link",
+   "label": "Container number",
+   "options": "Container"
+  },
+  {
+   "fieldname": "cargo_description",
+   "fieldtype": "Small Text",
+   "label": "Cargo description"
+  },
+  {
+   "fieldname": "c_and_f_agent",
+   "fieldtype": "Link",
+   "label": "Clearing agent",
+   "options": "Clearing Agent"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "inspection_location",
+   "fieldtype": "Select",
+   "label": "Inspection location",
+   "options": "Location 1\nLocation 2\nLocation 3"
+  },
+  {
+   "fieldname": "column_break_sqsy",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-07-19 13:41:02.273317",
+ "modified_by": "Administrator",
+ "module": "ICD TZ",
+ "name": "Booking detail",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

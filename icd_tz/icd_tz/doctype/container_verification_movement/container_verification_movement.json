@@ -1,0 +1,178 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-19 12:12:42.088122",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_9rl7",
+  "movement_date",
+  "in_yard_container_booking",
+  "amended_from",
+  "driver_name",
+  "column_break_aamu",
+  "container",
+  "original_location",
+  "inspection_details_section",
+  "inspector_name",
+  "inspection_results",
+  "column_break_oepr",
+  "inspection_date",
+  "inspection_comments",
+  "post_inspection_location",
+  "yard_number",
+  "return_movement_date",
+  "column_break_gdea",
+  "row",
+  "column_break_arqu",
+  "position",
+  "additional_notes_section",
+  "additional_note"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_9rl7",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Container Verification Movement",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "in_yard_container_booking",
+   "fieldtype": "Link",
+   "label": "In Yard Container Booking",
+   "options": "In Yard Container Booking"
+  },
+  {
+   "fieldname": "movement_date",
+   "fieldtype": "Datetime",
+   "label": "Movement Date"
+  },
+  {
+   "fieldname": "driver_name",
+   "fieldtype": "Data",
+   "label": "Driver Name"
+  },
+  {
+   "fieldname": "column_break_aamu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "container",
+   "fieldtype": "Link",
+   "label": "Container",
+   "options": "Container"
+  },
+  {
+   "fieldname": "original_location",
+   "fieldtype": "Data",
+   "label": "Original Location"
+  },
+  {
+   "fieldname": "inspection_details_section",
+   "fieldtype": "Section Break",
+   "label": "Inspection Details"
+  },
+  {
+   "fieldname": "inspector_name",
+   "fieldtype": "Data",
+   "label": "Inspector Name"
+  },
+  {
+   "fieldname": "inspection_results",
+   "fieldtype": "Small Text",
+   "label": "Inspection Results"
+  },
+  {
+   "fieldname": "column_break_oepr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "inspection_date",
+   "fieldtype": "Datetime",
+   "label": "Inspection Date"
+  },
+  {
+   "fieldname": "inspection_comments",
+   "fieldtype": "Small Text",
+   "label": "Inspection Comments"
+  },
+  {
+   "fieldname": "post_inspection_location",
+   "fieldtype": "Section Break",
+   "label": "Post-Inspection Location"
+  },
+  {
+   "fieldname": "yard_number",
+   "fieldtype": "Data",
+   "label": "Yard Number"
+  },
+  {
+   "fieldname": "return_movement_date",
+   "fieldtype": "Date",
+   "label": "Return Movement Date"
+  },
+  {
+   "fieldname": "column_break_gdea",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "row",
+   "fieldtype": "Data",
+   "label": "Row"
+  },
+  {
+   "fieldname": "column_break_arqu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "position",
+   "fieldtype": "Data",
+   "label": "Position"
+  },
+  {
+   "fieldname": "additional_notes_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Notes"
+  },
+  {
+   "fieldname": "additional_note",
+   "fieldtype": "Small Text",
+   "label": "Additional Note"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-07-19 13:35:37.527272",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Container Verification Movement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

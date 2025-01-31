@@ -1,0 +1,262 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2024-09-13 11:24:28.105415",
+ "default_view": "List",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_9rl7",
+  "in_yard_container_booking",
+  "driver_name",
+  "column_break_bu4nq",
+  "c_and_f_company",
+  "clearing_agent",
+  "consignee",
+  "column_break_aamu",
+  "container_id",
+  "m_bl_no",
+  "container_no",
+  "column_break_d1lgj",
+  "company",
+  "posting_datetime",
+  "current_container_location",
+  "inspection_details_section",
+  "inspector_name",
+  "inspection_results",
+  "column_break_oepr",
+  "inspection_date",
+  "inspection_comments",
+  "post_inspection_location",
+  "new_container_location",
+  "column_break_gdea",
+  "additional_note",
+  "services_tab",
+  "services",
+  "amended_from",
+  "naming_series"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_9rl7",
+   "fieldtype": "Tab Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "in_yard_container_booking",
+   "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "In Yard Container Booking",
+   "options": "In Yard Container Booking",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_aamu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "driver_name",
+   "fieldtype": "Link",
+   "label": "Driver Name",
+   "options": "Driver"
+  },
+  {
+   "fieldname": "inspection_details_section",
+   "fieldtype": "Section Break",
+   "label": "Inspection Details"
+  },
+  {
+   "fieldname": "inspector_name",
+   "fieldtype": "Data",
+   "label": "Inspector Name"
+  },
+  {
+   "fieldname": "inspection_results",
+   "fieldtype": "Small Text",
+   "label": "Inspection Results"
+  },
+  {
+   "fieldname": "column_break_oepr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "inspection_date",
+   "fieldtype": "Datetime",
+   "label": "Inspection Date"
+  },
+  {
+   "fieldname": "inspection_comments",
+   "fieldtype": "Small Text",
+   "label": "Inspection Comments"
+  },
+  {
+   "fieldname": "post_inspection_location",
+   "fieldtype": "Section Break",
+   "label": "Post-Inspection Location"
+  },
+  {
+   "fieldname": "column_break_gdea",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "additional_note",
+   "fieldtype": "Small Text",
+   "label": "Additional Note"
+  },
+  {
+   "default": "ICD-CI-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "ICD-CI-.YYYY.-",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Container Inspection",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "services_tab",
+   "fieldtype": "Tab Break",
+   "label": "Service Details"
+  },
+  {
+   "fieldname": "services",
+   "fieldtype": "Table",
+   "label": "Services",
+   "options": "Container Inspection Detail"
+  },
+  {
+   "fieldname": "column_break_bu4nq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_d1lgj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "in_yard_container_booking.clearing_agent",
+   "fieldname": "clearing_agent",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Clearing Agent",
+   "options": "Clearing Agent",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fetch_from": "container_id.container_no",
+   "fieldname": "container_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Container No",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "in_yard_container_booking.company",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fetch_from": "in_yard_container_booking.c_and_f_company",
+   "fieldname": "c_and_f_company",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "C & F Company",
+   "options": "Clearing and Forwarding Company",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "in_yard_container_booking.consignee",
+   "fieldname": "consignee",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Consignee",
+   "options": "Consignee"
+  },
+  {
+   "fetch_from": "in_yard_container_booking.container_id",
+   "fieldname": "container_id",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Container ID",
+   "options": "Container",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "columns": 1,
+   "fetch_from": "container_id.m_bl_no",
+   "fieldname": "m_bl_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "M BL No",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "default": "now",
+   "fieldname": "posting_datetime",
+   "fieldtype": "Datetime",
+   "label": "Posting Datetime",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "container_id.original_location",
+   "fieldname": "current_container_location",
+   "fieldtype": "Link",
+   "label": "Current Container Location",
+   "options": "Container Location",
+   "read_only": 1
+  },
+  {
+   "fieldname": "new_container_location",
+   "fieldtype": "Link",
+   "label": "New Container Location",
+   "options": "Container Location"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-01-22 01:06:10.270536",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Container Inspection",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

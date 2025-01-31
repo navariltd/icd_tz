@@ -1,0 +1,552 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:naming_series",
+ "creation": "2024-06-26 09:58:36.857547",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "container_details_section",
+  "container_no",
+  "m_bl_no",
+  "type_of_container",
+  "no_of_packages",
+  "column_break_iq9ob",
+  "seal_no_1",
+  "seal_no_2",
+  "seal_no_3",
+  "freight_indicator",
+  "column_break_sohs",
+  "volume",
+  "volume_unit",
+  "weight",
+  "weight_unit",
+  "column_break_gwgiu",
+  "size",
+  "cargo_type",
+  "container_count",
+  "cargo_details_section",
+  "consignee",
+  "sline",
+  "sline_code",
+  "ship",
+  "voyage_no",
+  "column_break_6s4dw",
+  "port_of_loading",
+  "port_of_destination",
+  "abbr_for_destination",
+  "place_of_delivery",
+  "column_break_jhhs",
+  "place_of_destination",
+  "country_of_destination",
+  "package_unit",
+  "column_break_vdbo",
+  "cargo_description",
+  "date_reference_section",
+  "arrival_date",
+  "departure_date",
+  "column_break_votc",
+  "received_date",
+  "booking_date",
+  "column_break_ztec",
+  "last_inspection_date",
+  "movement_details_section",
+  "original_location",
+  "current_location",
+  "column_break_lduxs",
+  "status",
+  "column_break_qkrn",
+  "naming_series",
+  "references_section",
+  "manifest",
+  "movement_order",
+  "column_break_uxlo",
+  "container_reception",
+  "company",
+  "tab_break_edoll",
+  "total_days",
+  "column_break_dlhui",
+  "no_of_free_days",
+  "column_break_cd24q",
+  "no_of_writeoff_days",
+  "column_break_uont4",
+  "no_of_billable_days",
+  "column_break_xo7tr",
+  "days_to_be_billed",
+  "column_break_rs2fh",
+  "no_of_billed_days",
+  "section_break_twu7u",
+  "has_removal_charges",
+  "r_sales_invoice",
+  "column_break_iv6ai",
+  "has_corridor_levy_charges",
+  "c_sales_invoice",
+  "column_break_qjlyx",
+  "has_single_charge",
+  "has_double_charge",
+  "section_break_517wd",
+  "container_dates"
+ ],
+ "fields": [
+  {
+   "fieldname": "container_details_section",
+   "fieldtype": "Section Break",
+   "label": "Container Details"
+  },
+  {
+   "fieldname": "column_break_sohs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "seal_no_1",
+   "fieldtype": "Data",
+   "label": "Seal No. 1"
+  },
+  {
+   "fieldname": "seal_no_2",
+   "fieldtype": "Data",
+   "label": "Seal No. 2"
+  },
+  {
+   "fieldname": "cargo_details_section",
+   "fieldtype": "Section Break",
+   "label": "Cargo Details"
+  },
+  {
+   "fieldname": "cargo_description",
+   "fieldtype": "Text",
+   "label": "Cargo Description"
+  },
+  {
+   "fieldname": "column_break_jhhs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "port_of_destination",
+   "fieldtype": "Data",
+   "label": "Port of Destination"
+  },
+  {
+   "fieldname": "movement_details_section",
+   "fieldtype": "Section Break",
+   "label": "Movement Details"
+  },
+  {
+   "fieldname": "current_location",
+   "fieldtype": "Link",
+   "label": "Current Location",
+   "options": "Container Location"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "In Yard\nAt Booking\nAt Inspection\nAt Payments\nAt Gatepass\nDelivered"
+  },
+  {
+   "description": "Ship D/C Date",
+   "fieldname": "arrival_date",
+   "fieldtype": "Date",
+   "label": "Arrival Date"
+  },
+  {
+   "fieldname": "column_break_qkrn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "departure_date",
+   "fieldtype": "Date",
+   "label": "Departure Date"
+  },
+  {
+   "fieldname": "last_inspection_date",
+   "fieldtype": "Date",
+   "label": "Last Inspection Date"
+  },
+  {
+   "fieldname": "container_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Container No",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "size",
+   "fieldtype": "Data",
+   "label": "Size (FT)"
+  },
+  {
+   "fieldname": "volume",
+   "fieldtype": "Int",
+   "label": "Volume"
+  },
+  {
+   "fieldname": "column_break_lduxs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "container_reception",
+   "fieldtype": "Link",
+   "label": "Container Reception",
+   "options": "Container Reception",
+   "read_only": 1
+  },
+  {
+   "fieldname": "seal_no_3",
+   "fieldtype": "Data",
+   "label": "Seal No. 3"
+  },
+  {
+   "fieldname": "sline",
+   "fieldtype": "Data",
+   "label": "Sline"
+  },
+  {
+   "fieldname": "original_location",
+   "fieldtype": "Link",
+   "label": "Original Location",
+   "options": "Container Location"
+  },
+  {
+   "fieldname": "m_bl_no",
+   "fieldtype": "Data",
+   "label": "M B/L No"
+  },
+  {
+   "fieldname": "type_of_container",
+   "fieldtype": "Data",
+   "label": "Type of Container"
+  },
+  {
+   "fieldname": "no_of_packages",
+   "fieldtype": "Data",
+   "label": "No of Packages"
+  },
+  {
+   "fieldname": "volume_unit",
+   "fieldtype": "Data",
+   "label": "Volume Unit"
+  },
+  {
+   "fieldname": "weight_unit",
+   "fieldtype": "Data",
+   "label": "Weight Unit"
+  },
+  {
+   "fieldname": "freight_indicator",
+   "fieldtype": "Data",
+   "label": "Freight Indicator"
+  },
+  {
+   "fieldname": "column_break_iq9ob",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tab_break_edoll",
+   "fieldtype": "Tab Break",
+   "label": "Billable Details"
+  },
+  {
+   "fieldname": "container_dates",
+   "fieldtype": "Table",
+   "options": "Container Service Detail"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_gwgiu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "package_unit",
+   "fieldtype": "Small Text",
+   "label": "Package Unit"
+  },
+  {
+   "fieldname": "section_break_517wd",
+   "fieldtype": "Section Break",
+   "label": "Dates"
+  },
+  {
+   "fieldname": "no_of_billable_days",
+   "fieldtype": "Int",
+   "label": "No of Billable Days",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_cd24q",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_xo7tr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "no_of_billed_days",
+   "fieldtype": "Int",
+   "label": "No of Billed Days",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_days",
+   "fieldtype": "Int",
+   "label": "Total Days",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_dlhui",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_rs2fh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "days_to_be_billed",
+   "fieldtype": "Int",
+   "label": "Days to be billed",
+   "read_only": 1
+  },
+  {
+   "fieldname": "weight",
+   "fieldtype": "Data",
+   "label": "Weight"
+  },
+  {
+   "fieldname": "section_break_twu7u",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "port_of_loading",
+   "fieldtype": "Data",
+   "label": "Port of Loading"
+  },
+  {
+   "fieldname": "column_break_6s4dw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "consignee",
+   "fieldtype": "Link",
+   "label": "Consignee",
+   "options": "Consignee"
+  },
+  {
+   "description": "for storage charges validation",
+   "fieldname": "place_of_destination",
+   "fieldtype": "Data",
+   "label": "Place of Destination"
+  },
+  {
+   "fieldname": "place_of_delivery",
+   "fieldtype": "Data",
+   "label": "Place of Delivery"
+  },
+  {
+   "default": "Yes",
+   "fieldname": "has_removal_charges",
+   "fieldtype": "Select",
+   "label": "Has Removal Charges",
+   "options": "Yes\nNo",
+   "permlevel": 1
+  },
+  {
+   "description": "Invoice for Removal Charges",
+   "fieldname": "r_sales_invoice",
+   "fieldtype": "Data",
+   "label": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_iv6ai",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Yes",
+   "fieldname": "has_corridor_levy_charges",
+   "fieldtype": "Select",
+   "label": "Has Corridor Levy Charges",
+   "options": "Yes\nNo",
+   "permlevel": 1
+  },
+  {
+   "description": "Invoice for corridor levy charges",
+   "fieldname": "c_sales_invoice",
+   "fieldtype": "Data",
+   "label": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "no_of_free_days",
+   "fieldtype": "Int",
+   "label": "No of Free Days",
+   "read_only": 1
+  },
+  {
+   "description": "for corridor levy validation",
+   "fieldname": "country_of_destination",
+   "fieldtype": "Link",
+   "label": "Country of Destination",
+   "options": "Country"
+  },
+  {
+   "fieldname": "column_break_qjlyx",
+   "fieldtype": "Column Break",
+   "label": "Storage Charge"
+  },
+  {
+   "default": "0",
+   "fieldname": "has_single_charge",
+   "fieldtype": "Check",
+   "label": "Has Single Charge",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "has_double_charge",
+   "fieldtype": "Check",
+   "label": "Has Double Charge",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_uont4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "no_of_writeoff_days",
+   "fieldtype": "Int",
+   "label": "No of Writeoff Days",
+   "read_only": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "ICD-C-.YYYY.-"
+  },
+  {
+   "fieldname": "abbr_for_destination",
+   "fieldtype": "Data",
+   "label": "Abbr for Destination"
+  },
+  {
+   "description": "Carry In Date",
+   "fieldname": "received_date",
+   "fieldtype": "Date",
+   "label": "Received Date",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "date_reference_section",
+   "fieldtype": "Section Break",
+   "label": "Date Reference"
+  },
+  {
+   "fieldname": "column_break_votc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "booking_date",
+   "fieldtype": "Date",
+   "label": "Booking Date"
+  },
+  {
+   "fieldname": "column_break_ztec",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cargo_type",
+   "fieldtype": "Data",
+   "label": "Cargo Type"
+  },
+  {
+   "fieldname": "container_count",
+   "fieldtype": "Data",
+   "label": "Container Count"
+  },
+  {
+   "fieldname": "column_break_vdbo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "references_section",
+   "fieldtype": "Section Break",
+   "label": "References"
+  },
+  {
+   "fetch_from": "container_reception.manifest",
+   "fieldname": "manifest",
+   "fieldtype": "Link",
+   "label": "Manifest",
+   "options": "Manifest",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "container_reception.movement_order",
+   "fieldname": "movement_order",
+   "fieldtype": "Link",
+   "label": "Movement Order",
+   "options": "Container Movement Order",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_uxlo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sline_code",
+   "fieldtype": "Data",
+   "label": "Sline Code"
+  },
+  {
+   "fetch_from": "movement_order.ship",
+   "fieldname": "ship",
+   "fieldtype": "Data",
+   "label": "Ship"
+  },
+  {
+   "fetch_from": "movement_order.voyage_no",
+   "fieldname": "voyage_no",
+   "fieldtype": "Data",
+   "label": "Voyage No"
+  }
+ ],
+ "in_create": 1,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-01-31 13:06:48.615394",
+ "modified_by": "Administrator",
+ "module": "Icd Tz",
+ "name": "Container",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "container_no, m_bl_no, seal_no_1, size, country_of_destination, current_location, consignee",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
