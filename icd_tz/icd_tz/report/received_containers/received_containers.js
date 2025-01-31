@@ -21,7 +21,7 @@ frappe.query_reports["Received Containers"] = {
         },
         {
             "fieldname": "bl_no",
-            "label": __("B/L No."),
+            "label": __("M B/L No."),
             "fieldtype": "Data",
             
         },

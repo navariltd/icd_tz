@@ -17,7 +17,7 @@ frappe.query_reports["Daily Stripped Containers"] = {
         },
         {
             "fieldname": "bl_no",
-            "label": "B/L Number",
+            "label": "M B/L Number",
             "fieldtype": "Data"
         }
     ]

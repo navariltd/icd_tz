@@ -29,7 +29,7 @@ frappe.query_reports["Loose Cargo Tracking"] = {
         },
         {
             "fieldname": "bl_no",
-            "label": "B/L Number",
+            "label": "M B/L Number",
             "fieldtype": "Data"
         }
     ],

@@ -22,7 +22,7 @@ def get_columns():
     return [
         {
             "fieldname": "bl_no",
-            "label": _("B/L No."),
+            "label": _("M B/L No."),
             "fieldtype": "Data",
             "width": 120
         },
