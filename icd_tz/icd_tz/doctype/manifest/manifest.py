@@ -96,13 +96,13 @@ class Manifest(Document):
             container.freight_indicator = row[7]
             container.no_of_packages = row[8]
             container.package_unit = row[9]
-            container.volume = row[10]
-            container.volume_unit = row[11]
-            container.weight = row[12]
-            container.weight_unit = row[13]
-            container.plug_type_of_reefer = row[14]
-            container.minimum_temperature = row[15]
-            container.maximum_temperature = row[16]
+            # container.volume = row[10]
+            # container.volume_unit = row[11]
+            container.weight = row[10]
+            container.weight_unit = row[11]
+            container.plug_type_of_reefer = row[12]
+            container.minimum_temperature = row[13]
+            container.maximum_temperature = row[14]
 
     def update_hbl_containers(self, hbl_containers_sheet):
         for row in hbl_containers_sheet.iter_rows(min_row=2, values_only=True):
@@ -118,13 +118,13 @@ class Manifest(Document):
             hbicontainer.freight_indicator = row[8]
             hbicontainer.no_of_packages = row[9]
             hbicontainer.package_unit = row[10]
-            hbicontainer.volume = row[11]
-            hbicontainer.volume_unit = row[12]
-            hbicontainer.weight = row[13]
-            hbicontainer.weight_unit = row[14]
-            hbicontainer.plug_type_of_reefer = row[15]
-            hbicontainer.minimum_temperature = row[16]
-            hbicontainer.maximum_temperature = row[17]
+            # hbicontainer.volume = row[11]
+            # hbicontainer.volume_unit = row[12]
+            hbicontainer.weight = row[11]
+            hbicontainer.weight_unit = row[12]
+            hbicontainer.plug_type_of_reefer = row[13]
+            hbicontainer.minimum_temperature = row[14]
+            hbicontainer.maximum_temperature = row[15]
 
     def update_masterbi_details(self, master_bl_sheet):
         for row in master_bl_sheet.iter_rows(min_row=2, values_only=True):
@@ -139,7 +139,7 @@ class Manifest(Document):
             masterbi.number_of_containers = row[7]
             masterbi.cargo_description = row[8]
             masterbi.number_of_package = row[9]
-            masterbi.package_unit = row[10]  # Ensure this field is of type 'Text' in Frappe
+            masterbi.package_unit = row[10]
             masterbi.gross_weight = row[11]
             masterbi.gross_weight_unit = row[12]
             masterbi.gross_volume = row[13]
@@ -183,7 +183,7 @@ class Manifest(Document):
             housebi.number_of_containers = row[6]
             housebi.description_of_goods = row[7]
             housebi.number_of_package = row[8]
-            housebi.package_unit = row[9]  # Ensure this field is of type 'Text' in Frappe
+            housebi.package_unit = row[9]
             housebi.gross_weight = row[10]
             housebi.gross_weight_unit = row[11]
             housebi.gross_volume = row[12]
