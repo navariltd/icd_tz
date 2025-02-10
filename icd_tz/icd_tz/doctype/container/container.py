@@ -52,6 +52,8 @@ class Container(Document):
 			self.country_of_destination = container_reception.country_of_destination
 		if not self.company:
 			self.company = container_reception.company
+		if not self.cargo_type:
+			self.cargo_type = container_reception.cargo_type
 
 		container_info = frappe.db.get_value(
 			"Containers Detail", 
@@ -97,7 +99,7 @@ class Container(Document):
 				if not self.cargo_description:
 					self.cargo_description = masterbi_info.cargo_description
 				if not self.sline_code:
-					self.sline = masterbi_info.shipping_agent_code
+					self.sline_code = masterbi_info.shipping_agent_code
 				if not self.sline:
 					self.sline = masterbi_info.shipping_agent_name
 
