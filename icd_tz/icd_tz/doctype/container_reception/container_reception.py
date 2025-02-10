@@ -114,7 +114,8 @@ class ContainerReception(Document):
 
 			container_doc = frappe.get_doc("Container", container_id)
 			container_doc.container_dates = []
-			container_doc.arrival_date = self.received_date
+			container_doc.arrival_date = self.ship_dc_date
+			container_doc.received_date = self.received_date
 			container_doc.append("container_dates", {
 				"date": self.received_date,
 			})
