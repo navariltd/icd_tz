@@ -55,13 +55,13 @@
   {
    "allow_in_quick_entry": 1,
    "fieldname": "consignee_address",
-   "fieldtype": "Signature",
+   "fieldtype": "Small Text",
    "label": "Consignee Address"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-23 13:04:00.549054",
+ "modified": "2025-02-09 18:39:39.832562",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Consignee",

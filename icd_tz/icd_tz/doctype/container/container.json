@@ -9,8 +9,8 @@
  "engine": "InnoDB",
  "field_order": [
   "container_details_section",
-  "container_no",
   "m_bl_no",
+  "container_no",
   "type_of_container",
   "no_of_packages",
   "column_break_iq9ob",
@@ -140,16 +140,24 @@
    "options": "Container Location"
   },
   {
+   "bold": 1,
+   "columns": 1,
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Status",
-   "options": "In Yard\nAt Booking\nAt Inspection\nAt Payments\nAt Gatepass\nDelivered"
+   "options": "In Yard\nAt Booking\nAt Inspection\nAt Payments\nAt Gatepass\nDelivered",
+   "read_only": 1,
+   "width": "1"
   },
   {
    "description": "Ship D/C Date",
    "fieldname": "arrival_date",
    "fieldtype": "Date",
-   "label": "Arrival Date"
+   "label": "Arrival Date",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_qkrn",
@@ -158,20 +166,27 @@
   {
    "fieldname": "departure_date",
    "fieldtype": "Date",
-   "label": "Departure Date"
+   "label": "Departure Date",
+   "read_only": 1
   },
   {
    "fieldname": "last_inspection_date",
    "fieldtype": "Date",
-   "label": "Last Inspection Date"
+   "label": "Last Inspection Date",
+   "read_only": 1
   },
   {
+   "bold": 1,
+   "columns": 1,
    "fieldname": "container_no",
    "fieldtype": "Data",
    "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Container No",
+   "read_only": 1,
    "reqd": 1,
-   "unique": 1
+   "width": "1"
   },
   {
    "fieldname": "size",
@@ -190,6 +205,7 @@
   {
    "fieldname": "container_reception",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Container Reception",
    "options": "Container Reception",
    "read_only": 1
@@ -202,6 +218,7 @@
   {
    "fieldname": "sline",
    "fieldtype": "Data",
+   "in_preview": 1,
    "label": "Sline"
   },
   {
@@ -211,9 +228,16 @@
    "options": "Container Location"
   },
   {
+   "bold": 1,
+   "columns": 1,
    "fieldname": "m_bl_no",
    "fieldtype": "Data",
-   "label": "M B/L No"
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "M B/L No",
+   "read_only": 1,
+   "width": "1"
   },
   {
    "fieldname": "type_of_container",
@@ -337,6 +361,8 @@
   {
    "fieldname": "consignee",
    "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Consignee",
    "options": "Consignee"
   },
@@ -344,6 +370,7 @@
    "description": "for storage charges validation",
    "fieldname": "place_of_destination",
    "fieldtype": "Data",
+   "in_preview": 1,
    "label": "Place of Destination"
   },
   {
@@ -395,6 +422,8 @@
    "description": "for corridor levy validation",
    "fieldname": "country_of_destination",
    "fieldtype": "Link",
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Country of Destination",
    "options": "Country"
   },
@@ -442,6 +471,7 @@
    "description": "Carry In Date",
    "fieldname": "received_date",
    "fieldtype": "Date",
+   "in_standard_filter": 1,
    "label": "Received Date",
    "read_only": 1,
    "search_index": 1
@@ -458,7 +488,8 @@
   {
    "fieldname": "booking_date",
    "fieldtype": "Date",
-   "label": "Booking Date"
+   "label": "Booking Date",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_ztec",
@@ -487,6 +518,7 @@
    "fetch_from": "container_reception.manifest",
    "fieldname": "manifest",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Manifest",
    "options": "Manifest",
    "read_only": 1
@@ -495,6 +527,7 @@
    "fetch_from": "container_reception.movement_order",
    "fieldname": "movement_order",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Movement Order",
    "options": "Container Movement Order",
    "read_only": 1
@@ -524,7 +557,7 @@
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-01-31 13:06:48.615394",
+ "modified": "2025-02-09 19:10:58.103300",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",
