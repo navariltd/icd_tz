@@ -11,13 +11,8 @@ class ContainerInspection(Document):
         self.get_custom_verification_services()
     
     def after_insert(self):
-        self.update_in_yard_booking()
-        frappe.db.set_value(
-            "Container",
-            self.container_id,
-            "status",
-            "At Inspection"
-        )
+        self.update_in_yard_booking(value=self.name)
+        self.update_container_status("At Inspection")
     
     def before_save(self):
         if not self.company:
@@ -30,7 +25,22 @@ class ContainerInspection(Document):
     def on_submit(self):
         self.update_container_doc()
     
-    def update_in_yard_booking(self):
+    def on_trash(self):
+        self.update_in_yard_booking()
+        self.update_container_status("At Booking")
+
+    def update_container_status(self, status):
+        if not self.container_id:
+            return
+        
+        frappe.db.set_value(
+            "Container",
+            self.container_id,
+            "status",
+            status
+        )
+    
+    def update_in_yard_booking(self, value=None):
         if not self.in_yard_container_booking:
             return
         
@@ -38,7 +48,7 @@ class ContainerInspection(Document):
             "In Yard Container Booking",
             self.in_yard_container_booking,
             "container_inspection",
-            self.name
+            value
         )
     
     def update_container_doc(self):
