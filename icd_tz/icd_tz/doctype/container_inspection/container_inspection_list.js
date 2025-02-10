@@ -56,8 +56,8 @@ var show_dialog = (listview) => {
                 fieldtype: 'Column Break'
             },
             {
-                label: 'Inspection Name',
-                fieldname: 'inspection_name',
+                label: 'Inspector Name',
+                fieldname: 'inspector_name',
                 fieldtype: 'Data',
                 reqd: 1
             },
