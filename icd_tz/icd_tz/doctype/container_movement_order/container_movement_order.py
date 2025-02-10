@@ -30,6 +30,9 @@ class ContainerMovementOrder(Document):
 	def on_submit(self):
 		self.update_container_has_order()
 	
+	def on_cancel(self):
+		self.update_container_has_order(value=0)
+	
 	def validate_container_is_in_manifest(self):
 		"""Validate that the container number is in the selected manifest"""
 
@@ -60,13 +63,13 @@ class ContainerMovementOrder(Document):
 				f"Container: {self.container_no} already has a Movement Order: <a href='{url}'>{duplicates[0].cmo_id}</a>"
 			)
 	
-	def update_container_has_order(self):
+	def update_container_has_order(self, value=1):
 		"""Update the status of the container to Has Order"""
 		if self.container_no:
 			frappe.db.set_value(
 				"Containers Detail",
 				{"parent": self.manifest, "container_no": self.container_no},
-				"has_order", 1
+				"has_order", value
 			)
 	
 	def validate_signature(self):
