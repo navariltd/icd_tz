@@ -52,39 +52,39 @@ class Manifest(Document):
                         return None
                 return None
 
-            # Process the VesselInformation sheet
-            vessel_info_sheet = workbook['VesselInformation']
-            vessel_info_row = next(vessel_info_sheet.iter_rows(min_row=2, values_only=True))
+            # Process the MRN Detail (1) sheet
+            vessel_info_sheet = workbook['MRN Detail (1)']
+            vessel_info_row = next(vessel_info_sheet.iter_rows(min_row=4, values_only=True))
             self.mrn = vessel_info_row[0]
             self.vessel_name = vessel_info_row[1]
-            self.tpa_uid = vessel_info_row[2]
+            self.call_sign = vessel_info_row[2]
             self.voyage_no = vessel_info_row[3]
-            self.arrival_date = convert_date(vessel_info_row[4])
             # no need for departure date
             # self.departure_date = convert_date(vessel_info_row[5])
-            self.call_sign = vessel_info_row[6]
+            self.arrival_date = convert_date(vessel_info_row[5])
+            self.tpa_uid = vessel_info_row[6]
 
-            # Process the Containers sheet
-            containers_sheet = workbook['Containers']
+            # Process the Container (2) sheet
+            containers_sheet = workbook['Container (2)']
             self.update_container_details(containers_sheet)
 
-            # Process the HBlContainers sheet
-            hbl_containers_sheet = workbook['HBlContainers']
+            # Process the HBL Container (3) sheet
+            hbl_containers_sheet = workbook['HBL Container (3)']
             self.update_hbl_containers(hbl_containers_sheet)
             
-            # Process the MasterBl sheet
-            master_bl_sheet = workbook['MasterBl']
+            # Process the Master BL List (4) sheet
+            master_bl_sheet = workbook['Master BL List (4)']
             self.update_masterbi_details(master_bl_sheet)
 
-            # Process the HouseBl sheet
-            house_bl_sheet = workbook['HouseBl']
+            # Process the House BL List (5) sheet
+            house_bl_sheet = workbook['House BL List (5)']
             self.update_housebi_details(house_bl_sheet)
         
             # self.save()
             return False
     
     def update_container_details(self, containers_sheet):
-        for row in containers_sheet.iter_rows(min_row=2, values_only=True):
+        for row in containers_sheet.iter_rows(min_row=4, values_only=True):
             container = self.append("containers", {})
             container.m_bl_no = row[0]
             container.type_of_container = row[1]
@@ -105,7 +105,7 @@ class Manifest(Document):
             container.maximum_temperature = row[14]
 
     def update_hbl_containers(self, hbl_containers_sheet):
-        for row in hbl_containers_sheet.iter_rows(min_row=2, values_only=True):
+        for row in hbl_containers_sheet.iter_rows(min_row=4, values_only=True):
             hbicontainer = self.append("hbicontainers", {})
             hbicontainer.m_bl_no = row[0]
             hbicontainer.h_bl_no = row[1]
@@ -127,7 +127,7 @@ class Manifest(Document):
             hbicontainer.maximum_temperature = row[15]
 
     def update_masterbi_details(self, master_bl_sheet):
-        for row in master_bl_sheet.iter_rows(min_row=2, values_only=True):
+        for row in master_bl_sheet.iter_rows(min_row=4, values_only=True):
             masterbi = self.append("masterbi", {})
             masterbi.m_bl_no = row[0]
             masterbi.cargo_classification = row[1]
@@ -172,7 +172,7 @@ class Manifest(Document):
             masterbi.net_weight_unit = row[40]
 
     def update_housebi_details(self, house_bl_sheet):
-        for row in house_bl_sheet.iter_rows(min_row=2, values_only=True):
+        for row in house_bl_sheet.iter_rows(min_row=4, values_only=True):
             housebi = self.append("housebi", {})
             housebi.m_bl_no = row[0]
             housebi.h_bl_no = row[1]

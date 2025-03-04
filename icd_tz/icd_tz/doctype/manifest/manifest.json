@@ -14,12 +14,13 @@
   "vessel_information_section",
   "mrn",
   "vessel_name",
-  "tpa_uid",
-  "voyage_no",
+  "call_sign",
   "column_break_0ml7u",
+  "voyage_no",
+  "tpa_uid",
+  "column_break_nshg",
   "arrival_date",
   "port",
-  "call_sign",
   "section_break_w7oqg",
   "amended_from",
   "column_break_qoth5",
@@ -193,12 +194,16 @@
   {
    "fieldname": "column_break_qoth5",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_nshg",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-12 14:19:51.178331",
+ "modified": "2025-03-04 17:46:24.037807",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Manifest",
