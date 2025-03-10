@@ -76,6 +76,7 @@ def make_sales_order(doc_type, doc_name, m_bl_no=None, manifest=None):
         "transaction_date": nowdate(),
         "delivery_date": nowdate(),
         "selling_price_list": settings_doc.get("default_price_list"),
+        "currency": frappe.get_cached_value("Price List", settings_doc.get("default_price_list"), "currency"),
         "items": items,
         "consignee": consignee,
         "m_bl_no": order_m_bl_no,
