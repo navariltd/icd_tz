@@ -79,7 +79,7 @@ def get_columns():
             "width": 150
         },
         {
-            "fieldname": "cargo_classification",
+            "fieldname": "cargo_type",
             "label": _("Cargo Type"),
             "fieldtype": "Data",
             "width": 360
@@ -114,7 +114,7 @@ def get_data(filters=None):
         cr.name,
         cr.ship_dc_date,
         cr.received_date,
-        cr.cargo_classification,
+        cr.cargo_type,
         gp.goods_description,
         gp.vessel_name
     FROM 

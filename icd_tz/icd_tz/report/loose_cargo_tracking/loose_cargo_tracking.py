@@ -21,7 +21,7 @@ def get_columns(filters):
         {"label": "Description of Goods", "fieldname": "cargo_description", "fieldtype": "Small Text", "width": 250},
         {"label": "Consignee Name", "fieldname": "consignee", "fieldtype": "Data", "width": 200},
         {"label": "No.of Packages", "fieldname": "no_of_packages", "fieldtype": "Data", "width": 200},
-        {"label": "Cargo Type", "fieldname": "cargo_classification", "fieldtype": "Data", "width": 200}
+        {"label": "Cargo Type", "fieldname": "cargo_type", "fieldtype": "Data", "width": 200}
     ]
     
     if report_type == 'Exited Loose Cargo':
@@ -65,7 +65,8 @@ def get_data(filters):
                 c.last_inspection_date,
                 c.cargo_description,
                 c.consignee,
-                c.no_of_packages
+                c.no_of_packages,
+                c.cargo_type
             FROM `tabContainer` c
             WHERE {query_conditions}
             AND c.status= 'In Yard'
@@ -79,6 +80,7 @@ def get_data(filters):
                 c.last_inspection_date,
                 c.cargo_description,
                 c.consignee,
+                c.cargo_type,
                 CONCAT(g.submitted_date, ' ', g.submitted_time) as gate_out_date
             FROM `tabContainer` c
             JOIN `tabGate Pass` g ON c.m_bl_no = g.bl_no
@@ -95,7 +97,8 @@ def get_data(filters):
                 c.cargo_description,
                 c.consignee,
                 c.size,
-                c.container_no
+                c.container_no,
+                c.cargo_type
             FROM `tabContainer` c
             WHERE {query_conditions}
         """

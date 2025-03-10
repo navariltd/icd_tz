@@ -104,7 +104,7 @@ def get_data(filters):
             c.consignee AS consignee_name,
             c.cargo_description AS description_of_goods,
             c.sline AS shipping_line,
-            cr.cargo_classification AS cargo_type,
+            cr.cargo_type,
             cr.ship AS vessel
         FROM 
             `tabContainer` c
