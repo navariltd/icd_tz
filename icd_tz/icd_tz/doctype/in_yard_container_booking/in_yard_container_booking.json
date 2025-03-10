@@ -21,7 +21,7 @@
   "container_size",
   "cargo_description",
   "inspection_scheduling_section",
-  "inspection_datetime",
+  "inspection_date",
   "column_break_qyov",
   "inspection_location",
   "handling_and_charges_section",
@@ -278,24 +278,24 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "inspection_datetime",
-   "fieldtype": "Datetime",
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Inspection Datetime"
-  },
-  {
    "fetch_from": "container_id.size",
    "fieldname": "container_size",
    "fieldtype": "Data",
    "label": "Container Size",
    "read_only": 1
+  },
+  {
+   "fieldname": "inspection_date",
+   "fieldtype": "Date",
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Inspection Date"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-21 17:35:38.116189",
+ "modified": "2025-03-10 14:49:43.314112",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "In Yard Container Booking",

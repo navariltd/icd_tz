@@ -65,7 +65,7 @@ def create_bulk_bookings(data):
 		doc.clearing_agent = data.get("clearing_agent")
 		doc.container_id = container_id
 		doc.m_bl_no = data.get("m_bl_no")
-		doc.inspection_datetime = data.get("inspection_datetime")
+		doc.inspection_date = data.get("inspection_date")
 		doc.inspection_location = data.get("inspection_location")
 
 		doc.flags.ignore_permissions = True
