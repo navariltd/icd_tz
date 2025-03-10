@@ -105,7 +105,7 @@ def create_bulk_inspections(data):
 			"m_bl_no": data.get("m_bl_no"),
             "container_inspection": ("is", "not set")
 		},
-        fields=["name", "container_id", "inspection_datetime"]
+        fields=["name", "container_id", "inspection_date"]
 	)
     if len(bookings) == 0:
         frappe.msgprint(f"No submitted Container Bookings found for M BL No: <b>{data.get('m_bl_no')}</b>")
@@ -117,7 +117,7 @@ def create_bulk_inspections(data):
         doc.in_yard_container_booking = booking.name
         doc.container_id = booking.container_id
         doc.inspector_name = data.get("inspector_name")
-        doc.inspection_date = booking.inspection_datetime
+        doc.inspection_date = booking.inspection_date
         
         doc.flags.ignore_permissions = True
         doc.insert()

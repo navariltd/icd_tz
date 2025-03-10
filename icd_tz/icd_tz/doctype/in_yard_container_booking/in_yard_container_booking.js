@@ -47,7 +47,7 @@ frappe.ui.form.on("In Yard Container Booking", {
 					"clearing_agent": frm.doc.c_and_f_agent,
 					"c_and_f_company": frm.doc.c_and_f_company,
 					"container_no": frm.doc.container_no,
-                    "inspection_date": frm.doc.inspection_datetime,
+                    "inspection_date": frm.doc.inspection_date,
 				}, doc => {});
 			}).addClass('btn-primary');
 		}

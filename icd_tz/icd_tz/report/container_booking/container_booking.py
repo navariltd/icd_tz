@@ -27,13 +27,13 @@ def get_data(filters):
             ycb.c_and_f_company,
 			ycb.consignee,
             ycb.inspection_location.as_('location'),
-			ycb.inspection_datetime.as_('booking_date'),
+			ycb.inspection_date.as_('booking_date'),
 			cn.seal_no_1.as_('seal'),
         )
 		.where(
 			(ycb.docstatus == 1)
-			& (ycb.inspection_datetime >= filters.get('from_date'))
-			& (ycb.inspection_datetime <= filters.get('to_date'))
+			& (ycb.inspection_date >= filters.get('from_date'))
+			& (ycb.inspection_date <= filters.get('to_date'))
 		)
     )
 	

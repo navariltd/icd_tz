@@ -77,9 +77,9 @@ var show_dialog = (listview) => {
                 fieldtype: 'Column Break'
             },
             {
-                label: 'Inspection Datetime',
-                fieldname: 'inspection_datetime',
-                fieldtype: 'Datetime',
+                label: 'Inspection Date',
+                fieldname: 'inspection_date',
+                fieldtype: 'Date',
                 reqd: 1
             },
             {
