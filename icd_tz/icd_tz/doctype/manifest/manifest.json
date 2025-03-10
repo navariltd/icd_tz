@@ -2,7 +2,7 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "naming_series:naming_series",
- "creation": "2024-07-19 11:45:24.758478",
+ "creation": "2025-03-10 11:01:34.897138",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -28,11 +28,11 @@
   "containers_section_section",
   "containers",
   "section_break_xni6w",
-  "hbicontainers",
+  "hbl_containers",
   "section_break_y3pib",
-  "masterbi",
+  "master_bl",
   "section_break_sm463",
-  "housebi"
+  "house_bl"
  ],
  "fields": [
   {
@@ -110,29 +110,17 @@
   {
    "fieldname": "section_break_xni6w",
    "fieldtype": "Tab Break",
-   "label": "HBIContainers"
-  },
-  {
-   "fieldname": "hbicontainers",
-   "fieldtype": "Table",
-   "label": "HBIContainers",
-   "options": "HBIContainer"
+   "label": "HBL Containers"
   },
   {
    "fieldname": "section_break_y3pib",
    "fieldtype": "Tab Break",
-   "label": "MasterBI"
+   "label": "Master BL"
   },
   {
    "fieldname": "section_break_sm463",
    "fieldtype": "Tab Break",
-   "label": "HouseBI"
-  },
-  {
-   "fieldname": "housebi",
-   "fieldtype": "Table",
-   "label": "HouseBI",
-   "options": "HouseBI"
+   "label": "House BL"
   },
   {
    "fieldname": "amended_from",
@@ -143,12 +131,6 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
-  },
-  {
-   "fieldname": "masterbi",
-   "fieldtype": "Table",
-   "label": "MasterBI",
-   "options": "MasterBI"
   },
   {
    "default": "ICD-M-.YYYY.-",
@@ -198,12 +180,30 @@
   {
    "fieldname": "column_break_nshg",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "hbl_containers",
+   "fieldtype": "Table",
+   "label": "HBL Containers",
+   "options": "HBL Container"
+  },
+  {
+   "fieldname": "master_bl",
+   "fieldtype": "Table",
+   "label": "Master BL",
+   "options": "Master BL"
+  },
+  {
+   "fieldname": "house_bl",
+   "fieldtype": "Table",
+   "label": "House BL",
+   "options": "House BL"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-03-04 17:46:24.037807",
+ "modified": "2025-03-10 15:40:51.462538",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Manifest",

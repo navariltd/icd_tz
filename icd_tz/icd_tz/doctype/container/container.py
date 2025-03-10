@@ -81,27 +81,27 @@ class Container(Document):
 				self.weight_unit = container_info.weight_unit
 		
 		if container_info.m_bl_no:
-			masterbi_info = frappe.db.get_value(
-				"MasterBI", 
+			master_bl_info = frappe.db.get_value(
+				"Master BL", 
 				{"parent": container_reception.manifest, "m_bl_no": container_info.m_bl_no}, 
 				["place_of_destination", "place_of_delivery", "port_of_loading", "cosignee_name", "shipping_agent_code", "shipping_agent_name", "cargo_description"],
 				as_dict=True
 			)
-			if masterbi_info:
+			if master_bl_info:
 				if not self.abbr_for_destination:
-					self.abbr_for_destination = masterbi_info.place_of_destination
+					self.abbr_for_destination = master_bl_info.place_of_destination
 				if not self.place_of_delivery:
-					self.place_of_delivery = masterbi_info.place_of_delivery
+					self.place_of_delivery = master_bl_info.place_of_delivery
 				if not self.port_of_loading:
-					self.port_of_loading = masterbi_info.port_of_loading
+					self.port_of_loading = master_bl_info.port_of_loading
 				if not self.consignee:
-					self.consignee = masterbi_info.cosignee_name
+					self.consignee = master_bl_info.cosignee_name
 				if not self.cargo_description:
-					self.cargo_description = masterbi_info.cargo_description
+					self.cargo_description = master_bl_info.cargo_description
 				if not self.sline_code:
-					self.sline_code = masterbi_info.shipping_agent_code
+					self.sline_code = master_bl_info.shipping_agent_code
 				if not self.sline:
-					self.sline = masterbi_info.shipping_agent_name
+					self.sline = master_bl_info.shipping_agent_name
 
 
 		if len(self.container_dates) == 0:

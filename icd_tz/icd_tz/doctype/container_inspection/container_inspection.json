@@ -83,7 +83,7 @@
   },
   {
    "fieldname": "inspection_date",
-   "fieldtype": "Datetime",
+   "fieldtype": "Date",
    "label": "Inspection Date"
   },
   {
@@ -234,7 +234,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-22 01:06:10.270536",
+ "modified": "2025-03-10 16:26:00.086690",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Inspection",

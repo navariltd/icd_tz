@@ -209,6 +209,7 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Container No",
+   "read_only": 1,
    "reqd": 1,
    "search_index": 1
   },
@@ -320,7 +321,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-27 01:12:51.345052",
+ "modified": "2025-03-10 16:00:35.481996",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Movement Order",

@@ -7,7 +7,7 @@ from frappe.model.document import Document
 from frappe.utils import get_url_to_form, cint
 
 mf = DocType("Manifest")
-mb = DocType("MasterBI")
+mb = DocType("Master BL")
 cd = DocType("Containers Detail")
 cmo = DocType("Container Movement Order")
 
@@ -90,7 +90,7 @@ class ContainerMovementOrder(Document):
 			not self.container_count
 		):
 			total_count = frappe.db.get_value(
-				"MasterBI",
+				"Master BL",
 				{"parent": self.manifest, "m_bl_no": self.m_bl_no},
 				"number_of_containers"
 			)
