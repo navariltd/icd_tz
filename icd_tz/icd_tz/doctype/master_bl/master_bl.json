@@ -239,7 +239,7 @@
   },
   {
    "fieldname": "shipping_mark",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Shipping Mark"
   },
   {
@@ -267,10 +267,10 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-01-12 17:18:12.184003",
+ "modified": "2025-03-10 16:01:36.714762",
  "modified_by": "Administrator",
  "module": "Icd Tz",
- "name": "MasterBI",
+ "name": "Master BL",
  "owner": "Administrator",
  "permissions": [],
  "sort_field": "modified",

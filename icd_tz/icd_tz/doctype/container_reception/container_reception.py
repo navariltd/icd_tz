@@ -135,7 +135,7 @@ def get_container_details(manifest, container_no):
 	if len(container) > 0:
 		container_row = container[0]
 		container_row["abbr_for_destination"] = frappe.db.get_value(
-			"MasterBI", 
+			"Master BL", 
 			{"parent": manifest, "m_bl_no": container_row.m_bl_no}, 
 			"place_of_destination"
 		)
