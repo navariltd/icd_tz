@@ -112,7 +112,7 @@ class GatePass(Document):
 	
 	def validate_mandatory_fields(self):
 		fields_str = ""
-		fields = ["transporter", "truck", "trailer", "driver_name", "license_no"]
+		fields = ["transporter", "truck", "trailer", "driver", "license_no"]
 		for field in fields:
 			if not self.get(field):
 				fields_str += f"{self.meta.get_label(field)}, "
