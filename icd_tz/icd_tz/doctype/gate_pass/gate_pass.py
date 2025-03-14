@@ -12,9 +12,9 @@ class GatePass(Document):
 		validate_cf_agent(self)
 	
 	def before_submit(self):
-		self.validate_container_charges()
-		self.validate_in_yard_booking()
-		self.validate_reception_charges()
+		# self.validate_container_charges()
+		# self.validate_in_yard_booking()
+		# self.validate_reception_charges()
 		self.validate_mandatory_fields()
 		self.update_submitted_info()
 	
