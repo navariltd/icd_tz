@@ -34,6 +34,9 @@ def validate_qty_storage_item(doc):
             settings_doc.get("storage_item_double_20ft"),
             settings_doc.get("storage_item_double_40ft")
         ]:
+            if not item.container_child_refs:
+                continue
+
             qty = cint(item.qty)
             child_references = item.container_child_refs.split(",")
 
