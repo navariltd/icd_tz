@@ -101,5 +101,13 @@ frappe.ui.form.on('ICD TZ Settings', {
 				}
 			};
 		});
+
+		frm.set_query("service_name", "service_types", () => {
+			return {
+				filters: {
+					"item_group": "ICD Services"
+				}
+			};
+		});
 	}
 });
