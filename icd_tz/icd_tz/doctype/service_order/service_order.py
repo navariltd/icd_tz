@@ -71,7 +71,7 @@ class ServiceOrder(Document):
 		settings_doc = frappe.get_cached_doc("ICD TZ Settings")
 
 		self.get_transport_services(settings_doc)
-		self.get_shore_handling_services()
+		self.get_shore_handling_services(settings_doc)
 		self.get_strip_services()
 		self.get_custom_verification_services()
 		self.get_storage_services()
@@ -113,14 +113,14 @@ class ServiceOrder(Document):
 					"service": transport_item
 				})
 
-	def get_shore_handling_services(self):
+	def get_shore_handling_services(self, settings_doc):
 		if not self.container_id:
 			return
 		
-		container_reception = frappe.db.get_value(
+		container_reception, cargo_type = frappe.db.get_value(
 			"Container",
 			self.container_id,
-			"container_reception"
+			["container_reception", "cargo_type"]
 		)
 		has_shore_handling_charges, s_sales_invoice = frappe.db.get_value(
 			"Container Reception",
@@ -135,34 +135,33 @@ class ServiceOrder(Document):
 			return
 
 		shore_handling_item = None
-		settings_doc = frappe.get_doc("ICD TZ Settings")
-		if self.port == "DP WORLD":
-			if "2" in str(self.container_size)[0]:
-				shore_handling_item = settings_doc.get("shore_handling_item_t1_20ft")
-				if not shore_handling_item:
-					frappe.throw("Shore Handling Item (t1) for 20ft container is not set in ICD TZ setting, Please set it to continue")
-			
-			if "4" in str(self.container_size)[0]:
-				shore_handling_item = settings_doc.get("shore_handling_item_t1_40ft")
-				if not shore_handling_item:
-					frappe.throw("Shore Handling Item (t1) for 40ft container is not set in ICD TZ setting, Please set it to continue")
+		for row in settings_doc.service_types:
+			if (
+				row.service_type == "Shore" and
+				row.cargo_type == cargo_type and
+				row.port == self.port
+			):
+				if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+					shore_handling_item = row.service_name
+					break
 
-		if self.port == "TEAGTL":
-			if "2" in str(self.container_size)[0]:
-				shore_handling_item = settings_doc.get("shore_handling_item_t2_20ft")
-				if not shore_handling_item:
-					frappe.throw("Shore Handling Item (t2) for 20ft container is not set in ICD TZ setting, Please set it to continue")
-			
-			if "4" in str(self.container_size)[0]:
-				shore_handling_item = settings_doc.get("shore_handling_item_t2_40ft")
-				if not shore_handling_item:
-					frappe.throw("Shore Handling Item (t2) for 40ft container is not set in ICD TZ setting, Please set it to continue")
+				elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
+					shore_handling_item = row.service_name
+					break
 
+				else:
+					continue
+		
+		if not shore_handling_item:
+			frappe.throw(
+				f"Shore Handling Pricing Criteria for Size: {self.container_size}, Port: {self.port} and Cargo Type: {cargo_type} is not set in ICD TZ Settings, Please set it to continue"
+			)
+		
 		service_names = [row.get("service") for row in self.get("services")]
 		if shore_handling_item and shore_handling_item not in service_names:
 			self.append("services", {
 				"service": shore_handling_item,
-				"remarks": f"Size: {self.container_size}, Destination: {self.place_of_destination}, Port: {self.port}"
+				"remarks": f"Size: {self.container_size}, Cargo Type: {cargo_type}, Port: {self.port}"
 			})
 	
 	def get_custom_verification_services(self):
