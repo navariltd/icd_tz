@@ -27,6 +27,8 @@
   "storage_item_single_40ft",
   "storage_item_double_20ft",
   "storage_item_double_40ft",
+  "service_pricing_criteria_section",
+  "service_types",
   "corridor_levy_countries_section",
   "countries",
   "no_of_days_for_container_storage_charges_section",
@@ -176,12 +178,23 @@
    "fieldtype": "Table MultiSelect",
    "label": "countries",
    "options": "Corridor Levy Country"
+  },
+  {
+   "fieldname": "service_pricing_criteria_section",
+   "fieldtype": "Section Break",
+   "label": "Service Pricing Criteria"
+  },
+  {
+   "fieldname": "service_types",
+   "fieldtype": "Table",
+   "label": "Criteria",
+   "options": "ICD TZ Service Detail"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-02-09 19:42:08.335714",
+ "modified": "2025-04-15 23:21:18.408238",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "ICD TZ Settings",
