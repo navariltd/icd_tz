@@ -68,7 +68,9 @@ class ServiceOrder(Document):
 					self.consignee = booking_info.consignee
 	
 	def get_services(self):
-		self.get_transport_services()
+		settings_doc = frappe.get_cached_doc("ICD TZ Settings")
+
+		self.get_transport_services(settings_doc)
 		self.get_shore_handling_services()
 		self.get_strip_services()
 		self.get_custom_verification_services()
@@ -77,32 +79,40 @@ class ServiceOrder(Document):
 		self.get_corridor_services()
 		self.get_other_charges()
 
-	def get_transport_services(self):
-		if self.container_id:
-			container_reception = frappe.db.get_value(
-				"Container",
-				self.container_id,
-				"container_reception"
-			)
-			has_transport_charges, t_sales_invoice = frappe.db.get_value(
-				"Container Reception",
-				container_reception,
-				["has_transport_charges", "t_sales_invoice"]
-			)
-			if t_sales_invoice:
-				return
+	def get_transport_services(self, settings_doc):
+		if not self.container_id:
+			return
+		
+		container_reception = frappe.db.get_value(
+			"Container",
+			self.container_id,
+			"container_reception"
+		)
+		has_transport_charges, t_sales_invoice = frappe.db.get_value(
+			"Container Reception",
+			container_reception,
+			["has_transport_charges", "t_sales_invoice"]
+		)
+		if t_sales_invoice:
+			return
 
-			if has_transport_charges == "Yes":
-				service_names = [row.get("service") for row in self.get("services")]
-				transport_item = frappe.db.get_single_value("ICD TZ Settings", "transport_item")
-				if not transport_item:
-					frappe.throw("Transport item is not set in ICD TZ Settings, Please set it to continue")
-				
-				if transport_item and transport_item not in service_names:
-					self.append("services", {
-						"service": transport_item
-					})
-	
+		if has_transport_charges == "Yes":
+			service_names = [row.get("service") for row in self.get("services")]
+
+			transport_item = None
+			for row in settings_doc.service_types:
+				if row.service_type == "Transport":
+					transport_item = row.service_name
+					break
+
+			if not transport_item:
+				frappe.throw("Transport item is not set in ICD TZ Settings (Pricing Criteria), Please set it to continue")
+			
+			if transport_item and transport_item not in service_names:
+				self.append("services", {
+					"service": transport_item
+				})
+
 	def get_shore_handling_services(self):
 		if not self.container_id:
 			return
