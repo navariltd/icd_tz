@@ -25,54 +25,41 @@ def unlink_sales_order(doc):
             )
 
 @frappe.whitelist()
-def make_sales_order(doc_type, doc_name, m_bl_no=None, manifest=None):
-    service_docs = []
-
-    if m_bl_no and manifest:
-        service_docs = get_orders(m_bl_no, manifest)
-    
-    if len(service_docs) == 0:
-        if not doc_type or not doc_name:
-            return
-        
-        source_doc = frappe.get_doc(doc_type, doc_name)
-        service_docs.append(source_doc)
-
-
+def make_sales_order(doc_type=None, doc_name=None, m_bl_no=None):
     items = []
     company = None
     consignee = None
     c_and_f_company = None
     order_m_bl_no = m_bl_no if m_bl_no else None
-    order_manifest = manifest if manifest else None
 
     settings_doc = frappe.get_cached_doc("ICD TZ Settings")
-    
-    for doc in service_docs:
-        container_doc = frappe.get_doc("Container", doc.get("container_id"))
 
-        single_days, double_days = get_container_days_to_be_billed(doc, container_doc, settings_doc)
-        items += get_items(doc, single_days, double_days, settings_doc)
+    service_order_items, service_docs = get_service_order_items(doc_type=doc_type, doc_name=doc_name, m_bl_no=m_bl_no)
+    
+    items += service_order_items
+    if len(items) == 0:
+        return
+    
+    if len(service_docs) > 0:
+        source_doc = service_docs[0]
 
         if not consignee:
-            consignee = doc.consignee
+            consignee = source_doc.consignee
         
         if not company:
-            company = doc.company
+            company = source_doc.company
         
         if not c_and_f_company:
-            c_and_f_company = doc.c_and_f_company
+            c_and_f_company = source_doc.c_and_f_company
         
         if not order_m_bl_no:
-            order_m_bl_no = doc.m_bl_no
-        
-        if not order_manifest:
-            order_manifest = doc.manifest
+            order_m_bl_no = source_doc.m_bl_no
     
     sales_order = frappe.get_doc({
         "doctype": "Sales Order",
         "company": company,
-        "customer": c_and_f_company,
+        "customer": consignee,
+        "c_and_f_company": c_and_f_company,
         "transaction_date": nowdate(),
         "delivery_date": nowdate(),
         "selling_price_list": settings_doc.get("default_price_list"),
@@ -137,75 +124,72 @@ def get_container_days_to_be_billed(service_doc, container_doc, settings_doc):
     return single_days, double_days
 
 
-def get_items(doc, single_days, double_days, settings_doc):
+def get_service_order_items(
+    doc_type=None,
+    doc_name=None,
+    m_bl_no=None,
+):
+    items = []
+    service_docs = []
+
+    if m_bl_no:
+        service_docs = get_service_orders(m_bl_no)
+    
+    if len(service_docs) == 0:
+        if not doc_type or not doc_name:
+            return None, None
+        
+        source_doc = frappe.get_cached_doc(doc_type, doc_name)
+        service_docs.append(source_doc)
+
+    for doc in service_docs:
+        items += get_items(doc)
+        
+    return items, service_docs
+
+
+def get_service_orders(m_bl_no):
+    service_docs = []
+
+    filters = {
+        "m_bl_no": m_bl_no,
+    }
+    orders = frappe.db.get_all(
+        "Service Order",
+        filters=filters,
+        fields=["name", "docstatus"]
+    )
+    if len(orders) == 0:
+        return []
+    
+    draft_service_orders = [order for order in orders if order.docstatus == 0]
+    if len(draft_service_orders) > 0:
+        frappe.throw(f"Please submit all draft Service Orders for M BL No: <b>{m_bl_no}</b>")
+
+    for entry in orders:
+        source_doc = frappe.get_cached_doc("Service Order", entry.name)
+        service_docs.append(source_doc)
+
+    return service_docs
+    
+
+def get_items(doc):
     items = []
     for item in doc.get("services"):
-        qty = 1
-        container_childs = ""
-        if item.get("service") in [settings_doc.get("storage_item_single_20ft"), settings_doc.get("storage_item_single_40ft")]:
-            qty = len(single_days)
-            container_childs = ",".join(single_days)
-        
-        elif item.get("service") in [settings_doc.get("storage_item_double_20ft"), settings_doc.get("storage_item_double_40ft")]:
-            qty = len(double_days)
-            container_childs = ",".join(double_days)
-        
         row_item = {
             'item_code': item.get("service"),
-            'qty': qty,
+            'qty': 1,
             'container_no': doc.container_no,
             'container_id': doc.container_id
         }
-        if container_childs:
-            row_item["container_child_refs"] = container_childs
-        
         items.append(row_item)
     
     return items
 
 
-def get_orders(m_bl_no, manifest):
-    service_docs = []
-
-    filters = {
-        "manifest": manifest,
-        "m_bl_no": m_bl_no,
-        "docstatus": 1,
-    }
-    orders = frappe.db.get_all(
-        "Service Order",
-        filters=filters,
-    )
-
-    for entry in orders:
-        doc = frappe.get_doc("Service Order", entry.name)
-        service_docs.append(doc)
-
-    return service_docs
-    
 
 @frappe.whitelist()
 def create_sales_order(data):
 	data = frappe.parse_json(data)
-	service_orders = frappe.db.get_all(
-		"Service Order",
-		filters={
-			"m_bl_no": data.get("m_bl_no"),
-		},
-        fields=["name", "docstatus", "manifest"]
-	)
-	if len(service_orders) == 0:
-		frappe.msgprint(f"No submitted Sarvice Order found for M BL No: <b>{data.get('m_bl_no')}</b>")
-		return
-	
-	draft_service_orders = [order for order in service_orders if order.docstatus == 0]
-	if len(draft_service_orders) > 0:
-		frappe.msgprint(f"Please submit all draft Service Orders for M BL No: <b>{data.get('m_bl_no')}</b>")
-		return
-
-	return make_sales_order(
-		"Service Order",
-		service_orders[0].name,
-		data.get("m_bl_no"),
-		service_orders[0].manifest
-	)
+    
+	return make_sales_order(m_bl_no=data.get("m_bl_no"))
