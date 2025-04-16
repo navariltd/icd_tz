@@ -34,6 +34,8 @@ def make_sales_order(doc_type=None, doc_name=None, m_bl_no=None):
 
     settings_doc = frappe.get_cached_doc("ICD TZ Settings")
 
+    items += get_storage_services(m_bl_no)
+
     service_order_items, service_docs = get_service_order_items(doc_type=doc_type, doc_name=doc_name, m_bl_no=m_bl_no)
     
     items += service_order_items
@@ -82,7 +84,121 @@ def make_sales_order(doc_type=None, doc_name=None, m_bl_no=None):
     return sales_order.name
 
 
-def get_container_days_to_be_billed(service_doc, container_doc, settings_doc):
+def get_storage_services(m_bl_no):
+    services = []
+
+    containers = frappe.db.get_all(
+        "Container", filters={"m_bl_no": m_bl_no},
+        fields=["name", "days_to_be_billed"]
+    )
+    if len(containers) == 0:
+        return
+
+    settings_doc = frappe.get_cached_doc("ICD TZ Settings")
+
+    for container in containers:
+        if container.days_to_be_billed == 0:
+            continue
+        
+        container_doc = frappe.get_doc("Container", container.name)
+
+        single_days, double_days = get_container_days_to_be_billed(
+            container_doc,
+            settings_doc
+        )
+
+        if container_doc.has_single_charge == 1:
+            single_storage_item = None
+
+            for row in settings_doc.service_types:
+                if row.service_type == "Storage-Single":
+                    if "2" in str(row.size)[0] and "2" in str(container_doc.size)[0]:
+                        single_storage_item = row.service_name
+                        break
+
+                    elif "4" in str(row.size)[0] and "4" in str(container_doc.size)[0]:
+                        single_storage_item = row.service_name
+                        break
+
+                    else:
+                        continue
+                
+            if not single_storage_item:
+                frappe.throw(
+                    f"Storage-Single Pricing Criteria for Size: {container_doc.size} is not set in ICD TZ Settings, Please set it to continue"
+                )
+            
+            if len(single_days) > 0:
+                services.append({
+                    'item_code': single_storage_item,
+                    'qty': len(single_days),
+                    'container_no': container_doc.container_no,
+                    'container_id': container_doc.name,
+                    "container_child_refs": ",".join(single_days)
+                })
+
+        
+        if container_doc.has_double_charge == 1:
+            double_storage_item = None
+
+            for row in settings_doc.service_types:
+                if row.service_type == "Storage-Double":
+                    if "2" in str(row.size)[0] and "2" in str(container_doc.size)[0]:
+                        double_storage_item = row.service_name
+                        break
+
+                    elif "4" in str(row.size)[0] and "4" in str(container_doc.size)[0]:
+                        double_storage_item = row.service_name
+                        break
+
+                    else:
+                        continue
+            
+            if not double_storage_item:
+                frappe.throw(
+                    f"Storage-Double Pricing Criteria for Size: {container_doc.size} is not set in ICD TZ Settings, Please set it to continue"
+                )
+            
+            if len(double_days) > 0:
+                services.append({
+                    'item_code': double_storage_item,
+                    'qty': len(double_days),
+                    'container_no': container_doc.container_no,
+                    'container_id': container_doc.name,
+                    "container_child_refs": ",".join(double_days)
+                })
+        
+        if container_doc.has_removal_charges == "Yes":
+            removal_item = None
+            
+            for row in settings_doc.service_types:
+                if row.service_type == "Removal":
+                    if "2" in str(row.size)[0] and "2" in str(container_doc.size)[0]:
+                        removal_item = row.service_name
+                        break
+
+                    elif "4" in str(row.size)[0] and "4" in str(container_doc.size)[0]:
+                        removal_item = row.service_name
+                        break
+
+                    else:
+                        continue
+            
+            if not removal_item:
+                frappe.throw(
+                    f"Removal Pricing Criteria for Size: {container_doc.size} is not set in ICD TZ Settings, Please set it to continue"
+                )
+            
+            services.append({
+                'item_code': removal_item,
+                'qty': 1,
+                'container_no': container_doc.container_no,
+                'container_id': container_doc.name,
+            })
+                
+    return services
+
+def get_container_days_to_be_billed(container_doc, settings_doc):
     single_days = []
     double_days = []
     no_of_single_days = 0
@@ -90,11 +206,8 @@ def get_container_days_to_be_billed(service_doc, container_doc, settings_doc):
     single_charge_count = 0
     double_charge_count = 0
 
-    if container_doc.days_to_be_billed == 0:
-        return single_days, double_days
-
     for d in settings_doc.storage_days:
-        if d.destination == service_doc.place_of_destination:
+        if d.destination == container_doc.place_of_destination:
             if d.charge == "Single":
                 no_of_single_days = d.get("to") - d.get("from") + 1
 
