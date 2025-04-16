@@ -72,8 +72,7 @@ class ServiceOrder(Document):
 
 		self.get_transport_services(settings_doc)
 		self.get_shore_handling_services(settings_doc)
-		self.get_strip_services()
-		self.get_custom_verification_services(settings_doc)
+		self.get_booking_services(settings_doc)
 		self.get_storage_services()
 		self.get_removal_services()
 		self.get_corridor_services()
@@ -164,7 +163,7 @@ class ServiceOrder(Document):
 				"remarks": f"Size: {self.container_size}, Cargo Type: {cargo_type}, Port: {self.port}"
 			})
 	
-	def get_custom_verification_services(self, settings_doc):
+	def get_booking_services(self, settings_doc):
 		if not self.get("container_inspection"):
 			return
 		
@@ -172,19 +171,49 @@ class ServiceOrder(Document):
 		if not booking_id:
 			return
 		
-		has_custom_verification_charges, cv_sales_invoice = frappe.get_cached_value(
+		booking_details = frappe.get_cached_value(
 			"In Yard Container Booking",
             booking_id,
-            ["has_custom_verification_charges", "cv_sales_invoice"]
+            ["has_stripping_charges", "s_sales_invoice", "has_custom_verification_charges", "cv_sales_invoice"],
+			as_dict=True
 		)
-
-		if cv_sales_invoice:
+		if not booking_details:
 			return
 		
-		if has_custom_verification_charges == "Yes":
-			service_names = [row.get("service") for row in self.get("services")]
+		service_names = [row.get("service") for row in self.get("services")]
+		if (
+			not booking_details.s_sales_invoice and
+			booking_details.has_stripping_charges == "Yes"
+		):
+			stripping_item = None
+			for row in settings_doc.service_types:
+				if row.service_type == "Stripping":
+					if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+						stripping_item = row.service_name
+						break
 
-			verification_item = ""
+					elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
+						stripping_item = row.service_name
+						break
+
+					else:
+						continue
+					
+			if not stripping_item:
+				frappe.throw(f"Stripping Pricing Criteria for Size: {self.container_size} is not set in ICD TZ Settings, Please set it to continue")
+			
+			if stripping_item and stripping_item not in service_names:
+				self.append("services", {
+					"service": stripping_item
+				})
+		
+
+		
+		if (
+			not booking_details.cv_sales_invoice and
+			booking_details.has_custom_verification_charges == "Yes"
+		):
+			verification_item = None
 			for row in settings_doc.service_types:
 				if row.service_type == "Verification":
 					if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
@@ -206,30 +235,6 @@ class ServiceOrder(Document):
 					"service": verification_item
 				})
 
-	def get_strip_services(self):
-		if not self.get("container_inspection"):
-			return
-		
-		has_stripping_charges, s_sales_invoice = frappe.db.get_value(
-            "In Yard Container Booking",
-            {"container_inspection": self.get("container_inspection")},
-            ["has_stripping_charges", "s_sales_invoice"]
-        )
-
-		if s_sales_invoice:
-			return
-		
-		if has_stripping_charges == "Yes":
-			service_names = [row.get("service") for row in self.get("services")]
-			booking_item = frappe.db.get_single_value("ICD TZ Settings", "in_yard_booking_item")
-			if not booking_item:
-				frappe.throw("In Yard Booking item is not set in ICD TZ Settings, Please set it to continue")
-			
-			if booking_item and booking_item not in service_names:
-				self.append("services", {
-					"service": booking_item
-				})
-    
 	def get_storage_services(self):
 		if not self.get("container_id"):
 			return
