@@ -10,23 +10,6 @@
   "default_price_list",
   "column_break_8yjq8",
   "enable_signature_validation",
-  "service_items_section",
-  "transport_item",
-  "column_break_m4wtn",
-  "in_yard_booking_item",
-  "custom_verification_item",
-  "removal_item",
-  "corridor_levy_item",
-  "column_break_50lb3",
-  "shore_handling_item_t1_20ft",
-  "shore_handling_item_t1_40ft",
-  "shore_handling_item_t2_20ft",
-  "shore_handling_item_t2_40ft",
-  "column_break_hgbbw",
-  "storage_item_single_20ft",
-  "storage_item_single_40ft",
-  "storage_item_double_20ft",
-  "storage_item_double_40ft",
   "corridor_levy_countries_section",
   "countries",
   "service_pricing_criteria_section",
@@ -40,106 +23,10 @@
    "default": "Standard Selling",
    "fieldname": "default_price_list",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Default Price List",
    "options": "Price List",
    "reqd": 1
-  },
-  {
-   "fieldname": "in_yard_booking_item",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "In Yard Booking Item",
-   "options": "Item"
-  },
-  {
-   "fieldname": "transport_item",
-   "fieldtype": "Link",
-   "label": "Transport Item",
-   "options": "Item"
-  },
-  {
-   "fieldname": "removal_item",
-   "fieldtype": "Link",
-   "label": "Removal Item",
-   "options": "Item"
-  },
-  {
-   "fieldname": "corridor_levy_item",
-   "fieldtype": "Link",
-   "label": "Corridor Levy Item",
-   "options": "Item"
-  },
-  {
-   "fieldname": "service_items_section",
-   "fieldtype": "Section Break",
-   "label": "Service Items"
-  },
-  {
-   "fieldname": "column_break_m4wtn",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "custom_verification_item",
-   "fieldtype": "Link",
-   "label": "Custom Verification Item",
-   "options": "Item"
-  },
-  {
-   "fieldname": "column_break_50lb3",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "shore_handling_item_t1_20ft",
-   "fieldtype": "Link",
-   "label": "Shore Handling Item T1 20ft",
-   "options": "Item"
-  },
-  {
-   "fieldname": "shore_handling_item_t1_40ft",
-   "fieldtype": "Link",
-   "label": "Shore Handling Item T1 40ft",
-   "options": "Item"
-  },
-  {
-   "fieldname": "shore_handling_item_t2_20ft",
-   "fieldtype": "Link",
-   "label": "Shore Handling Item T2 20ft",
-   "options": "Item"
-  },
-  {
-   "fieldname": "shore_handling_item_t2_40ft",
-   "fieldtype": "Link",
-   "label": "Shore Handling Item T2 40ft",
-   "options": "Item"
-  },
-  {
-   "fieldname": "column_break_hgbbw",
-   "fieldtype": "Column Break",
-   "options": "Item"
-  },
-  {
-   "fieldname": "storage_item_single_20ft",
-   "fieldtype": "Link",
-   "label": "Storage Item Single 20ft",
-   "options": "Item"
-  },
-  {
-   "fieldname": "storage_item_single_40ft",
-   "fieldtype": "Link",
-   "label": "Storage Item Single 40ft",
-   "options": "Item"
-  },
-  {
-   "fieldname": "storage_item_double_20ft",
-   "fieldtype": "Link",
-   "label": "Storage Item Double 20ft",
-   "options": "Item"
-  },
-  {
-   "fieldname": "storage_item_double_40ft",
-   "fieldtype": "Link",
-   "label": "Storage Item Double 40ft",
-   "options": "Item"
   },
   {
    "fieldname": "no_of_days_for_container_storage_charges_section",
@@ -194,7 +81,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-04-16 00:56:07.396158",
+ "modified": "2025-04-16 18:37:35.678696",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "ICD TZ Settings",
