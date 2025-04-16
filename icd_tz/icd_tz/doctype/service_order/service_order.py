@@ -72,9 +72,9 @@ class ServiceOrder(Document):
 
 		self.get_reception_services(settings_doc)
 		self.get_booking_services(settings_doc)
-		self.get_storage_services()
-		self.get_removal_services()
-		self.get_corridor_services()
+		# self.get_storage_services()
+		# self.get_removal_services()
+		self.get_corridor_services(settings_doc)
 		self.get_other_charges()
 
 	def get_reception_services(self, settings_doc):
@@ -303,7 +303,7 @@ class ServiceOrder(Document):
 				"service": removal_item
 			})
 	
-	def get_corridor_services(self):
+	def get_corridor_services(self, settings_doc):
 		if not self.container_id:
 			return
 		
@@ -315,9 +315,22 @@ class ServiceOrder(Document):
 			return
 		
 		service_names = [row.get("service") for row in self.get("services")]
-		corridor_item = frappe.db.get_single_value("ICD TZ Settings", "corridor_levy_item")
+		corridor_item = None
+		for row in settings_doc.service_types:
+			if row.service_type == "Levy":
+				if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+					corridor_item = row.service_name
+					break
+
+				elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
+					corridor_item = row.service_name
+					break
+
+				else:
+					continue
+		
 		if not corridor_item:
-			frappe.throw("Corridor Levy item is not set in ICD TZ Settings, Please set it to continue")
+			frappe.throw(f"Corridor Levy Pricing Criteria for Size: {self.container_size} is not set in ICD TZ Settings, Please set it to continue")
 		
 		if corridor_item and corridor_item not in service_names:
 			self.append("services", {
