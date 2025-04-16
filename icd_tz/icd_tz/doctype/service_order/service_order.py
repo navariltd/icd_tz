@@ -70,15 +70,14 @@ class ServiceOrder(Document):
 	def get_services(self):
 		settings_doc = frappe.get_cached_doc("ICD TZ Settings")
 
-		self.get_transport_services(settings_doc)
-		self.get_shore_handling_services(settings_doc)
+		self.get_reception_services(settings_doc)
 		self.get_booking_services(settings_doc)
 		self.get_storage_services()
 		self.get_removal_services()
 		self.get_corridor_services()
 		self.get_other_charges()
 
-	def get_transport_services(self, settings_doc):
+	def get_reception_services(self, settings_doc):
 		if not self.container_id:
 			return
 		
@@ -87,82 +86,72 @@ class ServiceOrder(Document):
 			self.container_id,
 			"container_reception"
 		)
-		has_transport_charges, t_sales_invoice = frappe.db.get_value(
+		reception_details = frappe.get_cached_value(
 			"Container Reception",
 			container_reception,
-			["has_transport_charges", "t_sales_invoice"]
+			[
+				"cargo_type", "has_transport_charges", "t_sales_invoice",
+				"has_shore_handling_charges", "s_sales_invoice"
+			],
+			as_dict=True
 		)
-		if t_sales_invoice:
+		if not reception_details:
 			return
 
-		if has_transport_charges == "Yes":
-			service_names = [row.get("service") for row in self.get("services")]
-
+		service_names = [row.get("service") for row in self.get("services")]
+		if (
+			not reception_details.t_sales_invoice and
+			reception_details.has_transport_charges == "Yes"
+		):
 			transport_item = None
+
 			for row in settings_doc.service_types:
 				if row.service_type == "Transport":
 					transport_item = row.service_name
 					break
 
 			if not transport_item:
-				frappe.throw("Transport item is not set in ICD TZ Settings (Pricing Criteria), Please set it to continue")
+				frappe.throw("Transport Pricing Criteria is not set in ICD TZ Settings, Please set it to continue")
 			
 			if transport_item and transport_item not in service_names:
 				self.append("services", {
 					"service": transport_item
 				})
-
-	def get_shore_handling_services(self, settings_doc):
-		if not self.container_id:
-			return
 		
-		container_reception, cargo_type = frappe.db.get_value(
-			"Container",
-			self.container_id,
-			["container_reception", "cargo_type"]
-		)
-		has_shore_handling_charges, s_sales_invoice = frappe.db.get_value(
-			"Container Reception",
-			container_reception,
-			["has_shore_handling_charges", "s_sales_invoice"]
-		)
+		if (
+			not reception_details.s_sales_invoice and
+			reception_details.has_shore_handling_charges == "Yes"
+		):
+			shore_handling_item = None
+			for row in settings_doc.service_types:
+				if (
+					row.service_type == "Shore" and
+					row.cargo_type == reception_details.cargo_type and
+					row.port == self.port
+				):
+					if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+						shore_handling_item = row.service_name
+						break
 
-		if s_sales_invoice:
-			return
+					elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
+						shore_handling_item = row.service_name
+						break
+
+					else:
+						continue
+			
+			if not shore_handling_item:
+				frappe.throw(
+					f"Shore Handling Pricing Criteria for Size: {self.container_size}, Port: {self.port} and Cargo Type: {reception_details.cargo_type} is not set in ICD TZ Settings, Please set it to continue"
+				)
+			
+			service_names = [row.get("service") for row in self.get("services")]
+			if shore_handling_item and shore_handling_item not in service_names:
+				self.append("services", {
+					"service": shore_handling_item,
+					"remarks": f"Size: {self.container_size}, Cargo Type: {reception_details.cargo_type}, Port: {self.port}"
+				})
 		
-		if has_shore_handling_charges != "Yes":
-			return
-
-		shore_handling_item = None
-		for row in settings_doc.service_types:
-			if (
-				row.service_type == "Shore" and
-				row.cargo_type == cargo_type and
-				row.port == self.port
-			):
-				if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
-					shore_handling_item = row.service_name
-					break
-
-				elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
-					shore_handling_item = row.service_name
-					break
-
-				else:
-					continue
-		
-		if not shore_handling_item:
-			frappe.throw(
-				f"Shore Handling Pricing Criteria for Size: {self.container_size}, Port: {self.port} and Cargo Type: {cargo_type} is not set in ICD TZ Settings, Please set it to continue"
-			)
-		
-		service_names = [row.get("service") for row in self.get("services")]
-		if shore_handling_item and shore_handling_item not in service_names:
-			self.append("services", {
-				"service": shore_handling_item,
-				"remarks": f"Size: {self.container_size}, Cargo Type: {cargo_type}, Port: {self.port}"
-			})
-	
 	def get_booking_services(self, settings_doc):
 		if not self.get("container_inspection"):
 			return
@@ -206,8 +195,6 @@ class ServiceOrder(Document):
 				self.append("services", {
 					"service": stripping_item
 				})
-		
-
 		
 		if (
 			not booking_details.cv_sales_invoice and
