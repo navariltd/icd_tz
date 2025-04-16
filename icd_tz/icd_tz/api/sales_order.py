@@ -168,7 +168,10 @@ def get_storage_services(m_bl_no):
                     "container_child_refs": ",".join(double_days)
                 })
         
-        if container_doc.has_removal_charges == "Yes":
+        if (
+            not container_doc.r_sales_invoice and
+            container_doc.has_removal_charges == "Yes"
+        ):
             removal_item = None
             
             for row in settings_doc.service_types:
