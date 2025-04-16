@@ -73,7 +73,7 @@ class ServiceOrder(Document):
 		self.get_transport_services(settings_doc)
 		self.get_shore_handling_services(settings_doc)
 		self.get_strip_services()
-		self.get_custom_verification_services()
+		self.get_custom_verification_services(settings_doc)
 		self.get_storage_services()
 		self.get_removal_services()
 		self.get_corridor_services()
@@ -164,13 +164,17 @@ class ServiceOrder(Document):
 				"remarks": f"Size: {self.container_size}, Cargo Type: {cargo_type}, Port: {self.port}"
 			})
 	
-	def get_custom_verification_services(self):
+	def get_custom_verification_services(self, settings_doc):
 		if not self.get("container_inspection"):
 			return
 		
-		has_custom_verification_charges, cv_sales_invoice = frappe.db.get_value(
+		booking_id = frappe.get_cached_value("Container Inspection", self.get("container_inspection"), "in_yard_container_booking")
+		if not booking_id:
+			return
+		
+		has_custom_verification_charges, cv_sales_invoice = frappe.get_cached_value(
 			"In Yard Container Booking",
-            {"container_inspection": self.get("container_inspection")},
+            booking_id,
             ["has_custom_verification_charges", "cv_sales_invoice"]
 		)
 
@@ -179,9 +183,23 @@ class ServiceOrder(Document):
 		
 		if has_custom_verification_charges == "Yes":
 			service_names = [row.get("service") for row in self.get("services")]
-			verification_item = frappe.db.get_single_value("ICD TZ Settings", "custom_verification_item")
+
+			verification_item = ""
+			for row in settings_doc.service_types:
+				if row.service_type == "Verification":
+					if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+						verification_item = row.service_name
+						break
+
+					elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
+						verification_item = row.service_name
+						break
+
+					else:
+						continue
+					
 			if not verification_item:
-				frappe.throw("Custom Verification item is not set in ICD TZ Settings, Please set it to continue")
+				frappe.throw(f"Custom Verification Pricing criteria for Size: {self.container_size} is not set in ICD TZ Settings, Please set it to continue")
 			
 			if verification_item and verification_item not in service_names:
 				self.append("services", {
