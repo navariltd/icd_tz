@@ -11,7 +11,9 @@
   "consignee_tel",
   "column_break_q0vmd",
   "disabled",
-  "consignee_address"
+  "consignee_address",
+  "section_break_szgw",
+  "customer"
  ],
  "fields": [
   {
@@ -57,11 +59,21 @@
    "fieldname": "consignee_address",
    "fieldtype": "Small Text",
    "label": "Consignee Address"
+  },
+  {
+   "fieldname": "section_break_szgw",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-09 18:39:39.832562",
+ "modified": "2025-04-17 11:05:30.612572",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Consignee",
