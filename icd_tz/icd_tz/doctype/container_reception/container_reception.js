@@ -86,6 +86,9 @@ frappe.ui.form.on('Container Reception', {
                         frm.set_value("seal_no_2", data.seal_no2)
                         frm.set_value("seal_no_3", data.seal_no3)
                         frm.set_value("abbr_for_destination", data.abbr_for_destination)
+                        frm.set_value("place_of_destination", data.place_of_destination)
+                        frm.set_value("country_of_destination", data.country_of_destination)
+
                         frm.refresh_fields();
                     }
                 }
