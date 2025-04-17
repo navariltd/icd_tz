@@ -79,6 +79,7 @@ frappe.ui.form.on("Container Movement Order", {
                     "cargo_type": frm.doc.cargo_type,
                     "m_bl_no": frm.doc.m_bl_no,
                     "container_count": frm.doc.container_count,
+                    "freight_indicator": frm.doc.freight_indicator,
                 }, doc => {});
             }).addClass('btn-primary');
         }
@@ -165,6 +166,7 @@ var show_dialog = (frm, data) => {
                 container_no: $(this).find("#container_no").attr("data-container_no"),
                 m_bl_no: $(this).find("#m_bl_no").attr("data-m_bl_no"),
                 container_size: $(this).find("#container_size").attr("data-container_size"),
+                freight_indicator: $(this).find("#freight_indicator").attr("data-freight_indicator"),
                 cargo_type: $(this).find("#cargo_type").attr("data-cargo_type"),
             };
         });
@@ -173,6 +175,7 @@ var show_dialog = (frm, data) => {
             frm.set_value("container_no", container.container_no);
             frm.set_value("m_bl_no", container.m_bl_no);
             frm.set_value("size", container.container_size);
+            frm.set_value("freight_indicator", container.freight_indicator);
             frm.set_value("cargo_type", container.cargo_type);
 
             frm.refresh_fields();
@@ -235,7 +238,7 @@ var show_dialog = (frm, data) => {
                             <th style="background-color: #D3D3D3;">Container NO</th>
                             <th style="background-color: #D3D3D3;">M BL No</th>
                             <th style="background-color: #D3D3D3;">Size</th>
-                            <th style="background-color: #D3D3D3;">Status</th>
+                            <th style="background-color: #D3D3D3;">Freight Indicator</th>
                             <th style="background-color: #D3D3D3;">Cargo Type</th>
                         </tr>
                     </thead>
@@ -253,7 +256,7 @@ var show_dialog = (frm, data) => {
                     <td id="container_no" data-container_no="${row.container_no}">${row.container_no}</td>
                     <td id="m_bl_no" data-m_bl_no="${row.m_bl_no}">${row.m_bl_no}</td>
                     <td id="container_size" data-container_size="${row.container_size}">${row.container_size}</td>
-                    <td id="status" data-status="${row.status}">${row.status}</td>
+                    <td id="freight_indicator" data-freight_indicator="${row.freight_indicator}">${row.freight_indicator}</td>
                     <td id="cargo_type" data-cargo_type="${cargo_type}">${cargo_type}</td>
                 </tr>`;
         });
