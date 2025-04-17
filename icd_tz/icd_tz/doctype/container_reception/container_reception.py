@@ -12,17 +12,21 @@ class ContainerReception(Document):
 	def before_save(self):
 		if not self.company:
 			self.company = frappe.defaults.get_user_default("Company")
-		
+
 	def validate(self):
 		self.validate_duplicate_cr()
-	
+
 	def before_submit(self):
 		if not self.clerk:
 			frappe.throw("Clerk is missing, Please select clerk to proceed..!")
-	
+
 	def on_submit(self):
 		self.create_container()
 		self.update_container_storage_days()
+	
+	def before_cancel(self):
+		self.cancel_linked_docs()
+
 
 	def validate_duplicate_cr(self):
 		"""Validate that there is no duplicate Container Reception based on Container Movement Order (CMO)"""
@@ -75,7 +79,7 @@ class ContainerReception(Document):
 		container.save(ignore_permissions=True)
 
 		return container.name
-	
+
 	def update_container_storage_days(self):
 		"""Update the storage days of the containers based on the current received date and m_bl_no"""
 
@@ -94,7 +98,7 @@ class ContainerReception(Document):
 
 		if len(records) == 0:
 			return
-		
+
 		for record in records:
 			frappe.db.set_value(
 				"Container Reception",
@@ -121,6 +125,171 @@ class ContainerReception(Document):
 			})
 			container_doc.save(ignore_permissions=True)
 
+	def cancel_linked_docs(self):
+		container_id = frappe.db.get_value(
+			"Container",
+			{"container_reception": self.name},
+			["name"]
+		)
+
+		if not container_id:
+			return
+
+		# Check for related documents and their invoice status
+		error_messages = []
+		docs_to_cancel = []
+
+		# Check Service Order
+		service_orders = frappe.db.get_all(
+			"Service Order",
+			filters={"container_id": container_id},
+			fields=["name", "sales_invoice",  "sales_order"]
+		)
+
+		sales_order_ids = []
+		for service_order in service_orders:
+			if service_order.sales_invoice:
+				service_order_url = get_link_to_form("Service Order", service_order.name)
+				invoice_url = get_link_to_form("Sales Invoice", service_order.sales_invoice)
+				error_messages.append(f"Service Order <a href='{service_order_url}'>{service_order.name}</a> has invoice: <a href='{invoice_url}'>{service_order.sales_invoice}</a>")
+			else:
+				if (
+					not service_order.sales_invoice and 
+					service_order.sales_order and 
+					service_order.sales_order not in sales_order_ids
+				):
+					sales_order_ids.append(service_order.sales_order)
+
+				docs_to_cancel.append({"doc_type": "Service Order", "doc_name": service_order.name})
+
+		# Check Container Inspection
+		inspections = frappe.db.get_all(
+			"Container Inspection",
+			filters={"container_id": container_id},
+			fields=["name"]
+		)
+
+		for inspection in inspections:
+			inspection_doc = frappe.get_doc("Container Inspection", inspection.name)
+			invoice_links = []
+
+			for row in inspection_doc.services:
+				if "verification" in str(row.service).lower():
+					continue
+
+				if row.sales_invoice:
+					invoice_links.append((row.service, row.sales_invoice))
+
+			if len(invoice_links) > 0:
+				inspection_url = get_link_to_form("Container Inspection", inspection.name)
+				error_messages.append(f"Container Inspection <a href='{inspection_url}'>{inspection.name}</a> has the following invoices:")
+				for service_name, invoice_id in invoice_links:
+					invoice_url = get_link_to_form("Sales Invoice", invoice_id)
+					error_messages.append(f"- {service_name}: <a href='{invoice_url}'>{invoice_id}</a>")
+			else:
+				docs_to_cancel.append({"doc_type": "Container Inspection", "doc_name": inspection.name})
+
+		# Check In Yard Container Booking
+		bookings = frappe.db.get_all(
+			"In Yard Container Booking",
+			filters={"container_id": container_id},
+			fields=["name", "s_sales_invoice", "cv_sales_invoice"]
+		)
+
+		for booking in bookings:
+			invoice_links = []
+			if booking.s_sales_invoice:
+				invoice_links.append(("Stripping Charges", booking.s_sales_invoice))
+			if booking.cv_sales_invoice:
+				invoice_links.append(("Custom Verification Charges", booking.cv_sales_invoice))
+
+			if len(invoice_links) > 0:
+				booking_url = get_link_to_form("In Yard Container Booking", booking.name)
+				error_messages.append(f"In Yard Container Booking <a href='{booking_url}'>{booking.name}</a> has the following invoices:")
+				for charge_type, invoice_id in invoice_links:
+					invoice_url = get_link_to_form("Sales Invoice", invoice_id)
+					error_messages.append(f"- {charge_type}: <a href='{invoice_url}'>{invoice_id}</a>")
+				
+			else:
+				docs_to_cancel.append({"doc_type": "In Yard Container Booking", "doc_name": booking.name})
+
+		# Check Gate Pass
+		gate_passes = frappe.db.get_all(
+			"Gate Pass",
+			filters={"container_id": container_id},
+			fields=["name"]
+		)
+
+		if gate_passes:
+			for gate_pass in gate_passes:
+				docs_to_cancel.append({"doc_type": "Gate Pass", "doc_name": gate_pass.name})
+		
+				
+		# Check Sales Orders and Sales Invoices using m_bl_no
+		if self.m_bl_no:
+			# Check Sales Invoices
+			sales_invoices = frappe.db.get_all(
+				"Sales Invoice",
+				filters={"m_bl_no": self.m_bl_no, "docstatus": 0},
+				fields=["name"]
+			)
+
+			if sales_invoices:
+				for sales_invoice in sales_invoices:
+					docs_to_cancel.append({"doc_type": "Sales Invoice", "doc_name": sales_invoice.name})
+
+			# Check and delete draft Sales Orders
+			# TODO: finding a better way to handle sales order linked with sales invoices
+			# sales_orders = frappe.db.get_all(
+			# 	"Sales Order",
+			# 	filters={"m_bl_no": self.m_bl_no, "name": ["in", sales_order_ids]},
+			# 	fields=["name"]
+			# )
+
+			# for sales_order in sales_orders:
+			# 	docs_to_cancel.append({"doc_type": "Sales Order", "doc_name": sales_order.name})
+
+		
+
+		# If there are any error messages, throw them to prevent cancellation
+		if error_messages:
+			error_html = "<br>".join(error_messages)
+			error_message = f"<div>Cannot cancel Container Reception due to the following linked documents with invoices:</div><br>{error_html}<br><br><div>Please cancel these documents manually before proceeding.</div>"
+			frappe.throw(error_message)
+		
+		# Cancel the linked documents
+		count = 0
+		for record in docs_to_cancel:
+			frappe.publish_progress(count * 100 / len(docs_to_cancel), title="Canceling linked documents...")
+			doc = frappe.get_doc(record["doc_type"], record["doc_name"])
+			doc.flags.ignore_permissions = True
+
+			if doc.doctype != "Sales Order":
+				doc.flags.ignore_links = True
+		
+			if doc.docstatus == 1:
+				try:
+					doc.cancel()
+					doc.reload()
+				except Exception as e:
+					frappe.log_error(
+						title=f"Error while canceling {doc.doctype} {doc.name}",
+						message=str(e)
+					)
+					if doc.doctype == "Sales Order":
+						doc.db_set("status", "Closed")
+						continue
+					else:
+						raise e
+			
+			doc.delete()
+			count += 1
+
+		frappe.delete_doc(
+			"Container",
+			container_id,
+			ignore_permissions=True
+		)
 
 @frappe.whitelist()
 def get_container_details(manifest, container_no):
@@ -135,8 +304,8 @@ def get_container_details(manifest, container_no):
 	if len(container) > 0:
 		container_row = container[0]
 		container_row["abbr_for_destination"] = frappe.db.get_value(
-			"Master BL", 
-			{"parent": manifest, "m_bl_no": container_row.m_bl_no}, 
+			"Master BL",
+			{"parent": manifest, "m_bl_no": container_row.m_bl_no},
 			"place_of_destination"
 		)
 		return container_row
@@ -149,5 +318,5 @@ def get_place_of_destination():
 
 	for row in icd_doc.storage_days:
 		destinations.append(row.destination)
-	
+
 	return set(destinations)
