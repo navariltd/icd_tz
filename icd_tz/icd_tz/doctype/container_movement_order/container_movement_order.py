@@ -30,6 +30,9 @@ class ContainerMovementOrder(Document):
 	def on_submit(self):
 		self.update_container_has_order()
 	
+	def before_cancel(self):
+		self.validate_cmo_links()
+	
 	def on_cancel(self):
 		self.update_container_has_order(value=0)
 	
@@ -101,6 +104,16 @@ class ContainerMovementOrder(Document):
 			)
 
 			self.container_count = f"{current_count + 1}/{total_count}"
+
+	def validate_cmo_links(self):
+		reception_records = frappe.db.get_all(
+			"Container Reception",
+			{"movement_order": self.name},
+		)
+		if len(reception_records) == 0:
+			return
+		
+		frappe.throw(f"Do not cancel this Movement Order: {self.name}, It is linked with Container Reception: {reception_records[0].name}")
 
 
 @frappe.whitelist()
