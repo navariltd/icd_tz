@@ -125,6 +125,7 @@ def get_manifest_details(manifest, m_bl_no=None):
             cd.container_no,
             cd.m_bl_no,
             cd.container_size,
+			cd.freight_indicator.as_("status"),
             mb.cargo_classification.as_("cargo_type")
         )
         .where(
