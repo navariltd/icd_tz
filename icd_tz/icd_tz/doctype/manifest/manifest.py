@@ -218,17 +218,28 @@ class Manifest(Document):
             house_bl.oil_type = row[37]
     
     def create_consignees(self):
+        def create_consignee(row):
+            consignee = frappe.get_doc({
+                "doctype": "Consignee",
+                "consignee_name": row.cosignee_name,
+                "consignee_tel": row.cosignee_tel,
+                "consignee_tin": row.cosignee_tin,
+                "consignee_address": row.cosignee_address,
+            })
+            consignee.insert(ignore_permissions=True)
+        
         for row in self.master_bl:
             if not row.cosignee_name:
                 continue
 
             if not frappe.db.exists("Consignee", row.cosignee_name):
-                consignee = frappe.get_doc({
-                    "doctype": "Consignee",
-                    "consignee_name": row.cosignee_name,
-                    "consignee_tel": row.cosignee_tel,
-                    "consignee_tin": row.cosignee_tin,
-                    "consignee_address": row.cosignee_address,
-                })
-                consignee.insert()
+                create_consignee(row)
+        
+        for row in self.house_bl:
+            if not row.cosignee_name:
+                continue
+
+            if not frappe.db.exists("Consignee", row.cosignee_name):
+                create_consignee(row)
+        
         
