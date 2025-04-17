@@ -21,12 +21,12 @@ class ContainerReception(Document):
 			frappe.throw("Clerk is missing, Please select clerk to proceed..!")
 
 	def on_submit(self):
-		self.create_container()
+		self.create_mbl_container()
+		self.create_hbl_container()
 		self.update_container_storage_days()
-	
+
 	def before_cancel(self):
 		self.cancel_linked_docs()
-
 
 	def validate_duplicate_cr(self):
 		"""Validate that there is no duplicate Container Reception based on Container Movement Order (CMO)"""
@@ -48,7 +48,7 @@ class ContainerReception(Document):
 					f"Another Container Reception with the same Movement Order already exists: <a href='{url}'><b>{duplicates[0].name}</b></a>"
 				)
 
-	def create_container(self):
+	def create_mbl_container(self):
 		"""Create a Container record from the Container Reception"""
 
 		container = frappe.new_doc("Container")
@@ -73,12 +73,78 @@ class ContainerReception(Document):
 		container.container_count = self.container_count
 		container.status = "In Yard"
 
+		if self.freight_indicator == "LCL":
+			container.is_empty_container = 1
+
 		container.append("container_dates", {
 			"date": self.received_date,
 		})
 		container.save(ignore_permissions=True)
 
 		return container.name
+
+	def create_hbl_container(self):
+		"""Create a HBL Container record based on freight indicator on container reception"""
+		if self.freight_indicator != "LCL":
+			return
+
+		# Find all records from 'HBL Container' doctypes using filters of container_no and manifest
+		hbl_containers = frappe.get_all(
+			"HBL Container",
+			filters={
+				"container_no": self.container_no,
+				"parent": self.manifest
+			},
+			fields=["*"]
+		)
+
+		if not len(hbl_containers) == 0:
+			frappe.msgprint(f"No HBL Container records found for container {self.container_no} in manifest {self.manifest}")
+			return
+
+		# Create containers based on the information found
+		count = 0
+		for hbl_container in hbl_containers:
+			container = frappe.new_doc("Container")
+			container.container_reception = self.name
+			container.container_no = hbl_container.container_no
+			container.size = hbl_container.container_size
+			container.volume = hbl_container.volume
+			container.volume_unit = hbl_container.volume_unit
+			container.weight = hbl_container.weight
+			container.weight_unit = hbl_container.weight_unit
+			container.seal_no_1 = hbl_container.seal_no1
+			container.seal_no_2 = hbl_container.seal_no2
+			container.seal_no_3 = hbl_container.seal_no3
+			container.port_of_destination = self.port
+			container.arrival_date = self.ship_dc_date
+			container.received_date = self.received_date
+			container.original_location = self.container_location
+			container.current_location = self.container_location
+			# container.place_of_destination = self.place_of_destination
+			# container.country_of_destination = self.country_of_destination
+			container.manifest = self.manifest
+			container.movement_order = self.movement_order
+			container.m_bl_no = hbl_container.m_bl_no
+			container.h_bl_no = hbl_container.h_bl_no
+			container.status = "In Yard"
+			container.has_hbl = 1
+			container.type_of_container = hbl_container.type_of_container
+			container.plug_type_of_reefer = hbl_container.plug_type_of_reefer
+			container.minimum_temperature = hbl_container.minimum_temperature
+			container.maximum_temperature = hbl_container.maximum_temperature
+			container.container_count = 1
+
+			container.append("container_dates", {
+				"date": self.received_date,
+			})
+
+			container.save(ignore_permissions=True)
+			count += 1
+		
+		if count > 0:
+			frappe.msgprint(f"HBL records: {count} were created for container {self.container_no}", alert=True)
+
 
 	def update_container_storage_days(self):
 		"""Update the storage days of the containers based on the current received date and m_bl_no"""
@@ -108,22 +174,23 @@ class ContainerReception(Document):
 				update_modified=False
 			)
 
-			container_id = frappe.db.get_value(
+			container_ids = frappe.db.get_all(
 				"Container",
 				{"container_reception": record.name},
-				"name"
+				["name"]
 			)
-			if not container_id:
+			if len(container_ids) == 0:
 				continue
-
-			container_doc = frappe.get_doc("Container", container_id)
-			container_doc.container_dates = []
-			container_doc.arrival_date = self.ship_dc_date
-			container_doc.received_date = self.received_date
-			container_doc.append("container_dates", {
-				"date": self.received_date,
-			})
-			container_doc.save(ignore_permissions=True)
+			
+			for container_id in container_ids:
+				container_doc = frappe.get_doc("Container", container_id)
+				container_doc.container_dates = []
+				container_doc.arrival_date = self.ship_dc_date
+				container_doc.received_date = self.received_date
+				container_doc.append("container_dates", {
+					"date": self.received_date,
+				})
+				container_doc.save(ignore_permissions=True)
 
 	def cancel_linked_docs(self):
 		container_id = frappe.db.get_value(
@@ -154,8 +221,8 @@ class ContainerReception(Document):
 				error_messages.append(f"Service Order <a href='{service_order_url}'>{service_order.name}</a> has invoice: <a href='{invoice_url}'>{service_order.sales_invoice}</a>")
 			else:
 				if (
-					not service_order.sales_invoice and 
-					service_order.sales_order and 
+					not service_order.sales_invoice and
+					service_order.sales_order and
 					service_order.sales_order not in sales_order_ids
 				):
 					sales_order_ids.append(service_order.sales_order)
@@ -209,7 +276,7 @@ class ContainerReception(Document):
 				for charge_type, invoice_id in invoice_links:
 					invoice_url = get_link_to_form("Sales Invoice", invoice_id)
 					error_messages.append(f"- {charge_type}: <a href='{invoice_url}'>{invoice_id}</a>")
-				
+
 			else:
 				docs_to_cancel.append({"doc_type": "In Yard Container Booking", "doc_name": booking.name})
 
@@ -223,8 +290,8 @@ class ContainerReception(Document):
 		if gate_passes:
 			for gate_pass in gate_passes:
 				docs_to_cancel.append({"doc_type": "Gate Pass", "doc_name": gate_pass.name})
-		
-				
+
+
 		# Check Sales Orders and Sales Invoices using m_bl_no
 		if self.m_bl_no:
 			# Check Sales Invoices
@@ -249,14 +316,14 @@ class ContainerReception(Document):
 			# for sales_order in sales_orders:
 			# 	docs_to_cancel.append({"doc_type": "Sales Order", "doc_name": sales_order.name})
 
-		
+
 
 		# If there are any error messages, throw them to prevent cancellation
 		if error_messages:
 			error_html = "<br>".join(error_messages)
 			error_message = f"<div>Cannot cancel Container Reception due to the following linked documents with invoices:</div><br>{error_html}<br><br><div>Please cancel these documents manually before proceeding.</div>"
 			frappe.throw(error_message)
-		
+
 		# Cancel the linked documents
 		count = 0
 		for record in docs_to_cancel:
@@ -266,7 +333,7 @@ class ContainerReception(Document):
 
 			if doc.doctype != "Sales Order":
 				doc.flags.ignore_links = True
-		
+
 			if doc.docstatus == 1:
 				try:
 					doc.cancel()
@@ -281,7 +348,7 @@ class ContainerReception(Document):
 						continue
 					else:
 						raise e
-			
+
 			doc.delete()
 			count += 1
 
@@ -295,7 +362,7 @@ class ContainerReception(Document):
 def get_container_details(manifest, container_no):
 	"""Get the details of a container based on the container no and manifest"""
 
-	container = frappe.get_all(
+	container = frappe.db.get_all(
 		"Containers Detail",
 		filters={"parent": manifest, "container_no": container_no},
 		fields=["*"]
@@ -303,11 +370,29 @@ def get_container_details(manifest, container_no):
 
 	if len(container) > 0:
 		container_row = container[0]
-		container_row["abbr_for_destination"] = frappe.db.get_value(
+		abbr_for_destination = frappe.db.get_value(
 			"Master BL",
 			{"parent": manifest, "m_bl_no": container_row.m_bl_no},
 			"place_of_destination"
 		)
+		container_row["abbr_for_destination"] = abbr_for_destination
+
+		country_code = str(abbr_for_destination)[1]
+		country_of_destination = frappe.get_cached_value(
+			"Country", {"code": country_code.lower()}, "name"
+		)
+		container_row["country_of_destination"] = country_of_destination
+
+		place_of_destination = ""
+		if country_code == "TZ":
+			place_of_destination = "Local"
+		elif country_code == "CD":
+			place_of_destination = "DRC"
+		else:
+			place_of_destination = "Other"
+
+		container_row["place_of_destination"] = place_of_destination
+
 		return container_row
 
 @frappe.whitelist()
