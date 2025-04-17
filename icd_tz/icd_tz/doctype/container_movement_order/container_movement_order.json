@@ -15,6 +15,7 @@
   "m_bl_no",
   "container_no",
   "select_container",
+  "freight_indicator",
   "column_break_tnol5",
   "size",
   "container_count",
@@ -316,12 +317,19 @@
    "label": "Ship D/C Date",
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "freight_indicator",
+   "fieldtype": "Data",
+   "label": "Freight Indicator",
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-03-10 16:00:35.481996",
+ "modified": "2025-04-17 16:10:48.976358",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Movement Order",
