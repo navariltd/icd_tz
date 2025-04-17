@@ -10,6 +10,7 @@
  "field_order": [
   "container_details_section",
   "m_bl_no",
+  "h_bl_no",
   "container_no",
   "type_of_container",
   "no_of_packages",
@@ -18,32 +19,43 @@
   "seal_no_2",
   "seal_no_3",
   "freight_indicator",
+  "plug_type_of_reefer",
   "column_break_sohs",
   "volume",
   "volume_unit",
   "weight",
   "weight_unit",
+  "maximum_temperature",
   "column_break_gwgiu",
   "size",
   "cargo_type",
   "container_count",
+  "is_empty_container",
+  "has_hbl",
+  "minimum_temperature",
   "cargo_details_section",
   "consignee",
   "sline",
   "sline_code",
   "ship",
   "voyage_no",
+  "gross_weight",
+  "gross_weight_unit",
   "column_break_6s4dw",
   "port_of_loading",
   "port_of_destination",
   "abbr_for_destination",
   "place_of_delivery",
+  "net_weight",
+  "net_weight_unit",
   "column_break_jhhs",
   "place_of_destination",
   "country_of_destination",
   "package_unit",
+  "gross_volume",
   "column_break_vdbo",
   "cargo_description",
+  "gross_volume_unit",
   "date_reference_section",
   "arrival_date",
   "departure_date",
@@ -102,12 +114,14 @@
   {
    "fieldname": "seal_no_1",
    "fieldtype": "Data",
-   "label": "Seal No. 1"
+   "label": "Seal No. 1",
+   "search_index": 1
   },
   {
    "fieldname": "seal_no_2",
    "fieldtype": "Data",
-   "label": "Seal No. 2"
+   "label": "Seal No. 2",
+   "search_index": 1
   },
   {
    "fieldname": "cargo_details_section",
@@ -126,7 +140,8 @@
   {
    "fieldname": "port_of_destination",
    "fieldtype": "Data",
-   "label": "Port of Destination"
+   "label": "Port of Destination",
+   "search_index": 1
   },
   {
    "fieldname": "movement_details_section",
@@ -137,7 +152,8 @@
    "fieldname": "current_location",
    "fieldtype": "Link",
    "label": "Current Location",
-   "options": "Container Location"
+   "options": "Container Location",
+   "search_index": 1
   },
   {
    "bold": 1,
@@ -150,6 +166,7 @@
    "label": "Status",
    "options": "In Yard\nAt Booking\nAt Inspection\nAt Payments\nAt Gatepass\nDelivered",
    "read_only": 1,
+   "search_index": 1,
    "width": "1"
   },
   {
@@ -157,7 +174,8 @@
    "fieldname": "arrival_date",
    "fieldtype": "Date",
    "label": "Arrival Date",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "column_break_qkrn",
@@ -167,13 +185,15 @@
    "fieldname": "departure_date",
    "fieldtype": "Date",
    "label": "Departure Date",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "last_inspection_date",
    "fieldtype": "Date",
    "label": "Last Inspection Date",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "bold": 1,
@@ -186,17 +206,20 @@
    "label": "Container No",
    "read_only": 1,
    "reqd": 1,
+   "search_index": 1,
    "width": "1"
   },
   {
    "fieldname": "size",
    "fieldtype": "Data",
-   "label": "Size (FT)"
+   "label": "Size (FT)",
+   "search_index": 1
   },
   {
    "fieldname": "volume",
    "fieldtype": "Int",
-   "label": "Volume"
+   "label": "Volume",
+   "search_index": 1
   },
   {
    "fieldname": "column_break_lduxs",
@@ -208,24 +231,28 @@
    "in_standard_filter": 1,
    "label": "Container Reception",
    "options": "Container Reception",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "seal_no_3",
    "fieldtype": "Data",
-   "label": "Seal No. 3"
+   "label": "Seal No. 3",
+   "search_index": 1
   },
   {
    "fieldname": "sline",
    "fieldtype": "Data",
    "in_preview": 1,
-   "label": "Sline"
+   "label": "Sline",
+   "search_index": 1
   },
   {
    "fieldname": "original_location",
    "fieldtype": "Link",
    "label": "Original Location",
-   "options": "Container Location"
+   "options": "Container Location",
+   "search_index": 1
   },
   {
    "bold": 1,
@@ -237,12 +264,14 @@
    "in_standard_filter": 1,
    "label": "M B/L No",
    "read_only": 1,
+   "search_index": 1,
    "width": "1"
   },
   {
    "fieldname": "type_of_container",
    "fieldtype": "Data",
-   "label": "Type of Container"
+   "label": "Type of Container",
+   "search_index": 1
   },
   {
    "fieldname": "no_of_packages",
@@ -252,17 +281,20 @@
   {
    "fieldname": "volume_unit",
    "fieldtype": "Data",
-   "label": "Volume Unit"
+   "label": "Volume Unit",
+   "search_index": 1
   },
   {
    "fieldname": "weight_unit",
    "fieldtype": "Data",
-   "label": "Weight Unit"
+   "label": "Weight Unit",
+   "search_index": 1
   },
   {
    "fieldname": "freight_indicator",
    "fieldtype": "Data",
-   "label": "Freight Indicator"
+   "label": "Freight Indicator",
+   "search_index": 1
   },
   {
    "fieldname": "column_break_iq9ob",
@@ -284,7 +316,8 @@
    "hidden": 1,
    "label": "Company",
    "options": "Company",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "column_break_gwgiu",
@@ -343,7 +376,8 @@
   {
    "fieldname": "weight",
    "fieldtype": "Data",
-   "label": "Weight"
+   "label": "Weight",
+   "search_index": 1
   },
   {
    "fieldname": "section_break_twu7u",
@@ -352,7 +386,8 @@
   {
    "fieldname": "port_of_loading",
    "fieldtype": "Data",
-   "label": "Port of Loading"
+   "label": "Port of Loading",
+   "search_index": 1
   },
   {
    "fieldname": "column_break_6s4dw",
@@ -364,19 +399,22 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Consignee",
-   "options": "Consignee"
+   "options": "Consignee",
+   "search_index": 1
   },
   {
    "description": "for storage charges validation",
    "fieldname": "place_of_destination",
    "fieldtype": "Data",
    "in_preview": 1,
-   "label": "Place of Destination"
+   "label": "Place of Destination",
+   "search_index": 1
   },
   {
    "fieldname": "place_of_delivery",
    "fieldtype": "Data",
-   "label": "Place of Delivery"
+   "label": "Place of Delivery",
+   "search_index": 1
   },
   {
    "default": "Yes",
@@ -425,7 +463,8 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Country of Destination",
-   "options": "Country"
+   "options": "Country",
+   "search_index": 1
   },
   {
    "fieldname": "column_break_qjlyx",
@@ -460,12 +499,14 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Naming Series",
-   "options": "ICD-C-.YYYY.-"
+   "options": "ICD-C-.YYYY.-",
+   "search_index": 1
   },
   {
    "fieldname": "abbr_for_destination",
    "fieldtype": "Data",
-   "label": "Abbr for Destination"
+   "label": "Abbr for Destination",
+   "search_index": 1
   },
   {
    "description": "Carry In Date",
@@ -489,7 +530,8 @@
    "fieldname": "booking_date",
    "fieldtype": "Date",
    "label": "Booking Date",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "column_break_ztec",
@@ -498,12 +540,14 @@
   {
    "fieldname": "cargo_type",
    "fieldtype": "Data",
-   "label": "Cargo Type"
+   "label": "Cargo Type",
+   "search_index": 1
   },
   {
    "fieldname": "container_count",
    "fieldtype": "Data",
-   "label": "Container Count"
+   "label": "Container Count",
+   "search_index": 1
   },
   {
    "fieldname": "column_break_vdbo",
@@ -521,7 +565,8 @@
    "in_standard_filter": 1,
    "label": "Manifest",
    "options": "Manifest",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fetch_from": "container_reception.movement_order",
@@ -530,7 +575,8 @@
    "in_standard_filter": 1,
    "label": "Movement Order",
    "options": "Container Movement Order",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "column_break_uxlo",
@@ -539,25 +585,103 @@
   {
    "fieldname": "sline_code",
    "fieldtype": "Data",
-   "label": "Sline Code"
+   "label": "Sline Code",
+   "search_index": 1
   },
   {
    "fetch_from": "movement_order.ship",
    "fieldname": "ship",
    "fieldtype": "Data",
-   "label": "Ship"
+   "label": "Ship",
+   "search_index": 1
   },
   {
    "fetch_from": "movement_order.voyage_no",
    "fieldname": "voyage_no",
    "fieldtype": "Data",
-   "label": "Voyage No"
+   "label": "Voyage No",
+   "search_index": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_empty_container",
+   "fieldtype": "Check",
+   "label": "Is Empty Container",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "h_bl_no",
+   "fieldtype": "Data",
+   "label": "H B/L No",
+   "search_index": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "has_hbl",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Has HBL",
+   "search_index": 1
+  },
+  {
+   "fieldname": "plug_type_of_reefer",
+   "fieldtype": "Data",
+   "label": "Plug type of reefer",
+   "search_index": 1
+  },
+  {
+   "fieldname": "maximum_temperature",
+   "fieldtype": "Data",
+   "label": "Maximum Temperature"
+  },
+  {
+   "fieldname": "minimum_temperature",
+   "fieldtype": "Data",
+   "label": "Minimum Temperature",
+   "search_index": 1
+  },
+  {
+   "fieldname": "gross_weight",
+   "fieldtype": "Float",
+   "label": "Gross Weight",
+   "search_index": 1
+  },
+  {
+   "fieldname": "gross_weight_unit",
+   "fieldtype": "Data",
+   "label": "Gross Weight Unit",
+   "search_index": 1
+  },
+  {
+   "fieldname": "net_weight",
+   "fieldtype": "Float",
+   "label": "Net Weight",
+   "search_index": 1
+  },
+  {
+   "fieldname": "net_weight_unit",
+   "fieldtype": "Data",
+   "label": "Net Weight Unit",
+   "search_index": 1
+  },
+  {
+   "fieldname": "gross_volume",
+   "fieldtype": "Float",
+   "label": "Gross Volume",
+   "search_index": 1
+  },
+  {
+   "fieldname": "gross_volume_unit",
+   "fieldtype": "Data",
+   "label": "Gross Volume Unit",
+   "search_index": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-09 19:10:58.103300",
+ "modified": "2025-04-17 18:33:20.517819",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",
