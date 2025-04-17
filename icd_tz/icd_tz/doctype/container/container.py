@@ -11,7 +11,9 @@ class Container(Document):
 		if self.container_no and self.container_reception:
 			container_reception = frappe.get_doc("Container Reception", self.container_reception)
 
-			self.update_container_details(container_reception)
+			self.update_m_bl_based_container_details(container_reception)
+			self.update_hbl_based_container_details()
+
 			self.validate_place_of_destination()
 			self.update_container_reception(container_reception)
 		
@@ -20,7 +22,7 @@ class Container(Document):
 		self.check_corridor_levy_eligibility()
 		self.check_removal_charges_elibility()
 
-	def update_container_details(self, container_reception):
+	def update_m_bl_based_container_details(self, container_reception):
 		"""Update the container details from the Container Reception, Containers Detail and Container Movement Order"""
 
 		if self.status == "Delivered":
@@ -57,7 +59,7 @@ class Container(Document):
 
 		container_info = frappe.db.get_value(
 			"Containers Detail", 
-			{"parent": container_reception.manifest, "container_no": self.container_no}, 
+			{"parent": self.manifest, "container_no": self.container_no}, 
 			["type_of_container", "m_bl_no", "freight_indicator", "no_of_packages", "package_unit", "volume_unit", "weight_unit"],
 			as_dict=True
 		)
@@ -80,20 +82,30 @@ class Container(Document):
 			if not self.weight_unit:
 				self.weight_unit = container_info.weight_unit
 		
-		if container_info.m_bl_no:
+		if self.m_bl_no:
 			master_bl_info = frappe.db.get_value(
 				"Master BL", 
-				{"parent": container_reception.manifest, "m_bl_no": container_info.m_bl_no}, 
-				["place_of_destination", "place_of_delivery", "port_of_loading", "cosignee_name", "shipping_agent_code", "shipping_agent_name", "cargo_description"],
+				{"parent": self.manifest, "m_bl_no": self.m_bl_no}, 
+				["*"],
 				as_dict=True
 			)
+			
+			# ["place_of_destination", "place_of_delivery", "port_of_loading", "cosignee_name", "shipping_agent_code",
+			# "shipping_agent_name", "cargo_description"],
+
+
 			if master_bl_info:
-				if not self.abbr_for_destination:
-					self.abbr_for_destination = master_bl_info.place_of_destination
-				if not self.place_of_delivery:
-					self.place_of_delivery = master_bl_info.place_of_delivery
-				if not self.port_of_loading:
-					self.port_of_loading = master_bl_info.port_of_loading
+				del master_bl_info["name"]
+				del master_bl_info["parent"]
+				del master_bl_info["parentfield"]
+				del master_bl_info["parenttype"]
+				del master_bl_info["idx"]
+
+				self.update(master_bl_info)
+
+				self.abbr_for_destination = master_bl_info.place_of_destination
+				self.place_of_delivery = master_bl_info.place_of_delivery
+				self.port_of_loading = master_bl_info.port_of_loading
 				if not self.consignee:
 					self.consignee = master_bl_info.cosignee_name
 				if not self.cargo_description:
@@ -106,8 +118,128 @@ class Container(Document):
 
 		if len(self.container_dates) == 0:
 			self.append("container_dates", {
-				"date": self.arrival_date,
+				"date": self.recieved_date,
 			})
+
+	def update_hbl_based_container_details(self):
+		"""Update the container details from the HBL Container"""
+		if self.has_hbl == 0:
+			return
+
+		if self.status == "Delivered":
+			return
+		
+		if not self.status:
+			self.status = "In Yard"
+
+		hbl_container_info = frappe.db.get_value(
+			"HBL Container", 
+			{"parent": self.manifest, "container_no": self.container_no, "h_bl_no": self.h_bl_no},
+			[
+				"type_of_container", "m_bl_no", "freight_indicator", "container_size", 
+				"seal_no1", "seal_no2", "seal_no3", "no_of_packages", "package_unit", "volume",
+				"volume_unit", "weight_unit", "plug_type_of_reefer", "minimum_temperature", "maximum_temperature"
+			],
+			as_dict=True
+		)
+
+		if hbl_container_info:
+			if not self.type_of_container:
+				self.type_of_container = hbl_container_info.type_of_container
+			if not self.m_bl_no:
+				self.m_bl_no = hbl_container_info.m_bl_no
+			if not self.freight_indicator:
+				self.freight_indicator = hbl_container_info.freight_indicator
+			if not self.size:
+				self.size = hbl_container_info.container_size
+			if not self.no_of_packages:
+				self.no_of_packages = hbl_container_info.no_of_packages
+			if not self.package_unit:
+				self.package_unit = hbl_container_info.package_unit
+			if not self.volume:
+				self.volume = hbl_container_info.volume
+			if not self.volume_unit:
+				self.volume_unit = hbl_container_info.volume_unit
+			if not self.weight:
+				self.weight = hbl_container_info.weight
+			if not self.weight_unit:
+				self.weight_unit = hbl_container_info.weight_unit
+			if not self.seal_no_1:
+				self.seal_no_1 = hbl_container_info.seal_no1
+			if not self.seal_no_2:
+				self.seal_no_2 = hbl_container_info.seal_no2
+			if not self.seal_no_3:
+				self.seal_no_3 = hbl_container_info.seal_no3
+			if not self.plug_type_of_reefer:
+				self.plug_type_of_reefer = hbl_container_info.plug_type_of_reefer
+			if not self.minimum_temperature:
+				self.minimum_temperature = hbl_container_info.minimum_temperature
+			if not self.maximum_temperature:
+				self.maximum_temperature = hbl_container_info.maximum_temperature
+		
+		if self.h_bl_no:
+			house_bl_info = frappe.db.get_value(
+				"House BL", 
+				{"parent": self.manifest, "m_bl_no": self.h_bl_no}, 
+				["*"],
+				as_dict=True
+			)
+			# [
+			# 	"cargo_classification", "place_of_destination", "place_of_delivery", "port_of_loading", "cosignee_name",
+			# 	"shipping_agent_code", "shipping_agent_name", "cargo_description", "net_weight", "net_weight_unit", "number_of_containers",
+			# 	"description_of_goods", "number_of_package", "package_unit", "gross_weight", "gross_weight_unit", "gross_volume", "gross_volume_unit",
+			# 	"shipping_agent_code", "shipping_agent_name"
+			# ]
+
+			if house_bl_info:
+				del house_bl_info["name"]
+				del house_bl_info["parent"]
+				del house_bl_info["parentfield"]
+				del house_bl_info["parenttype"]
+				del house_bl_info["idx"]
+
+				self.update(house_bl_info)
+
+				country_code = str(house_bl_info.place_of_destination)[1]
+				country_of_destination = frappe.db.get_value(
+					"Country", {"code": country_code.lower()}, "name"
+				)
+				place_of_destination = ""
+				if country_code == "TZ":
+					place_of_destination = "Local"
+				elif country_code == "CD":
+					place_of_destination = "DRC"
+				else:
+					place_of_destination = "Other"
+				
+				self.abbr_for_destination = house_bl_info.place_of_destination
+				self.country_of_destination = country_of_destination
+				self.place_of_destination = place_of_destination
+
+				cargo_type = ""
+				if house_bl_info.cargo_classification == "IM":
+					cargo_type = "Local"
+				elif house_bl_info.cargo_classification == "TR":
+					cargo_type = "Transit"
+				
+				self.cargo_type = cargo_type
+
+				if not self.container_count:
+					self.container_count = "1/1"
+				if not self.sline_code:
+					self.sline_code = house_bl_info.shipping_agent_code
+				if not self.sline:
+					self.sline = house_bl_info.shipping_agent_name
+				if not self.consignee:
+					self.consignee = house_bl_info.cosignee_name
+				if not self.cargo_description:
+					self.cargo_description = house_bl_info.cargo_description
+
+		if len(self.container_dates) == 0:
+			self.append("container_dates", {
+				"date": self.recieved_date,
+			})
+				
 
 	def update_billed_days(self):
 		setting_doc = frappe.get_doc("ICD TZ Settings")
