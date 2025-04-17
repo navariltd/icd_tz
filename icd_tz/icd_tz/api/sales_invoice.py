@@ -18,41 +18,39 @@ def update_sales_references(doc):
     if doc.is_return:
         invoice_id = None
 
-    settings_doc = frappe.get_doc("ICD TZ Settings")
-
+    settings_doc = frappe.get_cached_doc("ICD TZ Settings")
+    corridor_services = [row.service_name for row in settings_doc.service_types if row.service_type == "Levy"]
+    verification_services = [row.service_name for row in settings_doc.service_types if row.service_type == "Verification"]
+    stripping_services = [row.service_name for row in settings_doc.service_types if row.service_type == "Stripping"]
+    removal_services = [row.service_name for row in settings_doc.service_types if row.service_type == "Removal"]
+    transport_services = [row.service_name for row in settings_doc.service_types if row.service_type == "Transport"]
+    storage_services = [row.service_name for row in settings_doc.service_types if row.service_type in ["Storage-Single", "Storage-Double"]]
+    shore_services = [row.service_name for row in settings_doc.service_types if row.service_type == "Shore"]
+    
     for item in doc.items:
-        if item.item_code == settings_doc.transport_item:
-            update_container_rec(item.container_id, invoice_id, "t_sales_invoice")
+        if item.item_code in transport_services:
+            update_container_reception(item.container_id, invoice_id, "t_sales_invoice")
         
-        elif item.item_code in [
-            settings_doc.get("shore_handling_item_t1_20ft"),
-            settings_doc.get("shore_handling_item_t1_40ft"),
-            settings_doc.get("shore_handling_item_t2_20ft"),
-            settings_doc.get("shore_handling_item_t2_40ft")
-        ]:
-            update_container_rec(item.container_id, invoice_id, "s_sales_invoice")
+        elif item.item_code in shore_services:
+            update_container_reception(item.container_id, invoice_id, "s_sales_invoice")
         
-        elif item.item_code == settings_doc.in_yard_booking_item:
+        elif item.item_code in stripping_services:
             update_booking_refs(item.container_id, invoice_id, "s_sales_invoice")
         
-        elif item.item_code == settings_doc.custom_verification_item:
+        elif item.item_code in verification_services:
             update_booking_refs(item.container_id, invoice_id, "cv_sales_invoice")
         
-        elif item.item_code == settings_doc.removal_item:
+        elif item.item_code in removal_services:
             update_container_refs(item.container_id, invoice_id, "r_sales_invoice")
         
-        elif item.item_code == settings_doc.corridor_levy_item:
+        elif item.item_code in corridor_services:
             update_container_refs(item.container_id, invoice_id, "c_sales_invoice")
         
-        elif item.item_code in [
-            settings_doc.get("storage_item_single_20ft"),
-            settings_doc.get("storage_item_single_40ft"),
-            settings_doc.get("storage_item_double_20ft"),
-            settings_doc.get("storage_item_double_40ft")
-        ]:
+        elif item.item_code in storage_services:
             update_storage_date_refs(item.container_id, invoice_id, item.container_child_refs)
         
-        update_container_insp(item.container_id, item.item_code, invoice_id)
+        else:
+            update_container_insp(item.container_id, item.item_code, invoice_id)
     
     sales_order = doc.items[0].sales_order
     service_orders = frappe.db.get_all(
@@ -68,7 +66,7 @@ def update_sales_references(doc):
         )
 
 
-def update_container_rec(container_id, invoice_id, field):
+def update_container_reception(container_id, invoice_id, field):
     container_reception = frappe.db.get_value(
         "Container",
         container_id,
@@ -96,16 +94,17 @@ def update_booking_refs(container_id, invoice_id, field):
     if not invoice_id:
         filters[field] = ["!=", ""]
 
-    booking_id = frappe.db.get_value("In Yard Container Booking", filters)
-    if not booking_id:
+    booking_ids = frappe.db.get_all("In Yard Container Booking", filters, pluck="name")
+    if len(booking_ids) == 0:
         return
-
-    frappe.db.set_value(
-        "In Yard Container Booking",
-        booking_id,
-        field,
-        invoice_id
-    )
+    
+    for booking_id in booking_ids:
+        frappe.db.set_value(
+            "In Yard Container Booking",
+            booking_id,
+            field,
+            invoice_id
+        )
 
 
 def update_container_refs(container_id, invoice_id, field):
@@ -128,17 +127,18 @@ def update_storage_date_refs(container_id, invoice_id, child_refs):
 
 
 def update_container_insp(container_id, item_code, invoice_id):
-    container_inspection = frappe.db.get_value("Container Inspection", {"container_id": container_id, "docstatus": 1})
-    if not container_inspection:
+    container_inspections = frappe.db.get_all("Container Inspection", {"container_id": container_id, "docstatus": 1}, pluck="name")
+    if len(container_inspections) == 0:
         return
     
-    insp_doc = frappe.get_doc("Container Inspection", container_inspection)
-    for row in insp_doc.services:
-        if row.service == item_code:
-            frappe.db.set_value(
-                "Container Inspection Detail",
-                row.name,
-                "sales_invoice",
-                invoice_id
-            )
+    for inspeaction in container_inspections:
+        insp_doc = frappe.get_doc("Container Inspection", inspeaction)
+        for row in insp_doc.services:
+            if row.service == item_code:
+                frappe.db.set_value(
+                    "Container Inspection Detail",
+                    row.name,
+                    "sales_invoice",
+                    invoice_id
+                )
 
