@@ -12,17 +12,31 @@ class GatePass(Document):
 		validate_cf_agent(self)
 	
 	def before_submit(self):
-		# self.validate_container_charges()
-		# self.validate_in_yard_booking()
-		# self.validate_reception_charges()
+		self.validate_pending_payments()
 		self.validate_mandatory_fields()
 		self.update_submitted_info()
 	
 	def on_submit(self):
 		self.update_container_status()
 
+	def validate_pending_payments(self):
+		"""Validate the pending payments for the Gate Pass"""
+
+		service_msg = ""
+		service_msg += self.validate_container_charges()
+		service_msg += self.validate_in_yard_booking()
+		service_msg += self.validate_reception_charges()
+		service_msg += self.validate_inspection_charges()
+		
+		if service_msg:
+			msg = "<hr>Pending Payments - <ul> " + service_msg + " </ul>"
+
+			frappe.throw(str(msg))
+
 	def validate_container_charges(self):
 		"""Validate the storage payments for the Gate Pass"""
+
+		msg=""
 
 		container_info = frappe.db.get_value(
 			"Container",
@@ -32,50 +46,48 @@ class GatePass(Document):
 		)
 
 		if container_info.days_to_be_billed > 0:
-			frappe.throw(
-				f"There are <b>{container_info.days_to_be_billed}</b> days to be billed for this container.<br>\
-				Please clear storage payment dues before issuing the Gate Pass."
-			)
+			msg += f"<li>Storage Charges</li> <b>{container_info.days_to_be_billed} Days</b></li>"
 		
 		if container_info.has_removal_charges == "Yes" and not container_info.r_sales_invoice:
-			frappe.throw(
-				"Payment for Removal charge were not done. Please clear the payment before issuing the Gate Pass."
-			)
+			msg += "<li>Removal Charges</li>"
 		
 		if container_info.has_corridor_levy_charges == "Yes" and not container_info.c_sales_invoice:
-			frappe.throw(
-				"Payment for Corridor Levy charge were not done. Please clear the payment before issuing the Gate Pass."
-			)
+			msg += "<li>Corridor Levy Charges</li>"
+		
+		return msg
 	
 	def validate_in_yard_booking(self):
 		"""Validate the In Yard Container Booking for the Gate Pass"""
 
-		booking_info = frappe.db.get_value(
+		msg = ""
+
+		booking_info = frappe.db.get_all(
 			"In Yard Container Booking",
 			{"container_id": self.container_id},
 			["has_stripping_charges", "s_sales_invoice", "has_custom_verification_charges", "cv_sales_invoice"],
 			as_dict=True
 		)
-		if booking_info.has_stripping_charges == "Yes" and not booking_info.s_sales_invoice:
-			frappe.throw(
-				"Payment for Stripping charge were not done. Please clear the payment before issuing the Gate Pass."
-			)
-		
-		if booking_info.has_custom_verification_charges == "Yes" and not booking_info.cv_sales_invoice:
-			frappe.throw(
-				"Payment for Custom Verification charge were not done. Please clear the payment before issuing the Gate Pass."
-			)
+		for row in booking_info:
+			if row.has_stripping_charges == "Yes" and not row.s_sales_invoice:
+				msg += "<li>Stripping Charges</li>"
+			
+			if row.has_custom_verification_charges == "Yes" and not row.cv_sales_invoice:
+				msg += "<li>Custom Verification Charges</li>"
+				
+		return msg
 	
 	def validate_reception_charges(self):
 		"""Validate the Reception Charges for the Gate Pass"""
 
+		msg = ""
+		
 		container_reception = frappe.db.get_value(
 			"Container",
 			self.container_id,
 			"container_reception"
 		)
 		if not container_reception:
-			return
+			return ""
 		
 		reception_info = frappe.db.get_value(
 			"Container Reception",
@@ -85,14 +97,37 @@ class GatePass(Document):
 		)
 
 		if reception_info.has_transport_charges == "Yes" and not reception_info.t_sales_invoice:
-			frappe.throw(
-				"Payment for Transport charge were not done. Please clear the payment before issuing the Gate Pass."
-			)
+			msg += "<li>Transport Charges</li>"
 		
 		if reception_info.has_shore_handling_charges == "Yes" and not reception_info.s_sales_invoice:
-			frappe.throw(
-				"Payment for Shore Handling charge were not done. Please clear the payment before issuing the Gate Pass."
-			)
+			msg += "<li>Shore Handling Charges</li>"
+
+		return msg
+
+	def validate_inspection_charges(self):
+		"""Validate the Inspection Charges for the Gate Pass"""
+
+		msg = ""
+
+		inspection_info = frappe.db.get_all(
+			"Container Inspection",
+			{"container_id": self.container_id},
+			pluck="name"
+		)
+		if len(inspection_info) == 0:
+			return ""
+		
+		for inspection in inspection_info:
+			inspection_doc = frappe.get_doc("Container Inspection", inspection)
+			
+			for d in inspection_doc.get("services"):
+				if "off" in str(d.get("service")).lower() and not d.get("sales_invoice"):
+					msg += f"<li>{d.get('service')}</li>"
+				
+				if "status" in str(d.get("service")).lower() and not d.get("sales_invoice"):
+					msg += f"<li>{d.get('service')}</li>"
+		
+		return msg
 
 	def update_container_status(self):
 		if not self.container_id:
