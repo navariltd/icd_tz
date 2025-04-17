@@ -117,6 +117,7 @@ frappe.ui.form.on("Container Movement Order", {
 var show_dialog = (frm, data) => {
     let d = new frappe.ui.Dialog({
         title: __("Select Container"),
+        soze: "large",
         fields: [
             {
                 fieldtype: "Data",
@@ -221,11 +222,12 @@ var show_dialog = (frm, data) => {
             <div class="table-container">
                 <table class="table table-hover">
                     <colgroup>
+                        <col width="5%">
+                        <col width="25%">
+                        <col width="25%">
                         <col width="10%">
-                        <col width="25%">
-                        <col width="25%">
                         <col width="15%">
-                        <col width="25%">
+                        <col width="20%">
                     </colgroup>
                     <thead>
                         <tr>
@@ -233,6 +235,7 @@ var show_dialog = (frm, data) => {
                             <th style="background-color: #D3D3D3;">Container NO</th>
                             <th style="background-color: #D3D3D3;">M BL No</th>
                             <th style="background-color: #D3D3D3;">Size</th>
+                            <th style="background-color: #D3D3D3;">Status</th>
                             <th style="background-color: #D3D3D3;">Cargo Type</th>
                         </tr>
                     </thead>
@@ -250,6 +253,7 @@ var show_dialog = (frm, data) => {
                     <td id="container_no" data-container_no="${row.container_no}">${row.container_no}</td>
                     <td id="m_bl_no" data-m_bl_no="${row.m_bl_no}">${row.m_bl_no}</td>
                     <td id="container_size" data-container_size="${row.container_size}">${row.container_size}</td>
+                    <td id="status" data-status="${row.status}">${row.status}</td>
                     <td id="cargo_type" data-cargo_type="${cargo_type}">${cargo_type}</td>
                 </tr>`;
         });
