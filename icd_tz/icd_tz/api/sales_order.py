@@ -6,8 +6,10 @@ from icd_tz.icd_tz.api.utils import validate_qty_storage_item
 def before_save(doc, method):
     validate_qty_storage_item(doc)
 
+
 def on_trash(doc, method):
     unlink_sales_order(doc)
+
 
 def unlink_sales_order(doc):
     if not doc.m_bl_no:
@@ -23,6 +25,7 @@ def unlink_sales_order(doc):
                 "",
                 update_modified=False
             )
+
 
 @frappe.whitelist()
 def make_sales_order(doc_type=None, doc_name=None, m_bl_no=None):
@@ -201,6 +204,7 @@ def get_storage_services(m_bl_no):
                 
     return services
 
+
 def get_container_days_to_be_billed(container_doc, settings_doc):
     single_days = []
     double_days = []
@@ -301,7 +305,6 @@ def get_items(doc):
         items.append(row_item)
     
     return items
-
 
 
 @frappe.whitelist()
