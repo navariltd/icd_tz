@@ -49,6 +49,7 @@
   "trailer",
   "driver",
   "driver_lisence",
+  "freight_indicator",
   "column_break_y5zga",
   "container_location",
   "abbr_for_destination",
@@ -486,12 +487,20 @@
    "fieldtype": "Data",
    "label": "Cargo Type",
    "read_only": 1
+  },
+  {
+   "fetch_from": "movement_order.freight_indicator",
+   "fieldname": "freight_indicator",
+   "fieldtype": "Data",
+   "label": "Freight Indicator",
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-27 01:11:34.765062",
+ "modified": "2025-04-17 16:17:51.964846",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",
