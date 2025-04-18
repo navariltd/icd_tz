@@ -49,7 +49,13 @@ var show_dialog = (listview) => {
                 label: 'M BL No',
                 fieldname: 'm_bl_no',
                 fieldtype: 'Data',
-                reqd: 1
+                reqd: 0
+            },
+            {
+                label: 'H BL No',
+                fieldname: 'h_bl_no',
+                fieldtype: 'Data',
+                reqd: 0
             },
             {
                 fieldname: 'insp_cb',
@@ -66,6 +72,25 @@ var show_dialog = (listview) => {
         primary_action_label: 'Create Inspections',
         primary_action(values) {
             if (values) {
+                if (!values.m_bl_no && !values.h_bl_no) {
+                    frappe.msgprint({
+                        title: __("Validation Error"),
+                        indicator: 'red',
+                        message: __("Please enter either M BL No or H BL No")
+                    });
+                    return;
+                }
+
+                if (values.m_bl_no && values.h_bl_no) {
+                    frappe.msgprint({
+                        title: __("Validation Error"),
+                        indicator: 'red',
+                        message: __("Invalid input: You must enter EITHER <b>M BL No</b> or <b>H BL No</b>, but not both. Please clear one of these fields to proceed.")
+                    });
+                    return;
+                }
+
+
                 frappe.call({
                     method: 'icd_tz.icd_tz.doctype.container_inspection.container_inspection.create_bulk_inspections',
                     args: {
@@ -87,6 +112,26 @@ var show_dialog = (listview) => {
             }
         }
     });
+
+    d.fields_dict.m_bl_no.df.onchange = () => {
+        if (d.get_value('m_bl_no') && d.get_value('h_bl_no')) {
+            frappe.msgprint({
+                title: __("Validation Error"),
+                indicator: 'red',
+                message: __("Invalid input: You must enter EITHER <b>M BL No</b> or <b>H BL No</b>, but not both. Please clear one of these fields to proceed.")
+            });
+        }
+    };
+
+    d.fields_dict.h_bl_no.df.onchange = () => {
+        if (d.get_value('h_bl_no') && d.get_value('m_bl_no')) {
+            frappe.msgprint({
+                title: __("Validation Error "),
+                indicator: 'red',
+                message: __("Invalid input: You must enter EITHER <b>M BL No</b> or <b>H BL No</b>, but not both. Please clear one of these fields to proceed.")
+            });
+        }
+    };
 
     d.show();
 }
