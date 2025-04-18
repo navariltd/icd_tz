@@ -62,6 +62,7 @@ class ContainerInspection(Document):
         for row in self.services:
             if row.status_changed_to and row.status_changed_to != container_doc.freight_indicator:
                 container_doc.freight_indicator = row.status_changed_to
+                container_doc.gross_volume = row.volume
         
         container_doc.last_inspection_date = nowdate()
         container_doc.save(ignore_permissions=True)
@@ -122,7 +123,7 @@ def create_bulk_inspections(data):
 
     if data.get("m_bl_no"):
         filters["m_bl_no"] = data.get("m_bl_no")
-        filters["h_bl_no"] = None
+        filters["h_bl_no"] = ["is", "not set"]
     elif data.get("h_bl_no"):
         filters["h_bl_no"] = data.get("h_bl_no")
     
