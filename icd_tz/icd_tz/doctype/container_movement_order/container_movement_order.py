@@ -134,7 +134,6 @@ def get_manifest_details(manifest, m_bl_no=None):
 			mf.tpa_uid,
 			mf.voyage_no,
 			mf.arrival_date,
-			mf.departure_date,
 			mf.call_sign,
 			mf.company,
             cd.container_no,
