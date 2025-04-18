@@ -20,7 +20,8 @@ frappe.ui.form.on('Container Reception', {
         frm.set_query("movement_order", () => {
             return {
                 filters: {
-                    docstatus: 1
+                    docstatus: 1,
+                    status: ["!=", "Received"]
                 }
             };
         });

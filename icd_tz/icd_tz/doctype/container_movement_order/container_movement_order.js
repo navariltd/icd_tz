@@ -60,7 +60,7 @@ frappe.ui.form.on("Container Movement Order", {
         frm.trigger("get_containers");
     },
     create_container_reception: (frm) => {
-        if (frm.doc.docstatus == 1) {
+        if (frm.doc.docstatus == 1 && frm.doc.status != "Received") {
             frm.add_custom_button(__('Create Container Reception'), () => {
                 frappe.new_doc('Container Reception', {
                     "movement_order": frm.doc.name,
