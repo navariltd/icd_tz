@@ -98,17 +98,30 @@ class ContainerInspection(Document):
 @frappe.whitelist()
 def create_bulk_inspections(data):
     data = frappe.parse_json(data)
+
+    filters = {
+        "docstatus": 1
+    }
+
+    if data.get("m_bl_no"):
+        filters["m_bl_no"] = data.get("m_bl_no")
+        filters["h_bl_no"] = None
+    elif data.get("h_bl_no"):
+        filters["h_bl_no"] = data.get("h_bl_no")
+    
     bookings = frappe.db.get_all(
 		"In Yard Container Booking",
-		filters={
-            "docstatus": 1,
-			"m_bl_no": data.get("m_bl_no"),
-            "container_inspection": ("is", "not set")
-		},
+		filters=filters,
         fields=["name", "container_id", "inspection_date"]
 	)
     if len(bookings) == 0:
-        frappe.msgprint(f"No submitted Container Bookings found for M BL No: <b>{data.get('m_bl_no')}</b>")
+        msg = ""
+        if data.get("m_bl_no"):
+            msg = f"M BL No: <b>{data.get('m_bl_no')}</b>"
+        elif data.get("h_bl_no"):
+            msg = f"H BL No: <b>{data.get('h_bl_no')}</b>"
+        
+        frappe.msgprint(f"No submitted Container Bookings found for {msg}")
         return
     
     count = 0
