@@ -3,6 +3,8 @@ frappe.listview_settings['Container Inspection'] = {
     hide_name_column: true,
     
     onload: (listview) => {
+        $('button[data-label="Add Container Inspection"]').hide();
+
         listview.page.add_inner_button(__("Create Bulk Inspections"), () => {
             show_dialog(listview);
         }).removeClass("btn-default").addClass("btn-info btn-sm");
