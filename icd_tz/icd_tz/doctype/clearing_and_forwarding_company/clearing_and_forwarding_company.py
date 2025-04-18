@@ -6,6 +6,7 @@ from frappe.model.document import Document
 
 class ClearingandForwardingCompany(Document):
 	def after_insert(self):
+		return
 		self.create_customer()
 
 	def create_customer(self):
