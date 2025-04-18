@@ -59,8 +59,6 @@ class Manifest(Document):
             self.vessel_name = vessel_info_row[1]
             self.call_sign = vessel_info_row[2]
             self.voyage_no = vessel_info_row[3]
-            # no need for departure date
-            # self.departure_date = convert_date(vessel_info_row[5])
             self.arrival_date = convert_date(vessel_info_row[5])
             self.tpa_uid = vessel_info_row[6]
 
