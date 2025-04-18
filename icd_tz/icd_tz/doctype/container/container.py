@@ -48,6 +48,8 @@ class Container(Document):
 			self.original_location = container_reception.container_location
 		if not self.current_location:
 			self.current_location = container_reception.container_location
+		if not self.abbr_for_destination:
+			self.abbr_for_destination = container_reception.abbr_for_destination
 		if not self.place_of_destination:
 			self.place_of_destination = container_reception.place_of_destination
 		if not self.country_of_destination:
@@ -101,13 +103,16 @@ class Container(Document):
 				del master_bl_info["parenttype"]
 				del master_bl_info["idx"]
 
+				place_of_destination = self.place_of_destination
+
 				self.update(master_bl_info)
 
 				self.abbr_for_destination = master_bl_info.place_of_destination
+				self.place_of_destination = place_of_destination
 				self.place_of_delivery = master_bl_info.place_of_delivery
 				self.port_of_loading = master_bl_info.port_of_loading
 				if not self.consignee:
-					self.consignee = master_bl_info.cosignee_name
+					self.consignee = master_bl_info.consignee_name
 				if not self.cargo_description:
 					self.cargo_description = master_bl_info.cargo_description
 				if not self.sline_code:
@@ -200,7 +205,7 @@ class Container(Document):
 
 				self.update(house_bl_info)
 
-				country_code = str(house_bl_info.place_of_destination)[1]
+				country_code = str(house_bl_info.place_of_destination)[:2]
 				country_of_destination = frappe.db.get_value(
 					"Country", {"code": country_code.lower()}, "name"
 				)
@@ -231,9 +236,10 @@ class Container(Document):
 				if not self.sline:
 					self.sline = house_bl_info.shipping_agent_name
 				if not self.consignee:
-					self.consignee = house_bl_info.cosignee_name
+					self.consignee = house_bl_info.consignee_name
 				if not self.cargo_description:
 					self.cargo_description = house_bl_info.cargo_description
+
 
 		if len(self.container_dates) == 0:
 			self.append("container_dates", {
@@ -326,7 +332,6 @@ class Container(Document):
 				self.has_removal_charges = "Yes"
 			else:
 				self.has_removal_charges = "No"
-
 
 	def check_corridor_levy_eligibility(self):
 		"""Check if the container is eligible for Corridor Levy payments"""
