@@ -27,6 +27,8 @@ class ContainerMovementOrder(Document):
 	def before_submit(self):
 		self.validate_signature()
 
+		self.status = "Pending"
+
 	def on_submit(self):
 		self.update_container_has_order()
 	

@@ -26,6 +26,7 @@ class ContainerReception(Document):
 		self.create_mbl_container()
 		self.create_hbl_container()
 		self.update_container_storage_days()
+		self.update_cmo_status()
 
 	def before_cancel(self):
 		self.cancel_linked_docs()
@@ -369,6 +370,14 @@ class ContainerReception(Document):
 			container_id,
 			ignore_permissions=True
 		)
+
+	def update_cmo_status(self):
+		if not self.movement_order:
+			return
+		
+		doc = frappe.get_cached_doc("Container Movement Order", self.movement_order)
+		doc.status = "Received"
+		doc.save(ignore_permissions=True)
 
 @frappe.whitelist()
 def get_container_details(manifest, container_no):
