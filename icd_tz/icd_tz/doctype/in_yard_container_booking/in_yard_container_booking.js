@@ -11,8 +11,14 @@ frappe.ui.form.on("In Yard Container Booking", {
             frm.set_value("company", frappe.defaults.get_user_default("Company"));
         }
 		frm.trigger("set_filters");
-        
+
         frm.trigger("create_container_inspection");
+    },
+    c_and_f_company: (frm) =>{
+        if (frm.doc.clearing_agent) {
+            frm.set_value('clearing_agent', '');
+        }
+        // frm.trigger("set_filters");
     },
 	set_filters: (frm) => {
 		frm.set_query("c_and_f_company", () => {
@@ -26,7 +32,7 @@ frappe.ui.form.on("In Yard Container Booking", {
 			return {
 				filters: {
 					"disabled": 0,
-					"c_and_f_company": frm.doc.c_and_f_company || ""
+					"c_and_f_company": frm.doc.c_and_f_company
 				}
 			};
 		});
@@ -48,7 +54,7 @@ frappe.ui.form.on("In Yard Container Booking", {
 					"c_and_f_company": frm.doc.c_and_f_company,
 					"container_no": frm.doc.container_no,
                     "inspection_date": frm.doc.inspection_date,
-				}, doc => {});
+				});
 			}).addClass('btn-primary');
 		}
 	}
