@@ -65,6 +65,7 @@ class ContainerReception(Document):
 		container.received_date = self.received_date
 		container.original_location = self.container_location
 		container.current_location = self.container_location
+		container.abbr_for_destination = self.abbr_for_destination
 		container.place_of_destination = self.place_of_destination
 		container.country_of_destination = self.country_of_destination
 		container.manifest = self.manifest
@@ -377,7 +378,7 @@ def get_container_details(manifest, container_no):
 		)
 		container_row["abbr_for_destination"] = abbr_for_destination
 
-		country_code = str(abbr_for_destination)[1]
+		country_code = str(abbr_for_destination)[:2]
 		country_of_destination = frappe.get_cached_value(
 			"Country", {"code": country_code.lower()}, "name"
 		)
