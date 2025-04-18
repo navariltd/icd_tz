@@ -17,6 +17,7 @@
   "column_break_aamu",
   "container_id",
   "m_bl_no",
+  "h_bl_no",
   "container_no",
   "column_break_d1lgj",
   "company",
@@ -70,7 +71,8 @@
   {
    "fieldname": "inspector_name",
    "fieldtype": "Data",
-   "label": "Inspector Name"
+   "label": "Inspector Name",
+   "search_index": 1
   },
   {
    "fieldname": "inspection_results",
@@ -84,7 +86,8 @@
   {
    "fieldname": "inspection_date",
    "fieldtype": "Date",
-   "label": "Inspection Date"
+   "label": "Inspection Date",
+   "search_index": 1
   },
   {
    "fieldname": "inspection_comments",
@@ -168,7 +171,8 @@
    "fieldname": "company",
    "fieldtype": "Link",
    "label": "Company",
-   "options": "Company"
+   "options": "Company",
+   "search_index": 1
   },
   {
    "fetch_from": "in_yard_container_booking.c_and_f_company",
@@ -195,7 +199,8 @@
    "label": "Container ID",
    "options": "Container",
    "read_only": 1,
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "columns": 1,
@@ -214,7 +219,8 @@
    "fieldname": "posting_datetime",
    "fieldtype": "Datetime",
    "label": "Posting Datetime",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fetch_from": "container_id.original_location",
@@ -222,19 +228,32 @@
    "fieldtype": "Link",
    "label": "Current Container Location",
    "options": "Container Location",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
   },
   {
    "fieldname": "new_container_location",
    "fieldtype": "Link",
    "label": "New Container Location",
    "options": "Container Location"
+  },
+  {
+   "columns": 1,
+   "fetch_from": "container_id.h_bl_no",
+   "fieldname": "h_bl_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "H BL No",
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-03-10 16:26:00.086690",
+ "modified": "2025-04-19 01:11:36.030053",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Inspection",
