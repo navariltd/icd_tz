@@ -4,7 +4,6 @@
 import frappe
 from frappe.model.document import Document
 from frappe.utils import nowdate, getdate, add_days
-from icd_tz.icd_tz.doctype.container_reception.container_reception import get_place_of_destination
 
 class Container(Document):
 	def before_save(self):
@@ -400,6 +399,18 @@ class Container(Document):
 					start_date = add_days(start_date, 1)
 
 		self.save(ignore_permissions=True)
+
+
+@frappe.whitelist()
+def get_place_of_destination():
+	destinations = []
+
+	icd_doc = frappe.get_doc("ICD TZ Settings")
+
+	for row in icd_doc.storage_days:
+		destinations.append(row.destination)
+
+	return set(destinations)
 
 
 def daily_update_date_container_stay(container_id=None):

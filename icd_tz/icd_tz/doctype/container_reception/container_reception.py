@@ -406,14 +406,3 @@ def get_container_details(manifest, container_no):
 		container_row["place_of_destination"] = place_of_destination
 
 		return container_row
-
-@frappe.whitelist()
-def get_place_of_destination():
-	destinations = []
-
-	icd_doc = frappe.get_doc("ICD TZ Settings")
-
-	for row in icd_doc.storage_days:
-		destinations.append(row.destination)
-
-	return set(destinations)

@@ -108,7 +108,7 @@ frappe.ui.form.on('Container Reception', {
     },
     get_places_of_destination: (frm) => {
         frappe.call({
-            method: "icd_tz.icd_tz.doctype.container_reception.container_reception.get_place_of_destination",
+            method: "icd_tz.icd_tz.doctype.container.container.get_place_of_destination",
             args: {},
             callback: (r) => {
                 if (r.message) {
