@@ -168,5 +168,25 @@ var show_dialog = (listview) => {
 
     });
 
+    d.fields_dict.m_bl_no.df.onchange = () => {
+        if (d.get_value('m_bl_no') && d.get_value('h_bl_no')) {
+            frappe.msgprint({
+                title: __("Validation Error"),
+                indicator: 'red',
+                message: __("Invalid input: You must enter EITHER <b>M BL No</b> or <b>H BL No</b>, but not both. Please clear one of these fields to proceed.")
+            });
+        }
+    };
+
+    d.fields_dict.h_bl_no.df.onchange = () => {
+        if (d.get_value('h_bl_no') && d.get_value('m_bl_no')) {
+            frappe.msgprint({
+                title: __("Validation Error "),
+                indicator: 'red',
+                message: __("Invalid input: You must enter EITHER <b>M BL No</b> or <b>H BL No</b>, but not both. Please clear one of these fields to proceed.")
+            });
+        }
+    };
+
     d.show();
 }
