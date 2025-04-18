@@ -4,7 +4,9 @@
 import frappe
 from frappe.query_builder import DocType
 from frappe.model.document import Document
+from frappe.utils.background_jobs import enqueue
 from frappe.utils import get_link_to_form, nowdate, getdate, add_days
+from icd_tz.icd_tz.doctype.container.container import daily_update_date_container_stay
 
 cr = DocType("Container Reception")
 
@@ -82,6 +84,11 @@ class ContainerReception(Document):
 		})
 		container.save(ignore_permissions=True)
 
+		enqueue(
+			method=daily_update_date_container_stay,
+			container_id=container.name
+		)
+
 		return container.name
 
 	def create_hbl_container(self):
@@ -142,10 +149,14 @@ class ContainerReception(Document):
 
 			container.save(ignore_permissions=True)
 			count += 1
+
+			enqueue(
+				method=daily_update_date_container_stay,
+				container_id=container.name
+			)
 		
 		if count > 0:
 			frappe.msgprint(f"HBL records: {count} were created for container {self.container_no}", alert=True)
-
 
 	def update_container_storage_days(self):
 		"""Update the storage days of the containers based on the current received date and m_bl_no"""

@@ -92,7 +92,7 @@ class Container(Document):
 				as_dict=True
 			)
 			
-			# ["place_of_destination", "place_of_delivery", "port_of_loading", "cosignee_name", "shipping_agent_code",
+			# ["place_of_destination", "place_of_delivery", "port_of_loading", "consignee_name", "shipping_agent_code",
 			# "shipping_agent_name", "cargo_description"],
 
 
@@ -190,7 +190,7 @@ class Container(Document):
 				as_dict=True
 			)
 			# [
-			# 	"cargo_classification", "place_of_destination", "place_of_delivery", "port_of_loading", "cosignee_name",
+			# 	"cargo_classification", "place_of_destination", "place_of_delivery", "port_of_loading", "consignee_name",
 			# 	"shipping_agent_code", "shipping_agent_name", "cargo_description", "net_weight", "net_weight_unit", "number_of_containers",
 			# 	"description_of_goods", "number_of_package", "package_unit", "gross_weight", "gross_weight_unit", "gross_volume", "gross_volume_unit",
 			# 	"shipping_agent_code", "shipping_agent_name"
@@ -245,7 +245,6 @@ class Container(Document):
 			self.append("container_dates", {
 				"date": self.recieved_date,
 			})
-				
 
 	def update_billed_days(self):
 		setting_doc = frappe.get_doc("ICD TZ Settings")
@@ -376,38 +375,49 @@ class Container(Document):
 		if self.place_of_destination not in places:
 			frappe.throw(f"Invalid Place of Destination <b>{self.place_of_destination}</b>, valid places are: <b>{places_str}</b>")
 
-def daily_update_date_container_stay():
-    containers = frappe.get_all("Container", filters={"status": ["!=", "Delivered"]})
+	def update_container_stay(self, up_to_date=None):
+		current_date = getdate(nowdate())
+		if up_to_date:
+			current_date = getdate(up_to_date)
 
-    for item in containers:
-        try:
-            doc = frappe.get_doc("Container", item.name)
-            current_date = getdate(nowdate())
-            container_dates_len = len(doc.container_dates)
+		container_dates_len = len(self.container_dates)
 
-            if container_dates_len > 0:
-                last_row = doc.container_dates[container_dates_len - 1]
-                last_date = getdate(last_row.date)
+		if container_dates_len > 0:
+			last_row = self.container_dates[container_dates_len - 1]
+			last_date = getdate(last_row.date)
 
-                while last_date < current_date:
-                    new_row = doc.append("container_dates", {})
-                    last_date = add_days(last_date, 1)
-                    new_row.date = last_date
+			while last_date < current_date:
+				new_row = self.append("container_dates", {})
+				last_date = add_days(last_date, 1)
+				new_row.date = last_date
 
-            elif container_dates_len == 0:
-                start_date = doc.arrival_date
-                if start_date:
-                    while getdate(start_date) <= current_date:
-                        new_row = doc.append("container_dates", {})
-                        new_row.date = start_date
-                        start_date = add_days(start_date, 1)
+		elif container_dates_len == 0:
+			start_date = self.received_date
+			if start_date:
+				while getdate(start_date) <= current_date:
+					new_row = self.append("container_dates", {})
+					new_row.date = start_date
+					start_date = add_days(start_date, 1)
 
-            doc.save(ignore_permissions=True)
+		self.save(ignore_permissions=True)
 
-        except Exception:
-            frappe.log_error(
-                str(f"<b>{item.name}</b> Daily Update Container Dates"),
+
+def daily_update_date_container_stay(container_id=None):
+	containers = []
+	if container_id:
+		containers.append(container_id)
+	else:
+		containers = frappe.get_all("Container", filters={"status": ["!=", "Delivered"]}, pluck="name")
+	
+	for container_id in containers:
+		try:
+			doc = frappe.get_doc("Container", container_id)
+			doc.update_container_stay()
+		
+		except Exception:
+			frappe.log_error(
+                str(f"<b>{container_id}</b> Daily Update Container Dates"),
                 frappe.get_traceback()
             )
-            continue
+			continue
 
