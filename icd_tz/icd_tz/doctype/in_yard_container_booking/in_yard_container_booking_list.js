@@ -1,7 +1,7 @@
 frappe.listview_settings['In Yard Container Booking'] = {
     add_fields: ['container_no', 'doctype'],
     hide_name_column: true,
-    
+
     onload: (listview) => {
         listview.page.add_inner_button(__("Create Bulk Bookings"), () => {
             show_dialog(listview);
@@ -52,7 +52,13 @@ var show_dialog = (listview) => {
                 label: 'M BL No',
                 fieldname: 'm_bl_no',
                 fieldtype: 'Data',
-                reqd: 1
+                reqd: 0
+            },
+            {
+                label: 'H BL No',
+                fieldname: 'h_bl_no',
+                fieldtype: 'Data',
+                reqd: 0
             },
             {
                 fieldname: 'cf_cb',
@@ -63,7 +69,23 @@ var show_dialog = (listview) => {
                 fieldname: 'c_and_f_company',
                 fieldtype: 'Link',
                 options: 'Clearing and Forwarding Company',
-                reqd: 1
+                reqd: 1,
+                onchange: function() {
+                    d.set_value('clearing_agent', '');
+
+                    if (d.get_value('c_and_f_company')) {
+                        d.set_df_property('clearing_agent', 'hidden', 0);
+                    } else {
+                        d.set_df_property('clearing_agent', 'hidden', 1);
+                    }
+                },
+                get_query: function() {
+                    return {
+                        filters: {
+                            "disabled": 0
+                        }
+                    };
+                }
             },
             {
                 label: 'Clearing Agent',
@@ -71,6 +93,15 @@ var show_dialog = (listview) => {
                 fieldtype: 'Link',
                 options: 'Clearing Agent',
                 reqd: 1,
+                hidden: 1,
+                get_query: function() {
+                    return {
+                        filters: {
+                            "disabled": 0,
+                            'c_and_f_company': d.get_value('c_and_f_company')
+                        }
+                    };
+                }
             },
             {
                 fieldname: 'insp_cb',
@@ -94,6 +125,24 @@ var show_dialog = (listview) => {
         primary_action_label: 'Create Bookings',
         primary_action(values) {
             if (values) {
+                if (!values.m_bl_no && !values.h_bl_no) {
+                    frappe.msgprint({
+                        title: __("Validation Error"),
+                        indicator: 'red',
+                        message: __("Please enter either M BL No or H BL No")
+                    });
+                    return;
+                }
+
+                if (values.m_bl_no && values.h_bl_no) {
+                    frappe.msgprint({
+                        title: __("Validation Error"),
+                        indicator: 'red',
+                        message: __("Invalid input: You must enter EITHER <b>M BL No</b> or <b>H BL No</b>, but not both. Please clear one of these fields to proceed.")
+                    });
+                    return;
+                }
+
                 frappe.call({
                     method: 'icd_tz.icd_tz.doctype.in_yard_container_booking.in_yard_container_booking.create_bulk_bookings',
                     args: {
@@ -113,7 +162,8 @@ var show_dialog = (listview) => {
                     }
                 });
             }
-        }
+        },
+
     });
 
     d.show();
