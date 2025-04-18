@@ -163,7 +163,7 @@ doc_events = {
 scheduler_events = {
     "cron": {
         # run after every two hours
-        "0 30 * * *": [
+        "*/30 * * * *": [
             "icd_tz.icd_tz.doctype.container.container.daily_update_date_container_stay",
             "icd_tz.icd_tz.doctype.consignee.consignee.create_customer"
         ]
