@@ -2,7 +2,7 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "naming_series:naming_series",
- "creation": "2024-06-26 09:58:36.857547",
+ "creation": "2025-04-18 11:05:51.525290",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -613,6 +613,9 @@
   {
    "fieldname": "h_bl_no",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "H B/L No",
    "search_index": 1
   },
@@ -681,7 +684,7 @@
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-18 10:56:15.344186",
+ "modified": "2025-04-18 12:15:45.499953",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",
