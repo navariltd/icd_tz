@@ -26,10 +26,13 @@ class ContainerReception(Document):
 		self.create_mbl_container()
 		self.create_hbl_container()
 		self.update_container_storage_days()
-		self.update_cmo_status()
+		self.update_cmo_status("Received")
 
 	def before_cancel(self):
 		self.cancel_linked_docs()
+	
+	def on_cancel(self):
+		self.update_cmo_status()
 
 	def validate_duplicate_cr(self):
 		"""Validate that there is no duplicate Container Reception based on Container Movement Order (CMO)"""
@@ -94,11 +97,12 @@ class ContainerReception(Document):
 
 	def create_hbl_container(self):
 		"""Create a HBL Container record based on freight indicator on container reception"""
+		
 		if self.freight_indicator != "LCL":
 			return
 
 		# Find all records from 'HBL Container' doctypes using filters of container_no and manifest
-		hbl_containers = frappe.get_all(
+		hbl_containers = frappe.db.get_all(
 			"HBL Container",
 			filters={
 				"container_no": self.container_no,
@@ -107,8 +111,8 @@ class ContainerReception(Document):
 			fields=["*"]
 		)
 
-		if not len(hbl_containers) == 0:
-			frappe.msgprint(f"No HBL Container records found for container {self.container_no} in manifest {self.manifest}")
+		if len(hbl_containers) == 0:
+			frappe.msgprint(f"No HBL Container records found for Container No: <b>{self.container_no}</b> in Manifest: <b>{self.manifest}</b>")
 			return
 
 		# Create containers based on the information found
@@ -371,12 +375,12 @@ class ContainerReception(Document):
 			ignore_permissions=True
 		)
 
-	def update_cmo_status(self):
+	def update_cmo_status(self, status="Pending"):
 		if not self.movement_order:
 			return
 		
 		doc = frappe.get_cached_doc("Container Movement Order", self.movement_order)
-		doc.status = "Received"
+		doc.status = status
 		doc.save(ignore_permissions=True)
 
 @frappe.whitelist()
