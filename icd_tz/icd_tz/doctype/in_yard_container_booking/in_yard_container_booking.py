@@ -46,16 +46,30 @@ def validate_cf_agent(c_and_f_company, clearing_agent):
 def create_bulk_bookings(data):
 	data = frappe.parse_json(data)
 	validate_cf_agent(data.get("c_and_f_company"), data.get("clearing_agent"))
+
+	filters = {
+		"status": ["!=", "Delivered"],
+	}
+
+	if data.get("m_bl_no"):
+		filters["m_bl_no"] = data.get("m_bl_no")
+		filters["has_hbl"] = 0
+	elif data.get("h_bl_no"):
+		filters["h_bl_no"] = data.get("h_bl_no")
+	
 	containers = frappe.db.get_all(
 		"Container", 
-		filters={
-			"status": ["in", ["In Yard", "At Booking"]],
-			"m_bl_no": data.get("m_bl_no")
-		},
+		filters=filters,
 		pluck="name"
 	)
+	msg = ""
+	if data.get("m_bl_no"):
+		msg = f"M BL No: <b>{data.get('m_bl_no')}</b>"
+	elif data.get("h_bl_no"):
+		msg = f"H BL No: <b>{data.get('h_bl_no')}</b>"
+	
 	if len(containers) == 0:
-		frappe.msgprint(f"No Containers found for M BL No: <b>{data.get('m_bl_no')}</b>")
+		frappe.msgprint(f"No Containers found for {msg}")
 		return
 
 	count = 0
@@ -65,6 +79,7 @@ def create_bulk_bookings(data):
 		doc.clearing_agent = data.get("clearing_agent")
 		doc.container_id = container_id
 		doc.m_bl_no = data.get("m_bl_no")
+		doc.h_bl_no = data.get("h_bl_no")
 		doc.inspection_date = data.get("inspection_date")
 		doc.inspection_location = data.get("inspection_location")
 
