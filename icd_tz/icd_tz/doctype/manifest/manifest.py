@@ -162,10 +162,10 @@ class Manifest(Document):
             master_bl.exporter_tel = row[27]
             master_bl.exporter_address = row[28]
             master_bl.exporter_tin = row[29]
-            master_bl.cosignee_name = row[30]
-            master_bl.cosignee_tel = row[31]
-            master_bl.cosignee_address = row[32]
-            master_bl.cosignee_tin = row[33]
+            master_bl.consignee_name = row[30]
+            master_bl.consignee_tel = row[31]
+            master_bl.consignee_address = row[32]
+            master_bl.consignee_tin = row[33]
             master_bl.notify_name = row[34]
             master_bl.notify_tel = row[35]
             master_bl.notify_address = row[36]
@@ -206,10 +206,10 @@ class Manifest(Document):
             house_bl.exporter_tel = row[25]
             house_bl.exporter_address = row[26]
             house_bl.exporter_tin = row[27]
-            house_bl.cosignee_name = row[28]
-            house_bl.cosignee_tel = row[29]
-            house_bl.cosignee_address = row[30]
-            house_bl.cosignee_tin = row[31]
+            house_bl.consignee_name = row[28]
+            house_bl.consignee_tel = row[29]
+            house_bl.consignee_address = row[30]
+            house_bl.consignee_tin = row[31]
             house_bl.notify_name = row[32]
             house_bl.notify_tel = row[33]
             house_bl.notify_address = row[34]
@@ -221,25 +221,25 @@ class Manifest(Document):
         def create_consignee(row):
             consignee = frappe.get_doc({
                 "doctype": "Consignee",
-                "consignee_name": row.cosignee_name,
-                "consignee_tel": row.cosignee_tel,
-                "consignee_tin": row.cosignee_tin,
-                "consignee_address": row.cosignee_address,
+                "consignee_name": row.consignee_name,
+                "consignee_tel": row.consignee_tel,
+                "consignee_tin": row.consignee_tin,
+                "consignee_address": row.consignee_address,
             })
             consignee.insert(ignore_permissions=True)
         
         for row in self.master_bl:
-            if not row.cosignee_name:
+            if not row.consignee_name:
                 continue
 
-            if not frappe.db.exists("Consignee", row.cosignee_name):
+            if not frappe.db.exists("Consignee", row.consignee_name):
                 create_consignee(row)
         
         for row in self.house_bl:
-            if not row.cosignee_name:
+            if not row.consignee_name:
                 continue
 
-            if not frappe.db.exists("Consignee", row.cosignee_name):
+            if not frappe.db.exists("Consignee", row.consignee_name):
                 create_consignee(row)
         
         
