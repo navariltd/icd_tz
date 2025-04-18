@@ -80,19 +80,36 @@ class ContainerInspection(Document):
             "has_custom_verification_charges"
 		)
 
-        if has_custom_verification_charges == "Yes":
-            verification_item = frappe.db.get_single_value("ICD TZ Settings", "custom_verification_item")
-            if not verification_item:
-                frappe.throw("Custom Verification item is not set in ICD TZ Settings, Please set it to continue")
-            
-            service_names = [row.get("service") for row in self.get("services")]
-            if verification_item not in service_names:
-                if caller == "Front End":
-                    return verification_item
+        if has_custom_verification_charges != "Yes":
+            return
+        
+        verification_item = ""
+        settings_doc = frappe.get_cached_doc("ICD TZ Settings")
+
+        for row in settings_doc.get("service_types"):
+            if row.service_type == "Verification":
+                if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+                    verification_item = row.service_name
+                    break
+
+                elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
+                    verification_item = row.service_name
+                    break
+
                 else:
-                    self.append("services", {
-                        "service": verification_item
-                    })
+                    continue
+
+        if not verification_item:
+            frappe.throw("Verification Pricing Criteria is not set in ICD TZ Settings, Please set it to continue")
+        
+        service_names = [row.get("service") for row in self.get("services")]
+        if verification_item not in service_names:
+            if caller == "Front End":
+                return verification_item
+            else:
+                self.append("services", {
+                    "service": verification_item
+                })
 
 
 @frappe.whitelist()
