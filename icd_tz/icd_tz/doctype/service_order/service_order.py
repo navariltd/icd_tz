@@ -13,7 +13,6 @@ class ServiceOrder(Document):
 		self.get_services()
 	
 	def after_insert(self):
-		self.update_container_inspection()
 		frappe.db.set_value(
             "Container",
             self.container_id,
@@ -26,7 +25,6 @@ class ServiceOrder(Document):
 			self.company = frappe.defaults.get_user_default("Company")
 	
 	def validate(self):
-		validate_draft_doc("Container Inspection", self.container_inspection)
 		validate_cf_agent(self)
 
 	def on_submit(self):
@@ -288,17 +286,6 @@ class ServiceOrder(Document):
 				self.append("services", {
 					"service": d.get("service")
 				})		
-
-	def update_container_inspection(self):
-		if not self.container_inspection:
-			return
-		
-		# frappe.db.set_value(
-		# 	"Container Inspection",
-		# 	self.container_inspection,
-		# 	"service_order",
-		# 	self.name
-		# )
 	
 	def create_getpass(self):
 		"""
