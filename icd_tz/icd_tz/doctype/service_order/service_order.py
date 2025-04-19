@@ -394,6 +394,7 @@ def create_bulk_service_orders(data):
 		filters["has_hbl"] = 0
 	elif data.get("h_bl_no"):
 		filters["h_bl_no"] = data.get("h_bl_no")
+		filters["has_hbl"] = 1
 
 	containers = frappe.db.get_all(
 		"Container",
