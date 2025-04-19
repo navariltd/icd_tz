@@ -27,7 +27,7 @@ def validate_qty_storage_item(doc):
         return
     
     settings_doc = frappe.get_cached_doc("ICD TZ Settings")
-    storage_services = [row.service_name for row in settings_doc.service_types if row.service_type == "Storage"]
+    storage_services = [row.service_name for row in settings_doc.service_types if row.service_type in ["Storage-Single", "Storage-Double"]]
     for item in doc.items:
         if item.item_code in storage_services:
             if not item.container_child_refs:
