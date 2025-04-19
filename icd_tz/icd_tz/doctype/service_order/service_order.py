@@ -9,6 +9,7 @@ from icd_tz.icd_tz.api.sales_order import get_container_days_to_be_billed
 class ServiceOrder(Document):
 	def before_insert(self):
 		self.set_missing_values()
+		self.validate_draft_references()
 		self.get_services()
 	
 	def after_insert(self):
@@ -68,6 +69,21 @@ class ServiceOrder(Document):
 					self.c_and_f_company = booking_info.c_and_f_company
 					self.clearing_agent = booking_info.clearing_agent
 	
+	def validate_draft_references(self):
+		draft_inspections = frappe.db.get_all(
+			"Container Inspection",
+			filters={"container_id": self.container_id, "docstatus": 0}
+		)
+		if len(draft_inspections) > 0:
+			frappe.throw(f"There are <b>{len(draft_inspections)}</b> draft Container Inspection(s) for Container: {self.container_no}, Please submit them to continue")
+		
+		draft_bookings = frappe.db.get_all(
+			"In Yard Container Booking",
+			filters={"container_id": self.container_id, "docstatus": 0}
+		)
+		if len(draft_bookings) > 0:
+			frappe.throw(f"There are <b>{len(draft_bookings)}</b> draft In Yard Container Booking(s) for Container: {self.container_no}, Please submit them to continue")
+
 	def get_services(self):
 		settings_doc = frappe.get_cached_doc("ICD TZ Settings")
 
