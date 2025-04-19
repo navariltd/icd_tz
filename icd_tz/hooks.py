@@ -28,7 +28,7 @@ app_license = "MIT"
 
 # include js in doctype views
 doctype_js = {
-    "Sales Order" : "icd_tz/api/sales_order.js"
+    "Sales Order": "icd_tz/api/sales_order.js"
 }
 
 doctype_list_js = {

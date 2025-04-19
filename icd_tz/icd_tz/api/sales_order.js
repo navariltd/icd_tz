@@ -1,5 +1,5 @@
 
-frappe.ui.form.on('Service Order', {
+frappe.ui.form.on('Sales Order', {
 	update_items: (frm) => {
         if (!frm.doc.m_bl_no && !frm.doc.h_bl_no) {
             frappe.msgprint("Please enter M BL No or H BL No")
