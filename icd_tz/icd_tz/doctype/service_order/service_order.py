@@ -321,7 +321,7 @@ class ServiceOrder(Document):
 
 		inspection_location = frappe.db.get_value(
 			"In Yard Container Booking", 
-			{"container_inspection": self.container_inspection},
+			{"container_id": self.container_id},
 			"inspection_location"
 		)
 		
