@@ -97,12 +97,6 @@ def update_booking_refs(container_id, invoice_id, field):
         "docstatus": 1
     }
 
-    if invoice_id:
-        filters[field] = None
-    
-    if not invoice_id:
-        filters[field] = ["!=", ""]
-
     booking_ids = frappe.db.get_all("In Yard Container Booking", filters, pluck="name")
     if len(booking_ids) == 0:
         return

@@ -45,7 +45,6 @@ def update_items_on_sales_order(doc_name):
 
     sleep(10)
 
-    doc.items = []
     items += get_storage_services(doc.m_bl_no, doc.h_bl_no)
 
     service_order_items, service_docs = get_service_order_items(m_bl_no=doc.m_bl_no, h_bl_no=doc.h_bl_no)
@@ -54,7 +53,10 @@ def update_items_on_sales_order(doc_name):
     for record in service_docs:
         record.db_set("sales_order", doc.name)
     
-    doc.items = items
+    doc.items = []
+    for item in items:
+        doc.append("items", item)
+    
     doc.save(ignore_permissions=True)
     doc.reload()
     return True
@@ -200,22 +202,11 @@ def get_storage_services(m_bl_no=None, h_bl_no=None):
             if len(single_days) > 0:
                 new_row = {
                     'item_code': single_storage_item,
-                    'qty': len(single_days),
+                    'qty': len(single_days) * container_doc.gross_volume if container_doc.freight_indicator == "LCL" else len(single_days),
                     'container_no': container_doc.container_no,
                     'container_id': container_doc.name,
                     "container_child_refs": ",".join(single_days)
                 }
-                if container_doc.freight_indicator == "LCL":
-                    price_list_rate = frappe.db.get_value(
-                        "Item Price",
-                        {
-                            "item_code": single_storage_item,
-                            "price_list": settings_doc.default_price_list
-                        },
-                        "price_list_rate"
-                    ) or 0
-
-                new_row["rate"] = price_list_rate * container_doc.gross_volume
 
                 services.append(new_row)
         
@@ -243,21 +234,11 @@ def get_storage_services(m_bl_no=None, h_bl_no=None):
             if len(double_days) > 0:
                 new_row = {
                     'item_code': double_storage_item,
-                    'qty': len(double_days),
+                    'qty': len(double_days) * container_doc.gross_volume if container_doc.freight_indicator == "LCL" else len(double_days),
                     'container_no': container_doc.container_no,
                     'container_id': container_doc.name,
                     "container_child_refs": ",".join(double_days)
                 }
-                if container_doc.freight_indicator == "LCL":
-                    price_list_rate = frappe.db.get_value(
-                        "Item Price",
-                        {
-                            "item_code": double_storage_item,
-                            "price_list": settings_doc.default_price_list
-                        },
-                        "price_list_rate"
-                    ) or 0
-                    new_row["rate"] = price_list_rate * container_doc.gross_volume
 
                 services.append(new_row)
         
@@ -293,7 +274,7 @@ def get_storage_services(m_bl_no=None, h_bl_no=None):
             
             services.append({
                 'item_code': removal_item,
-                'qty': 1,
+                'qty': container_doc.gross_volume if container_doc.freight_indicator == "LCL" else 1,
                 'container_no': container_doc.container_no,
                 'container_id': container_doc.name,
             })
