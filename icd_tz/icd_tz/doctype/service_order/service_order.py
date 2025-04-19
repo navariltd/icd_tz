@@ -29,6 +29,25 @@ class ServiceOrder(Document):
 
 	def on_submit(self):
 		self.create_getpass()
+	
+	def before_cancel(self):
+		self.check_for_gate_pass()
+
+	def check_for_gate_pass(self):
+		orders = frappe.db.get_all(
+			"Service Order",
+			filters={
+				"container_id": self.container_id,
+				"docstatus": 1,
+				"name": ["!=", self.name]
+			}
+		)
+		if len(orders) > 0:
+			return
+		
+		get_pass = frappe.get_cached_doc("Gate Pass", self.get_pass)
+		get_pass.delete(ignore_permissions=True, force=True)
+		self.db_set("get_pass", "")
 
 	def set_missing_values(self):
 		if self.container_id:
