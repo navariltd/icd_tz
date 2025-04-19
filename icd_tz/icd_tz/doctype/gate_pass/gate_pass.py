@@ -29,7 +29,7 @@ class GatePass(Document):
 		service_msg += self.validate_inspection_charges()
 		
 		if service_msg:
-			msg = "<hr>Pending Payments - <ul> " + service_msg + " </ul>"
+			msg = "<h4 class='text-center'>Pending Payments:</h4><hr>Payment is pending for the following services <ul> " + service_msg + " </ul>"
 
 			frappe.throw(str(msg))
 
@@ -65,7 +65,6 @@ class GatePass(Document):
 			"In Yard Container Booking",
 			{"container_id": self.container_id},
 			["has_stripping_charges", "s_sales_invoice", "has_custom_verification_charges", "cv_sales_invoice"],
-			as_dict=True
 		)
 		for row in booking_info:
 			if row.has_stripping_charges == "Yes" and not row.s_sales_invoice:
