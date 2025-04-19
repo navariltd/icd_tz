@@ -213,18 +213,25 @@ def get_storage_services(m_bl_no=None, h_bl_no=None):
         if container_doc.has_double_charge == 1:
             double_storage_item = None
 
-            for row in settings_doc.service_types:
-                if row.service_type == "Storage-Double":
-                    if "2" in str(row.size)[0] and "2" in str(container_doc.size)[0]:
+            if container_doc.freight_indicator == "LCL":
+                for row in settings_doc.loose_types:
+                    if row.service_type == "Storage-Double":
                         double_storage_item = row.service_name
                         break
 
-                    elif "4" in str(row.size)[0] and "4" in str(container_doc.size)[0]:
-                        double_storage_item = row.service_name
-                        break
+            else:
+                for row in settings_doc.service_types:
+                    if row.service_type == "Storage-Double":
+                        if "2" in str(row.size)[0] and "2" in str(container_doc.size)[0]:
+                            double_storage_item = row.service_name
+                            break
 
-                    else:
-                        continue
+                        elif "4" in str(row.size)[0] and "4" in str(container_doc.size)[0]:
+                            double_storage_item = row.service_name
+                            break
+
+                        else:
+                            continue
             
             if not double_storage_item:
                 frappe.throw(
