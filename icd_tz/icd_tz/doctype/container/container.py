@@ -101,6 +101,7 @@ class Container(Document):
 				del master_bl_info["parentfield"]
 				del master_bl_info["parenttype"]
 				del master_bl_info["idx"]
+				del master_bl_info["docstatus"]
 
 				place_of_destination = self.place_of_destination
 
@@ -201,6 +202,7 @@ class Container(Document):
 				del house_bl_info["parentfield"]
 				del house_bl_info["parenttype"]
 				del house_bl_info["idx"]
+				del house_bl_info["docstatus"]
 
 				self.update(house_bl_info)
 
