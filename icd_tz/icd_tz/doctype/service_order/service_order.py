@@ -33,39 +33,40 @@ class ServiceOrder(Document):
 
 	def set_missing_values(self):
 		if self.container_id:
-			container_reception = frappe.db.get_value("Container", self.container_id, "container_reception")
-			container_reception_doc = frappe.get_doc("Container Reception", container_reception)
+			container_doc = frappe.get_doc("Container", self.container_id)
 
-			self.manifest = container_reception_doc.manifest
-			self.vessel_name = container_reception_doc.ship
-			self.port = container_reception_doc.port
-			self.place_of_destination = container_reception_doc.place_of_destination
-			self.country_of_destination = container_reception_doc.country_of_destination
-			self.m_bl_no = container_reception_doc.m_bl_no
+			self.manifest = container_doc.manifest
+			self.vessel_name = container_doc.ship
+			self.port = container_doc.port_of_destination
+			self.place_of_destination = container_doc.place_of_destination
+			self.country_of_destination = container_doc.country_of_destination
+			self.consignee = container_doc.consignee
+			if not self.m_bl_no:
+				self.m_bl_no = container_doc.m_bl_no
+			if not self.h_bl_no and container_doc.has_hbl == 1:
+				self.h_bl_no = container_doc.h_bl_no
 
+			inspection_info = frappe.get_cached_value(
+				"Container Inspection",
+				{"container_id": self.container_id},
+				["name", "c_and_f_company", "clearing_agent"],
+				as_dict=True
+			)
 
-			if not self.container_inspection:
-				(
-					self.container_inspection,
-					self.c_and_f_company,
-					self.clearing_agent,
-					self.consignee
-				) = frappe.db.get_value(
-					"Container Inspection",
-					{"container_id": self.container_id},
-					["name", "c_and_f_company", "clearing_agent", "consignee"]
-				)
+			if inspection_info:
+				self.c_and_f_company = inspection_info.c_and_f_company
+				self.clearing_agent = inspection_info.clearing_agent
 
-			if not self.container_inspection:
-				booking_info = frappe.db.get_value(
+			if not self.c_and_f_company or not self.clearing_agent:
+				booking_info = frappe.get_cached_value(
 					"In Yard Container Booking",
 					{"container_id": self.container_id},
-					["name", "c_and_f_company", "clearing_agent", "consignee"],
+					["name", "c_and_f_company", "clearing_agent"],
+					as_dict=True
 				)
 				if booking_info:
 					self.c_and_f_company = booking_info.c_and_f_company
 					self.clearing_agent = booking_info.clearing_agent
-					self.consignee = booking_info.consignee
 	
 	def get_services(self):
 		settings_doc = frappe.get_cached_doc("ICD TZ Settings")
@@ -329,14 +330,14 @@ def create_bulk_service_orders(data):
 	filters = {}
 	if data.get("m_bl_no"):
 		filters["m_bl_no"] = data.get("m_bl_no")
-		filters["h_bl_no"] = ["is", "not set"]
+		filters["has_hbl"] = 0
 	elif data.get("h_bl_no"):
 		filters["h_bl_no"] = data.get("h_bl_no")
 
 	containers = frappe.db.get_all(
 		"Container",
 		filters=filters,
-        fields=["name", "container_id"]
+        fields=["name"]
 	)
 
 	msg = ""
