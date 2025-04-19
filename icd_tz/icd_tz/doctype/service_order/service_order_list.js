@@ -3,6 +3,8 @@ frappe.listview_settings["Service Order"] = {
     hide_name_column: true,
 
     onload: (listview) => {
+        $('button[data-label="Add Service Order"]').hide();
+
         listview.page.add_inner_button(__("Create Bulk Service Order"), () => {
             show_dialog(listview);
         }).removeClass("btn-default").addClass("btn-info btn-sm");
@@ -49,7 +51,17 @@ var show_dialog = (listview) => {
                 label: 'M BL No',
                 fieldname: 'm_bl_no',
                 fieldtype: 'Data',
-                reqd: 1
+                reqd: 0
+            },
+            {
+                fieldname: 'h_bl_cb',
+                fieldtype: 'Column Break'
+            },
+            {
+                label: 'H BL No',
+                fieldname: 'h_bl_no',
+                fieldtype: 'Data',
+                reqd: 0
             },
         ],
         size: "small",
