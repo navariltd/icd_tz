@@ -28,18 +28,29 @@ def unlink_sales_order(doc):
 
 
 @frappe.whitelist()
-def make_sales_order(doc_type=None, doc_name=None, m_bl_no=None):
+def make_sales_order(
+    doc_type=None,
+    doc_name=None,
+    m_bl_no=None,
+    h_bl_no=None
+):
     items = []
     company = None
     consignee = None
     c_and_f_company = None
     order_m_bl_no = m_bl_no if m_bl_no else None
+    order_h_bl_no = h_bl_no if h_bl_no else None
 
     settings_doc = frappe.get_cached_doc("ICD TZ Settings")
 
-    items += get_storage_services(m_bl_no)
+    items += get_storage_services(m_bl_no, h_bl_no)
 
-    service_order_items, service_docs = get_service_order_items(doc_type=doc_type, doc_name=doc_name, m_bl_no=m_bl_no)
+    service_order_items, service_docs = get_service_order_items(
+        doc_type=doc_type,
+        doc_name=doc_name,
+        m_bl_no=m_bl_no,
+        h_bl_no=h_bl_no
+    )
     
     items += service_order_items
     if len(items) == 0:
@@ -59,6 +70,9 @@ def make_sales_order(doc_type=None, doc_name=None, m_bl_no=None):
         
         if not order_m_bl_no:
             order_m_bl_no = source_doc.m_bl_no
+        
+        if not order_h_bl_no:
+            order_h_bl_no = source_doc.h_bl_no
     
     sales_order = frappe.get_doc({
         "doctype": "Sales Order",
@@ -72,6 +86,7 @@ def make_sales_order(doc_type=None, doc_name=None, m_bl_no=None):
         "items": items,
         "consignee": consignee,
         "m_bl_no": order_m_bl_no,
+        "h_bl_no": order_h_bl_no
     })
     
     sales_order.insert()
@@ -87,11 +102,23 @@ def make_sales_order(doc_type=None, doc_name=None, m_bl_no=None):
     return sales_order.name
 
 
-def get_storage_services(m_bl_no):
+def get_storage_services(m_bl_no=None, h_bl_no=None):
+    if not m_bl_no and not h_bl_no:
+        frappe.throw("Please enter either M BL No or H BL No")
+        return
+
     services = []
 
+    filters={}
+    if m_bl_no:
+        filters["m_bl_no"] = m_bl_no
+        filters["has_hbl"] = 0
+    elif h_bl_no:
+        filters["h_bl_no"] = h_bl_no
+        filters["has_hbl"] = 1
+
     containers = frappe.db.get_all(
-        "Container", filters={"m_bl_no": m_bl_no},
+        "Container", filters=filters,
         fields=["name", "days_to_be_billed"]
     )
     if len(containers) == 0:
@@ -113,18 +140,24 @@ def get_storage_services(m_bl_no):
         if container_doc.has_single_charge == 1:
             single_storage_item = None
 
-            for row in settings_doc.service_types:
-                if row.service_type == "Storage-Single":
-                    if "2" in str(row.size)[0] and "2" in str(container_doc.size)[0]:
+            if container_doc.freight_indicator == "LCL":
+                for row in settings_doc.loose_types:
+                    if row.service_type == "Storage-Single":
                         single_storage_item = row.service_name
                         break
+            else:
+                for row in settings_doc.service_types:
+                    if row.service_type == "Storage-Single":
+                        if "2" in str(row.size)[0] and "2" in str(container_doc.size)[0]:
+                            single_storage_item = row.service_name
+                            break
 
-                    elif "4" in str(row.size)[0] and "4" in str(container_doc.size)[0]:
-                        single_storage_item = row.service_name
-                        break
+                        elif "4" in str(row.size)[0] and "4" in str(container_doc.size)[0]:
+                            single_storage_item = row.service_name
+                            break
 
-                    else:
-                        continue
+                        else:
+                            continue
                 
             if not single_storage_item:
                 frappe.throw(
@@ -132,14 +165,26 @@ def get_storage_services(m_bl_no):
                 )
             
             if len(single_days) > 0:
-                services.append({
+                new_row = {
                     'item_code': single_storage_item,
                     'qty': len(single_days),
                     'container_no': container_doc.container_no,
                     'container_id': container_doc.name,
                     "container_child_refs": ",".join(single_days)
-                })
+                }
+                if container_doc.freight_indicator == "LCL":
+                    price_list_rate = frappe.db.get_value(
+                        "Item Price",
+                        {
+                            "item_code": single_storage_item,
+                            "price_list": settings_doc.default_price_list
+                        },
+                        "price_list_rate"
+                    ) or 0
 
+                new_row["rate"] = price_list_rate * container_doc.gross_volume
+
+                services.append(new_row)
         
         if container_doc.has_double_charge == 1:
             double_storage_item = None
@@ -163,13 +208,25 @@ def get_storage_services(m_bl_no):
                 )
             
             if len(double_days) > 0:
-                services.append({
+                new_row = {
                     'item_code': double_storage_item,
                     'qty': len(double_days),
                     'container_no': container_doc.container_no,
                     'container_id': container_doc.name,
                     "container_child_refs": ",".join(double_days)
-                })
+                }
+                if container_doc.freight_indicator == "LCL":
+                    price_list_rate = frappe.db.get_value(
+                        "Item Price",
+                        {
+                            "item_code": double_storage_item,
+                            "price_list": settings_doc.default_price_list
+                        },
+                        "price_list_rate"
+                    ) or 0
+                    new_row["rate"] = price_list_rate * container_doc.gross_volume
+
+                services.append(new_row)
         
         if (
             not container_doc.r_sales_invoice and
@@ -177,18 +234,24 @@ def get_storage_services(m_bl_no):
         ):
             removal_item = None
             
-            for row in settings_doc.service_types:
-                if row.service_type == "Removal":
-                    if "2" in str(row.size)[0] and "2" in str(container_doc.size)[0]:
+            if container_doc.freight_indicator == "LCL":
+                for row in settings_doc.loose_types:
+                    if row.service_type == "Removal":
                         removal_item = row.service_name
                         break
+            else:
+                for row in settings_doc.service_types:
+                    if row.service_type == "Removal":
+                        if "2" in str(row.size)[0] and "2" in str(container_doc.size)[0]:
+                            removal_item = row.service_name
+                            break
 
-                    elif "4" in str(row.size)[0] and "4" in str(container_doc.size)[0]:
-                        removal_item = row.service_name
-                        break
+                        elif "4" in str(row.size)[0] and "4" in str(container_doc.size)[0]:
+                            removal_item = row.service_name
+                            break
 
-                    else:
-                        continue
+                        else:
+                            continue
             
             if not removal_item:
                 frappe.throw(
@@ -248,12 +311,13 @@ def get_service_order_items(
     doc_type=None,
     doc_name=None,
     m_bl_no=None,
+    h_bl_no=None
 ):
     items = []
     service_docs = []
 
-    if m_bl_no:
-        service_docs = get_service_orders(m_bl_no)
+    if m_bl_no or h_bl_no:
+        service_docs = get_service_orders(m_bl_no, h_bl_no)
     
     if len(service_docs) == 0:
         if not doc_type or not doc_name:
@@ -268,12 +332,15 @@ def get_service_order_items(
     return items, service_docs
 
 
-def get_service_orders(m_bl_no):
+def get_service_orders(m_bl_no=None, h_bl_no=None):
     service_docs = []
 
-    filters = {
-        "m_bl_no": m_bl_no,
-    }
+    filters = {}
+    if m_bl_no:
+        filters["m_bl_no"] = m_bl_no
+    elif h_bl_no:
+        filters["h_bl_no"] = h_bl_no
+
     orders = frappe.db.get_all(
         "Service Order",
         filters=filters,
@@ -283,8 +350,14 @@ def get_service_orders(m_bl_no):
         return []
     
     draft_service_orders = [order for order in orders if order.docstatus == 0]
+    msg = ""
+    if m_bl_no:
+        msg = f"M BL No: <b>{m_bl_no}</b>"
+    elif h_bl_no:
+        msg = f"H BL No: <b>{h_bl_no}</b>"
+
     if len(draft_service_orders) > 0:
-        frappe.throw(f"Please submit all draft Service Orders for M BL No: <b>{m_bl_no}</b>")
+        frappe.throw(f"Please submit all draft Service Orders for {msg}")
 
     for entry in orders:
         source_doc = frappe.get_cached_doc("Service Order", entry.name)
@@ -298,7 +371,7 @@ def get_items(doc):
     for item in doc.get("services"):
         row_item = {
             'item_code': item.get("service"),
-            'qty': 1,
+            'qty': item.get("qty"),
             'container_no': doc.container_no,
             'container_id': doc.container_id
         }
@@ -311,4 +384,4 @@ def get_items(doc):
 def create_sales_order(data):
 	data = frappe.parse_json(data)
     
-	return make_sales_order(m_bl_no=data.get("m_bl_no"))
+	return make_sales_order(m_bl_no=data.get("m_bl_no"), h_bl_no=data.get("h_bl_no"))
