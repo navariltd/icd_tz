@@ -617,6 +617,7 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "H B/L No",
+   "read_only": 1,
    "search_index": 1
   },
   {
@@ -684,7 +685,7 @@
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-18 12:15:45.499953",
+ "modified": "2025-04-20 00:13:13.379077",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",
