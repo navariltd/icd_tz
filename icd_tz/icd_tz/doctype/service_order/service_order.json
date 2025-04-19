@@ -9,24 +9,24 @@
  "field_order": [
   "section_break_9rl7",
   "section_break_pd2vw",
-  "container_inspection",
-  "c_and_f_company",
+  "company",
   "column_break_ifoto",
   "clearing_agent",
-  "consignee",
+  "c_and_f_company",
   "column_break_bu4nq",
-  "company",
+  "consignee",
   "posting_datetime",
   "container_details_section",
   "manifest",
   "vessel_name",
   "port",
   "column_break_l0qms",
-  "m_bl_no",
+  "container_id",
   "place_of_destination",
   "country_of_destination",
   "column_break_nlrcd",
-  "container_id",
+  "m_bl_no",
+  "h_bl_no",
   "container_no",
   "container_seal",
   "column_break_aamu",
@@ -49,13 +49,6 @@
    "fieldname": "section_break_9rl7",
    "fieldtype": "Tab Break",
    "label": "Details"
-  },
-  {
-   "fieldname": "container_inspection",
-   "fieldtype": "Link",
-   "label": "Container Inspection",
-   "options": "Container Inspection",
-   "read_only": 1
   },
   {
    "fetch_from": "container_inspection.c_and_f_company",
@@ -92,7 +85,8 @@
    "fieldname": "company",
    "fieldtype": "Link",
    "label": "Company",
-   "options": "Company"
+   "options": "Company",
+   "search_index": 1
   },
   {
    "fieldname": "container_details_section",
@@ -103,7 +97,8 @@
    "depends_on": "eval: doc.container_id",
    "fieldname": "vessel_name",
    "fieldtype": "Data",
-   "label": "Vessel Name"
+   "label": "Vessel Name",
+   "search_index": 1
   },
   {
    "depends_on": "eval: doc.container_id",
@@ -136,7 +131,8 @@
    "fetch_from": "container_id.seal_no_1",
    "fieldname": "container_seal",
    "fieldtype": "Data",
-   "label": "Container Seal"
+   "label": "Container Seal",
+   "search_index": 1
   },
   {
    "depends_on": "eval: doc.container_id",
@@ -144,7 +140,8 @@
    "fieldname": "container_location",
    "fieldtype": "Link",
    "label": "Container Location",
-   "options": "Container Location"
+   "options": "Container Location",
+   "search_index": 1
   },
   {
    "fieldname": "column_break_aamu",
@@ -155,14 +152,16 @@
    "fetch_from": "container_id.freight_indicator",
    "fieldname": "container_status",
    "fieldtype": "Data",
-   "label": "Container Status"
+   "label": "Container Status",
+   "search_index": 1
   },
   {
    "depends_on": "eval: doc.container_id",
    "fetch_from": "container_id.size",
    "fieldname": "container_size",
    "fieldtype": "Data",
-   "label": "Container Size"
+   "label": "Container Size",
+   "search_index": 1
   },
   {
    "fieldname": "services_tab",
@@ -271,14 +270,16 @@
    "description": "for storage charge validation",
    "fieldname": "place_of_destination",
    "fieldtype": "Data",
-   "label": "Place of Destination"
+   "label": "Place of Destination",
+   "search_index": 1
   },
   {
    "depends_on": "eval: doc.container_id",
    "description": "for corridor levy validation",
    "fieldname": "country_of_destination",
    "fieldtype": "Data",
-   "label": "Country of Destination"
+   "label": "Country of Destination",
+   "search_index": 1
   },
   {
    "depends_on": "eval: doc.container_id",
@@ -289,6 +290,7 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "M B/L No",
+   "read_only": 1,
    "search_index": 1
   },
   {
@@ -296,13 +298,26 @@
    "fieldname": "posting_datetime",
    "fieldtype": "Datetime",
    "label": "Posting Datetime",
-   "read_only": 1
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "depends_on": "eval: doc.container_id",
+   "fetch_from": "container_id.m_bl_no",
+   "fieldname": "h_bl_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "H B/L No",
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-22 02:09:40.900414",
+ "modified": "2025-04-19 09:19:13.052065",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Service Order",
