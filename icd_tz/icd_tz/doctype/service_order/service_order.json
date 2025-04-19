@@ -33,6 +33,7 @@
   "container_size",
   "container_status",
   "container_location",
+  "gross_volume",
   "services_tab",
   "services",
   "section_break_vfatw",
@@ -312,12 +313,20 @@
    "label": "H B/L No",
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fetch_from": "container_id.gross_volume",
+   "fieldname": "gross_volume",
+   "fieldtype": "Float",
+   "label": "Gross Volume",
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-19 12:03:20.173777",
+ "modified": "2025-04-19 13:01:19.256701",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Service Order",
