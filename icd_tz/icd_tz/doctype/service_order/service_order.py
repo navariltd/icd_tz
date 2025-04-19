@@ -138,7 +138,7 @@ class ServiceOrder(Document):
 			if transport_item and transport_item not in service_names:
 				self.append("services", {
 					"service": transport_item,
-					"qty": 1
+					"qty": self.gross_volume if self.container_status == "LCL" else 1
 				})
 		
 		if (
@@ -182,7 +182,7 @@ class ServiceOrder(Document):
 			if shore_handling_item and shore_handling_item not in service_names:
 				self.append("services", {
 					"service": shore_handling_item,
-					"qty": 1,
+					"qty": self.gross_volume if self.container_status == "LCL" else 1,
 					"remarks": f"Size: {self.container_size}, Cargo Type: {reception_details.cargo_type}, Port: {self.port}"
 				})
 		
@@ -263,14 +263,14 @@ class ServiceOrder(Document):
 		if len(strips) > 0:
 			self.append("services", {
 				"service": strips[0],
-				"qty": len(strips),
+				"qty": len(strips) * self.gross_volume if self.container_status == "LCL" else len(strips),
 				"remarks": "Having more than one booking" if len(strips) > 1 else ""
 			})
 		
 		if len(verifications) > 0:
 			self.append("services", {
 				"service": verifications[0],
-				"qty": len(verifications),
+				"qty": len(verifications) * self.gross_volume if self.container_status == "LCL" else len(verifications),
 				"remarks": "Having more than one booking" if len(verifications) > 1 else ""
 			})
 	
@@ -313,7 +313,7 @@ class ServiceOrder(Document):
 		if corridor_item and corridor_item not in service_names:
 			self.append("services", {
 				"service": corridor_item,
-				"qty": 1
+				"qty": self.gross_volume if self.container_status == "LCL" else 1
 			})
 	
 	def get_other_charges(self):
@@ -342,7 +342,7 @@ class ServiceOrder(Document):
 				if d.get("service") and d.get("service") not in service_names:
 					self.append("services", {
 						"service": d.get("service"),
-						"qty": 1
+						"qty": self.gross_volume if self.container_status == "LCL" else 1
 					})
 	
 	def create_getpass(self):
