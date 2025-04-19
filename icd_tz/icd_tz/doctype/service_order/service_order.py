@@ -45,7 +45,14 @@ class ServiceOrder(Document):
 		if len(orders) > 0:
 			return
 		
+		if not self.get_pass:
+			return
+
 		get_pass = frappe.get_cached_doc("Gate Pass", self.get_pass)
+
+		if get_pass.docstatus == 1:
+			get_pass.cancel()
+		
 		get_pass.delete(ignore_permissions=True, force=True)
 		self.db_set("get_pass", "")
 
