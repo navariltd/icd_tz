@@ -50,6 +50,8 @@ class ServiceOrder(Document):
 
 		get_pass = frappe.get_cached_doc("Gate Pass", self.get_pass)
 
+		self.gate_pass = ""
+		
 		if get_pass.docstatus == 1:
 			get_pass.cancel()
 		
