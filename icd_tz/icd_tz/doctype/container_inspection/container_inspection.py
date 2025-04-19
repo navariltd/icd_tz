@@ -123,10 +123,9 @@ def create_bulk_inspections(data):
 
     if data.get("m_bl_no"):
         filters["m_bl_no"] = data.get("m_bl_no")
-        filters["has_hbl"] = 0
+        filters["h_bl_no"] = ["is", "not set"]
     elif data.get("h_bl_no"):
         filters["h_bl_no"] = data.get("h_bl_no")
-        filters["has_hbl"] = 1
     
     bookings = frappe.db.get_all(
 		"In Yard Container Booking",
