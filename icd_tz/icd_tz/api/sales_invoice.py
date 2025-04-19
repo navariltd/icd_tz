@@ -26,6 +26,15 @@ def update_sales_references(doc):
     transport_services = [row.service_name for row in settings_doc.service_types if row.service_type == "Transport"]
     storage_services = [row.service_name for row in settings_doc.service_types if row.service_type in ["Storage-Single", "Storage-Double"]]
     shore_services = [row.service_name for row in settings_doc.service_types if row.service_type == "Shore"]
+
+    # for loose container
+    corridor_services += [row.service_name for row in settings_doc.loose_types if row.service_type == "Levy"]
+    verification_services += [row.service_name for row in settings_doc.loose_types if row.service_type == "Verification"]
+    stripping_services += [row.service_name for row in settings_doc.loose_types if row.service_type == "Stripping"]
+    removal_services += [row.service_name for row in settings_doc.loose_types if row.service_type == "Removal"]
+    transport_services += [row.service_name for row in settings_doc.loose_types if row.service_type == "Transport"]
+    storage_services += [row.service_name for row in settings_doc.loose_types if row.service_type in ["Storage-Single", "Storage-Double"]]
+    shore_services += [row.service_name for row in settings_doc.loose_types if row.service_type == "Shore"]
     
     for item in doc.items:
         if item.item_code in transport_services:
