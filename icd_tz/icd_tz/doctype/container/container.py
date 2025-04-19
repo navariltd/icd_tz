@@ -2,6 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
+from time import sleep
 from frappe.model.document import Document
 from frappe.utils import nowdate, getdate, add_days
 
@@ -420,6 +421,7 @@ def get_place_of_destination():
 
 
 def daily_update_date_container_stay(container_id=None):
+	sleep(20)
 	containers = []
 	if container_id:
 		containers.append(container_id)

@@ -153,6 +153,7 @@ class ContainerReception(Document):
 			})
 
 			container.save(ignore_permissions=True)
+			container.reload()
 			count += 1
 
 			enqueue(
