@@ -88,7 +88,7 @@ class ServiceOrder(Document):
 		self.get_reception_services(settings_doc)
 		self.get_booking_services(settings_doc)
 		self.get_corridor_services(settings_doc)
-		self.get_other_charges()
+		self.get_other_charges()		
 
 	def get_reception_services(self, settings_doc):
 		if not self.container_id:
@@ -118,11 +118,20 @@ class ServiceOrder(Document):
 		):
 			transport_item = None
 
-			for row in settings_doc.service_types:
-				if row.service_type == "Transport":
-					transport_item = row.service_name
-					break
-
+			if self.container_status == "LCL":
+				for row in settings_doc.loose_types:
+					if row.service_type == "Transport":
+						transport_item = row.service_name
+						break
+			else:
+				for row in settings_doc.service_types:
+					if (
+						row.service_type == "Transport" and 
+						row.cargo_type == reception_details.cargo_type
+					):
+						transport_item = row.service_name
+						break
+			
 			if not transport_item:
 				frappe.throw("Transport Pricing Criteria is not set in ICD TZ Settings, Please set it to continue")
 			
@@ -137,22 +146,32 @@ class ServiceOrder(Document):
 			reception_details.has_shore_handling_charges == "Yes"
 		):
 			shore_handling_item = None
-			for row in settings_doc.service_types:
-				if (
-					row.service_type == "Shore" and
-					row.cargo_type == reception_details.cargo_type and
-					row.port == self.port
-				):
-					if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+
+			if self.container_status == "LCL":
+				for row in settings_doc.loose_types:
+					if (
+						row.service_type == "Shore"
+						and row.cargo_type == reception_details.cargo_type
+					):
 						shore_handling_item = row.service_name
 						break
+			else:
+				for row in settings_doc.service_types:
+					if (
+						row.service_type == "Shore" and
+						row.cargo_type == reception_details.cargo_type and
+						row.port == self.port
+					):
+						if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+							shore_handling_item = row.service_name
+							break
 
-					elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
-						shore_handling_item = row.service_name
-						break
+						elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
+							shore_handling_item = row.service_name
+							break
 
-					else:
-						continue
+						else:
+							continue
 			
 			if not shore_handling_item:
 				frappe.throw(
@@ -187,18 +206,25 @@ class ServiceOrder(Document):
 				booking.has_stripping_charges == "Yes"
 			):
 				stripping_item = None
-				for row in settings_doc.service_types:
-					if row.service_type == "Stripping":
-						if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+
+				if self.container_status == "LCL":
+					for row in settings_doc.loose_types:
+						if row.service_type == "Stripping":
 							stripping_item = row.service_name
 							break
+				else:
+					for row in settings_doc.service_types:
+						if row.service_type == "Stripping":
+							if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+								stripping_item = row.service_name
+								break
 
-						elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
-							stripping_item = row.service_name
-							break
+							elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
+								stripping_item = row.service_name
+								break
 
-						else:
-							continue
+							else:
+								continue
 						
 				if not stripping_item:
 					frappe.throw(f"Stripping Pricing Criteria for Size: {self.container_size} is not set in ICD TZ Settings, Please set it to continue")
@@ -210,18 +236,24 @@ class ServiceOrder(Document):
 				booking.has_custom_verification_charges == "Yes"
 			):
 				verification_item = None
-				for row in settings_doc.service_types:
-					if row.service_type == "Verification":
-						if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+				if self.container_status == "LCL":
+					for row in settings_doc.loose_types:
+						if row.service_type == "Verification":
 							verification_item = row.service_name
 							break
+				else:
+					for row in settings_doc.service_types:
+						if row.service_type == "Verification":
+							if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+								verification_item = row.service_name
+								break
 
-						elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
-							verification_item = row.service_name
-							break
+							elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
+								verification_item = row.service_name
+								break
 
-						else:
-							continue
+							else:
+								continue
 						
 				if not verification_item:
 					frappe.throw(f"Custom Verification Pricing criteria for Size: {self.container_size} is not set in ICD TZ Settings, Please set it to continue")
@@ -253,20 +285,27 @@ class ServiceOrder(Document):
 		if container_doc.c_sales_invoice:
 			return
 		
-		service_names = [row.get("service") for row in self.get("services")]
 		corridor_item = None
-		for row in settings_doc.service_types:
-			if row.service_type == "Levy":
-				if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+		service_names = [row.get("service") for row in self.get("services")]
+
+		if self.container_status == "LCL":
+			for row in settings_doc.loose_types:
+				if row.service_type == "Levy":
 					corridor_item = row.service_name
 					break
+		else:
+			for row in settings_doc.service_types:
+				if row.service_type == "Levy":
+					if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+						corridor_item = row.service_name
+						break
 
-				elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
-					corridor_item = row.service_name
-					break
+					elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
+						corridor_item = row.service_name
+						break
 
-				else:
-					continue
+					else:
+						continue
 		
 		if not corridor_item:
 			frappe.throw(f"Corridor Levy Pricing Criteria for Size: {self.container_size} is not set in ICD TZ Settings, Please set it to continue")
@@ -295,6 +334,9 @@ class ServiceOrder(Document):
 
 			for d in inspection_doc.get("services"):
 				if d.get("sales_invoice"):
+					continue
+
+				if "verification" in str(d.get("service")).lower():
 					continue
 				
 				if d.get("service") and d.get("service") not in service_names:
