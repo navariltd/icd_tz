@@ -348,13 +348,17 @@ class Container(Document):
 		if is_eligible_for_corridor_levy_payments:
 			if self.c_sales_invoice:
 				self.has_corridor_levy_charges = "No"
-			elif self.days_to_be_billed > 0:
+			else:
 				self.has_corridor_levy_charges = "Yes"
-			elif self.days_to_be_billed <= 0:
-				if self.has_single_charge == 1 or self.has_double_charge == 1:
-					self.has_corridor_levy_charges = "Yes"
-				else:
-					self.has_corridor_levy_charges = "No"
+
+			# corridor levy does not depend on storage days (2025-04-19)
+			# elif self.days_to_be_billed > 0:
+			# 	self.has_corridor_levy_charges = "Yes"
+			# elif self.days_to_be_billed <= 0:
+			# 	if self.has_single_charge == 1 or self.has_double_charge == 1:
+			# 		self.has_corridor_levy_charges = "Yes"
+			# 	else:
+			# 		self.has_corridor_levy_charges = "No"
 		else:
 			self.has_corridor_levy_charges = "No"
 	
