@@ -1,4 +1,5 @@
 import frappe
+from time import sleep
 from frappe.utils import nowdate
 from icd_tz.icd_tz.api.utils import validate_qty_storage_item
 
@@ -25,6 +26,38 @@ def unlink_sales_order(doc):
                 "",
                 update_modified=False
             )
+
+
+@frappe.whitelist()
+def update_items_on_sales_order(doc_name):
+    doc = frappe.get_doc("Sales Order", doc_name)
+
+    items = []
+    unique_containers = []
+    for item in doc.items:
+        if item.container_id not in unique_containers:
+            unique_containers.append(item.container_id)
+    
+    for container_id in unique_containers:
+        container_doc = frappe.get_doc("Container", container_id)
+        container_doc.update_container_stay(up_to_date=doc.delivery_date)
+        container_doc.reload()
+
+    sleep(10)
+
+    doc.items = []
+    items += get_storage_services(doc.m_bl_no, doc.h_bl_no)
+
+    service_order_items, service_docs = get_service_order_items(m_bl_no=doc.m_bl_no, h_bl_no=doc.h_bl_no)
+    items += service_order_items
+
+    for record in service_docs:
+        record.db_set("sales_order", doc.name)
+    
+    doc.items = items
+    doc.save(ignore_permissions=True)
+    doc.reload()
+    return True
 
 
 @frappe.whitelist()
@@ -110,12 +143,12 @@ def get_storage_services(m_bl_no=None, h_bl_no=None):
     services = []
 
     filters={}
-    if m_bl_no:
-        filters["m_bl_no"] = m_bl_no
-        filters["has_hbl"] = 0
-    elif h_bl_no:
+    if h_bl_no:
         filters["h_bl_no"] = h_bl_no
         filters["has_hbl"] = 1
+    elif m_bl_no:
+        filters["m_bl_no"] = m_bl_no
+        filters["has_hbl"] = 0
 
     containers = frappe.db.get_all(
         "Container", filters=filters,
@@ -316,7 +349,7 @@ def get_service_order_items(
     items = []
     service_docs = []
 
-    if m_bl_no or h_bl_no:
+    if h_bl_no or m_bl_no:
         service_docs = get_service_orders(m_bl_no, h_bl_no)
     
     if len(service_docs) == 0:
@@ -336,10 +369,10 @@ def get_service_orders(m_bl_no=None, h_bl_no=None):
     service_docs = []
 
     filters = {}
-    if m_bl_no:
-        filters["m_bl_no"] = m_bl_no
-    elif h_bl_no:
+    if h_bl_no:
         filters["h_bl_no"] = h_bl_no
+    elif m_bl_no:
+        filters["m_bl_no"] = m_bl_no
 
     orders = frappe.db.get_all(
         "Service Order",
@@ -351,10 +384,10 @@ def get_service_orders(m_bl_no=None, h_bl_no=None):
     
     draft_service_orders = [order for order in orders if order.docstatus == 0]
     msg = ""
-    if m_bl_no:
-        msg = f"M BL No: <b>{m_bl_no}</b>"
-    elif h_bl_no:
+    if h_bl_no:
         msg = f"H BL No: <b>{h_bl_no}</b>"
+    elif m_bl_no:
+        msg = f"M BL No: <b>{m_bl_no}</b>"
 
     if len(draft_service_orders) > 0:
         frappe.throw(f"Please submit all draft Service Orders for {msg}")
