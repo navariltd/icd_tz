@@ -325,24 +325,36 @@ class ServiceOrder(Document):
 @frappe.whitelist()
 def create_bulk_service_orders(data):
 	data = frappe.parse_json(data)
-	inspections = frappe.db.get_all(
-		"Container Inspection",
-		filters={
-            "docstatus": 1,
-			"m_bl_no": data.get("m_bl_no"),
-		},
+
+	filters = {}
+	if data.get("m_bl_no"):
+		filters["m_bl_no"] = data.get("m_bl_no")
+		filters["h_bl_no"] = ["is", "not set"]
+	elif data.get("h_bl_no"):
+		filters["h_bl_no"] = data.get("h_bl_no")
+
+	containers = frappe.db.get_all(
+		"Container",
+		filters=filters,
         fields=["name", "container_id"]
 	)
-	if len(inspections) == 0:
-		frappe.msgprint(f"No submitted Container Inspection found for M BL No: <b>{data.get('m_bl_no')}</b>")
+
+	msg = ""
+	if data.get("m_bl_no"):
+		msg = f"M BL No: <b>{data.get('m_bl_no')}</b>"
+	elif data.get("h_bl_no"):
+		msg = f"H BL No: <b>{data.get('h_bl_no')}</b>"
+
+	if len(containers) == 0:
+		frappe.msgprint(f"No Containers found for {msg}")
 		return
     
 	count = 0
-	for inspection in inspections:
+	for container in containers:
 		doc = frappe.new_doc("Service Order")
-		doc.container_inspection = inspection.name
-		doc.container_id = inspection.container_id
+		doc.container_id = container.name
 		doc.m_bl_no = data.get("m_bl_no")
+		doc.h_bl_no = data.get("h_bl_no")
         
 		doc.flags.ignore_permissions = True
 		doc.save()
