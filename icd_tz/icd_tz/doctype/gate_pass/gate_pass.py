@@ -46,7 +46,7 @@ class GatePass(Document):
 		)
 
 		if container_info.days_to_be_billed > 0:
-			msg += f"<li>Storage Charges</li> <b>{container_info.days_to_be_billed} Days</b></li>"
+			msg += f"<li>Storage Charges:  <b>{container_info.days_to_be_billed} Days</b></li>"
 		
 		if container_info.has_removal_charges == "Yes" and not container_info.r_sales_invoice:
 			msg += "<li>Removal Charges</li>"
