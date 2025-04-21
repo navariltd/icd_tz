@@ -211,7 +211,7 @@ class ServiceOrder(Document):
 				self.append("services", {
 					"service": shore_handling_item,
 					"qty": self.gross_volume if self.container_status == "LCL" else 1,
-					"remarks": f"Size: {self.container_size}, Cargo Type: {reception_details.cargo_type}, Port: {self.port}"
+					"remarks": f"Size: <b>{self.container_size}</b>, Cargo Type: <b>{reception_details.cargo_type}</b>, Port: <b>{self.port}</b>"
 				})
 		
 	def get_booking_services(self, settings_doc):
@@ -292,14 +292,14 @@ class ServiceOrder(Document):
 			self.append("services", {
 				"service": strips[0],
 				"qty": len(strips) * self.gross_volume if self.container_status == "LCL" else len(strips),
-				"remarks": "Having more than one booking" if len(strips) > 1 else ""
+				"remarks": "<b>Having multiple bookings</b>" if len(strips) > 1 else ""
 			})
 		
 		if len(verifications) > 0:
 			self.append("services", {
 				"service": verifications[0],
 				"qty": len(verifications) * self.gross_volume if self.container_status == "LCL" else len(verifications),
-				"remarks": "Having more than one booking" if len(verifications) > 1 else ""
+				"remarks": "<b>Having multiple bookings</b>" if len(verifications) > 1 else ""
 			})
 	
 	def get_corridor_services(self, settings_doc):
@@ -348,7 +348,6 @@ class ServiceOrder(Document):
 		if not self.container_id:
 			return
 		
-		service_names = [row.get("service") for row in self.get("services")]
 		inspeactions = frappe.db.get_all(
 			"Container Inspection",
 			{"container_id": self.container_id, "docstatus": 1},
@@ -357,6 +356,7 @@ class ServiceOrder(Document):
 		if len(inspeactions) == 0:
 			return
 
+		insp_service_dict = {}
 		for inspection in inspeactions:
 			inspection_doc = frappe.get_doc("Container Inspection", inspection.name)
 
@@ -366,12 +366,25 @@ class ServiceOrder(Document):
 
 				if "verification" in str(d.get("service")).lower():
 					continue
-				
-				if d.get("service") and d.get("service") not in service_names:
-					self.append("services", {
+
+				if not d.get("service"):
+					continue
+					
+				qty_to_add = self.gross_volume if self.container_status == "LCL" else 1
+				if d.get("service") in insp_service_dict:
+					insp_service_dict[d.get("service")]["qty"] += qty_to_add
+					insp_service_dict[d.get("service")]["remarks"] = 	"<b>Having Multiple Inspections</b>"
+				else:
+					new_row = {
 						"service": d.get("service"),
-						"qty": self.gross_volume if self.container_status == "LCL" else 1
-					})
+						"qty": qty_to_add
+					}
+					insp_service_dict[d.get("service")] = new_row
+
+		for item in insp_service_dict.values():
+			self.append("services", item)
+				
+			
 	
 	def create_getpass(self):
 		"""
