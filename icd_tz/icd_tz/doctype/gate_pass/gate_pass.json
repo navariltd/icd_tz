@@ -16,7 +16,10 @@
   "company",
   "submitted_date",
   "submitted_time",
+  "column_break_ecqj",
   "submitted_by",
+  "action_for_missing_booking",
+  "missing_booking_allowed_by",
   "container_details_section",
   "container_id",
   "m_bl_no",
@@ -308,13 +311,32 @@
    "label": "Is Empty Container",
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "column_break_ecqj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Stop",
+   "fieldname": "action_for_missing_booking",
+   "fieldtype": "Select",
+   "label": "Action for Missing Booking",
+   "options": "\nStop\nAllow",
+   "permlevel": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "missing_booking_allowed_by",
+   "fieldtype": "Data",
+   "label": "Missing Booking Allowed By",
+   "read_only": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-21 09:54:46.341814",
+ "modified": "2025-04-21 14:22:05.561460",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Gate Pass",
