@@ -35,7 +35,7 @@
    "fieldname": "qty",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Qty",
+   "label": "Qty/CBM",
    "non_negative": 1,
    "read_only": 1,
    "search_index": 1
@@ -44,7 +44,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-04-19 09:30:32.328409",
+ "modified": "2025-04-21 13:12:17.519065",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Service Order Detail",
