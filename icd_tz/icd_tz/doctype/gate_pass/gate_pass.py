@@ -22,6 +22,9 @@ class GatePass(Document):
 	def validate_pending_payments(self):
 		"""Validate the pending payments for the Gate Pass"""
 
+		if self.is_empty_container == 1:
+			return
+
 		service_msg = ""
 		service_msg += self.validate_container_charges()
 		service_msg += self.validate_in_yard_booking()
