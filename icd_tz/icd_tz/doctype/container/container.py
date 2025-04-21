@@ -7,7 +7,7 @@ from frappe.model.document import Document
 from frappe.utils import nowdate, getdate, add_days
 
 class Container(Document):
-	def before_save(self):
+	def after_insert(self):
 		if self.container_no and self.container_reception:
 			container_reception = frappe.get_doc("Container Reception", self.container_reception)
 
@@ -16,7 +16,11 @@ class Container(Document):
 
 			self.validate_place_of_destination()
 			self.update_container_reception(container_reception)
-		
+
+			self.save()
+	
+	def before_save(self):
+		self.validate_place_of_destination()
 		self.update_billed_days()
 		self.update_billed_details()
 		self.check_corridor_levy_eligibility()
@@ -95,7 +99,6 @@ class Container(Document):
 			# ["place_of_destination", "place_of_delivery", "port_of_loading", "consignee_name", "shipping_agent_code",
 			# "shipping_agent_name", "cargo_description"],
 
-
 			if master_bl_info:
 				del master_bl_info["name"]
 				del master_bl_info["parent"]
@@ -120,7 +123,6 @@ class Container(Document):
 					self.sline_code = master_bl_info.shipping_agent_code
 				if not self.sline:
 					self.sline = master_bl_info.shipping_agent_name
-
 
 		if len(self.container_dates) == 0:
 			self.append("container_dates", {
@@ -241,7 +243,6 @@ class Container(Document):
 					self.consignee = house_bl_info.consignee_name
 				if not self.cargo_description:
 					self.cargo_description = house_bl_info.cargo_description
-
 
 		if len(self.container_dates) == 0:
 			self.append("container_dates", {
