@@ -93,9 +93,8 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "C & F Company",
+   "mandatory_depends_on": "eval: doc.is_empty_container == 0",
    "options": "Clearing and Forwarding Company",
-   "read_only": 1,
-   "reqd": 1,
    "search_index": 1
   },
   {
@@ -113,8 +112,8 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Clearing Agent",
+   "mandatory_depends_on": "eval: doc.is_empty_container == 0",
    "options": "Clearing Agent",
-   "reqd": 1,
    "search_index": 1
   },
   {
@@ -138,6 +137,8 @@
    "search_index": 1
   },
   {
+   "fetch_from": "container_id.manifest",
+   "fetch_if_empty": 1,
    "fieldname": "manifest",
    "fieldtype": "Link",
    "in_preview": 1,
@@ -282,6 +283,7 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "H BL No",
+   "read_only": 1,
    "search_index": 1
   },
   {
@@ -312,7 +314,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-19 14:28:21.058587",
+ "modified": "2025-04-21 09:54:46.341814",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Gate Pass",
