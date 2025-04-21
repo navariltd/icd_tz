@@ -23,5 +23,20 @@ frappe.ui.form.on('Service Order', {
 				}
 			};
 		});
+		frm.set_query("c_and_f_company", () => {
+			return {
+				filters: {
+					"disabled": 0
+				}
+			};
+		});
+		frm.set_query("clearing_agent", () => {
+			return {
+				filters: {
+					"disabled": 0,
+					"c_and_f_company": frm.doc.c_and_f_company
+				}
+			};
+		});
 	}
 });

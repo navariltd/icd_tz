@@ -26,6 +26,9 @@ class ServiceOrder(Document):
 	
 	def validate(self):
 		validate_cf_agent(self)
+	
+	def before_submit(self):
+		self.validate_mandatory_fields()
 
 	def on_submit(self):
 		self.create_getpass()
@@ -384,8 +387,6 @@ class ServiceOrder(Document):
 		for item in insp_service_dict.values():
 			self.append("services", item)
 				
-			
-	
 	def create_getpass(self):
 		"""
 		Create a Get pass document
@@ -423,6 +424,17 @@ class ServiceOrder(Document):
 
 		self.db_set("get_pass", getpass.name)
 		self.reload()
+
+	def validate_mandatory_fields(self):
+		fields = ["c_and_f_company", "clearing_agent", "consignee"]
+
+		fields_str = ""
+		for field in fields:
+			if not self.get(field):
+				fields_str += f"{self.meta.get_label(field)}, "
+
+		if fields_str:
+			frappe.throw(f"Please ensure the following fields are filled before submitting this document: <b>{fields_str}</b>")
 
 
 @frappe.whitelist()
