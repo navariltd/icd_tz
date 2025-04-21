@@ -6,6 +6,11 @@ frappe.ui.form.on('Sales Order', {
             return;
         }
 
+        if (frm.is_dirty()) {
+            frappe.msgprint("Please save the document before updating items")
+            return;
+        }
+
         frappe.call({
             method: 'icd_tz.icd_tz.api.sales_order.update_items_on_sales_order',
             args: {
