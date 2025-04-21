@@ -3,7 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
-from frappe.utils import get_fullname, nowdate, nowtime
+from frappe.utils import get_fullname, nowdate, nowtime, get_url_to_form
 from icd_tz.icd_tz.api.utils import validate_cf_agent, validate_draft_doc
 
 
@@ -153,3 +153,34 @@ class GatePass(Document):
 		
 		if fields_str:
 			frappe.throw(f"Please ensure the following fields are filled before submitting this document: <b>{fields_str}</b>")
+
+
+@frappe.whitelist()
+def create_getpass_for_empty_container(container_id):
+	"""
+	Create a Get pass document for an empty container
+	"""
+
+	exist_gate_pass = frappe.db.get_all(
+		"Gate Pass", filters={"container_id": container_id}
+	)
+
+	if len(exist_gate_pass) > 0:
+		url = get_url_to_form("Gate Pass", exist_gate_pass[0].name)
+		frappe.throw(
+			f"Gate Pass already exists for this Empty Container ID: <a href='{url}'>{exist_gate_pass[0].name}</a>"
+		)
+	
+	getpass = frappe.new_doc("Gate Pass")
+	getpass.update({
+		"container_id": container_id,
+		"is_empty_container": 1
+	})
+	getpass.save(ignore_permissions=True)
+	getpass.reload()
+
+	getpass.transporter = ""
+	getpass.save()
+
+	return True
+

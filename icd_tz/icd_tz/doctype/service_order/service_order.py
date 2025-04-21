@@ -377,15 +377,15 @@ class ServiceOrder(Document):
 		"""
 		Create a Get pass document
 		"""
-		exist_get_pass = frappe.db.get_all(
+		exist_gate_pass = frappe.db.get_all(
 			"Gate Pass",
 			filters={
 				"manifest": self.manifest,
 				"container_id": self.container_id
 			}
 		)
-		if len(exist_get_pass) > 0:
-			self.db_set("get_pass", exist_get_pass[0].name)
+		if len(exist_gate_pass) > 0:
+			self.db_set("get_pass", exist_gate_pass[0].name)
 			self.reload()
 			return
 
