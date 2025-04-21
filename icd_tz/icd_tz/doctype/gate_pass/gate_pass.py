@@ -94,11 +94,16 @@ class GatePass(Document):
 		reception_info = frappe.db.get_value(
 			"Container Reception",
 			container_reception,
-			["has_transport_charges", "t_sales_invoice", "has_shore_handling_charges", "s_sales_invoice"],
+			["cargo_type", "has_transport_charges", "t_sales_invoice", "has_shore_handling_charges", "s_sales_invoice"],
 			as_dict=True
 		)
 
-		if reception_info.has_transport_charges == "Yes" and not reception_info.t_sales_invoice:
+		if (
+			reception_info.has_transport_charges == "Yes"
+			and not reception_info.t_sales_invoice
+			# Transport is not mandatory service for Transit container
+			and reception_info.cargo_type != "Transit"
+		):
 			msg += "<li>Transport Charges</li>"
 		
 		if reception_info.has_shore_handling_charges == "Yes" and not reception_info.s_sales_invoice:
