@@ -69,6 +69,21 @@ class GatePass(Document):
 			{"container_id": self.container_id},
 			["has_stripping_charges", "s_sales_invoice", "has_custom_verification_charges", "cv_sales_invoice"],
 		)
+		cargo_type = frappe.get_cached_value(
+			"Container",
+			self.container_id,
+			"cargo_type"
+		)
+		
+		if (
+			len(booking_info) == 0 and
+			cargo_type != "Transit" and # Transit containers are not required to have booking
+			self.action_for_missing_booking == 'Stop'
+		):
+			frappe.throw(
+				f"No Booking found for container: <b>{self.container_no}</b>, Cargo Type: <b>{cargo_type}</b><br>If you want to proceed, Please inform relevant person to Approve this Gate Pass"
+			)
+
 		for row in booking_info:
 			if row.has_stripping_charges == "Yes" and not row.s_sales_invoice:
 				msg += "<li>Stripping Charges</li>"

@@ -18,4 +18,13 @@ frappe.ui.form.on("Gate Pass", {
             }
         });
     },
+    action_for_missing_booking: (frm) => {
+        if (frm.doc.action_for_missing_booking) {
+            frm.set_value("missing_booking_allowed_by", frappe.session.user_fullname);
+            frm.refresh_field("missing_booking_allowed_by");
+        } else {
+            frm.set_value("missing_booking_allowed_by", "");
+            frm.refresh_field("missing_booking_allowed_by");
+        }
+    }
 });
