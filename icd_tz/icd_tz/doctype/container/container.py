@@ -9,28 +9,28 @@ from frappe.utils import nowdate, getdate, add_days
 class Container(Document):
 	def after_insert(self):
 		if self.container_no and self.container_reception:
-			container_reception = frappe.get_doc("Container Reception", self.container_reception)
-
-			self.update_m_bl_based_container_details(container_reception)
+			self.update_m_bl_based_container_details()
 			self.update_hbl_based_container_details()
 
 			self.validate_place_of_destination()
-			self.update_container_reception(container_reception)
 
 			self.save()
 	
 	def before_save(self):
 		self.validate_place_of_destination()
+		self.update_container_reception()
 		self.update_billed_days()
 		self.update_billed_details()
 		self.check_corridor_levy_eligibility()
 		self.check_removal_charges_elibility()
 
-	def update_m_bl_based_container_details(self, container_reception):
+	def update_m_bl_based_container_details(self):
 		"""Update the container details from the Container Reception, Containers Detail and Container Movement Order"""
 
 		if self.status == "Delivered":
 			return
+		
+		container_reception = frappe.get_cached_doc("Container Reception", self.container_reception)
 
 		if not self.status:
 			self.status = "In Yard"
@@ -366,7 +366,9 @@ class Container(Document):
 		else:
 			self.has_corridor_levy_charges = "No"
 	
-	def update_container_reception(self, container_reception):
+	def update_container_reception(self):
+		container_reception = frappe.get_cached_doc("Container Reception", self.container_reception)
+	
 		if self.place_of_destination and self.place_of_destination != container_reception.place_of_destination:
 			container_reception.db_set("place_of_destination", self.place_of_destination)
 		
