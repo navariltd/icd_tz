@@ -210,6 +210,11 @@ class ContainerReception(Document):
 				})
 				container_doc.save(ignore_permissions=True)
 
+				enqueue(
+					method=daily_update_date_container_stay,
+					container_id=container_doc.name
+				)
+
 	def cancel_linked_docs(self):
 		container_id = frappe.db.get_value(
 			"Container",
