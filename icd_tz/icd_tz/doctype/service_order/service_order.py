@@ -143,10 +143,7 @@ class ServiceOrder(Document):
 			return
 
 		service_names = [row.get("service") for row in self.get("services")]
-		if (
-			not reception_details.t_sales_invoice and
-			reception_details.has_transport_charges == "Yes"
-		):
+		if reception_details.has_transport_charges == "Yes":
 			transport_item = None
 
 			if self.container_status == "LCL":
@@ -154,7 +151,10 @@ class ServiceOrder(Document):
 					if row.service_type == "Transport":
 						transport_item = row.service_name
 						break
-			else:
+			elif (
+				not reception_details.t_sales_invoice and
+				self.container_status != "LCL"
+			):
 				for row in settings_doc.service_types:
 					if (
 						row.service_type == "Transport" and 
@@ -172,10 +172,7 @@ class ServiceOrder(Document):
 					"qty": self.gross_volume if self.container_status == "LCL" else 1
 				})
 		
-		if (
-			not reception_details.s_sales_invoice and
-			reception_details.has_shore_handling_charges == "Yes"
-		):
+		if reception_details.has_shore_handling_charges == "Yes":
 			shore_handling_item = None
 
 			if self.container_status == "LCL":
@@ -186,7 +183,10 @@ class ServiceOrder(Document):
 					):
 						shore_handling_item = row.service_name
 						break
-			else:
+			elif (
+				not reception_details.s_sales_invoice and
+				self.container_status != "LCL"
+			):
 				for row in settings_doc.service_types:
 					if (
 						row.service_type == "Shore" and
@@ -209,7 +209,6 @@ class ServiceOrder(Document):
 					f"Shore Handling Pricing Criteria for Size: {self.container_size}, Port: {self.port} and Cargo Type: {reception_details.cargo_type} is not set in ICD TZ Settings, Please set it to continue"
 				)
 			
-			service_names = [row.get("service") for row in self.get("services")]
 			if shore_handling_item and shore_handling_item not in service_names:
 				self.append("services", {
 					"service": shore_handling_item,
