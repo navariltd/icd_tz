@@ -119,7 +119,7 @@ def get_data(filters):
         WHERE 
             1=1 {conditions}
         ORDER BY 
-            cr.ship_dc_date DESC
+            c.posting_date DESC
     """
     
     data = frappe.db.sql(query, filters, as_dict=1)
@@ -128,9 +128,9 @@ def get_data(filters):
 def get_conditions(filters):
     conditions = []
     if filters.get("from_date"):
-        conditions.append("cr.ship_dc_date >= %(from_date)s")
+        conditions.append("c.posting_date >= %(from_date)s")
     if filters.get("to_date"):
-        conditions.append("cr.ship_dc_date <= %(to_date)s")
+        conditions.append("c.posting_date <= %(to_date)s")
     if filters.get("bl_no"):
         conditions.append("c.m_bl_no = %(bl_no)s")
     return " AND " + " AND ".join(conditions) if conditions else ""

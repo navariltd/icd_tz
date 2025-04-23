@@ -14,6 +14,9 @@ class ContainerReception(Document):
 	def before_save(self):
 		if not self.company:
 			self.company = frappe.defaults.get_user_default("Company")
+		
+		if not self.posting_date:
+			self.posting_date = nowdate()
 
 	def validate(self):
 		self.validate_duplicate_cr()
