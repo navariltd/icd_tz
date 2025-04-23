@@ -21,6 +21,7 @@
   "column_break_75qur",
   "received_date",
   "ship_dc_date",
+  "posting_date",
   "column_break_azrq",
   "icd_time_in",
   "port_time_out",
@@ -495,12 +496,19 @@
    "label": "Freight Indicator",
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date",
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-18 09:20:13.839580",
+ "modified": "2025-04-23 15:39:24.316266",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container Reception",

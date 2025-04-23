@@ -63,6 +63,7 @@
   "received_date",
   "booking_date",
   "column_break_ztec",
+  "posting_date",
   "last_inspection_date",
   "movement_details_section",
   "original_location",
@@ -680,12 +681,19 @@
    "fieldtype": "Data",
    "label": "Gross Volume Unit",
    "search_index": 1
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date",
+   "read_only": 1,
+   "search_index": 1
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-04-20 00:13:13.379077",
+ "modified": "2025-04-23 15:41:46.493973",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Container",

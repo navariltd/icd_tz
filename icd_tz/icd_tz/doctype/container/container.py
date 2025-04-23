@@ -13,6 +13,8 @@ class Container(Document):
 			self.update_hbl_based_container_details()
 
 			self.validate_place_of_destination()
+			
+			self.posting_date = getdate(self.creation)
 
 			self.save()
 	
