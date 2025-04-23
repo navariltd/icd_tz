@@ -50,6 +50,25 @@ def update_items_on_sales_order(doc_name):
     service_order_items, service_docs = get_service_order_items(m_bl_no=doc.m_bl_no, h_bl_no=doc.h_bl_no)
     items += service_order_items
 
+    
+    if len(service_docs) > 0:
+        source_doc = service_docs[0]
+
+        if not doc.consignee:
+            doc.consignee = source_doc.consignee
+        
+        if not doc.company:
+            doc.company = source_doc.company
+        
+        if not doc.c_and_f_company:
+            doc.c_and_f_company = source_doc.c_and_f_company
+        
+        if not doc.m_bl_no:
+            doc.m_bl_no = source_doc.m_bl_no
+        
+        if not doc.h_bl_no:
+            doc.h_bl_no = source_doc.h_bl_no
+
     for record in service_docs:
         record.db_set("sales_order", doc.name)
     
@@ -108,6 +127,12 @@ def make_sales_order(
         
         if not order_h_bl_no:
             order_h_bl_no = source_doc.h_bl_no
+    
+    else:
+        if not consignee and h_bl_no:
+            consignee = frappe.get_cached_value("Container", {"h_bl_no": h_bl_no}, "consignee")
+        if not consignee and m_bl_no:
+            consignee = frappe.get_cached_value("Container", {"m_bl_no": m_bl_no}, "consignee")
     
     sales_order = frappe.get_doc({
         "doctype": "Sales Order",
@@ -342,7 +367,7 @@ def get_service_order_items(
     
     if len(service_docs) == 0:
         if not doc_type or not doc_name:
-            return None, None
+            return [], []
         
         source_doc = frappe.get_cached_doc(doc_type, doc_name)
         service_docs.append(source_doc)
