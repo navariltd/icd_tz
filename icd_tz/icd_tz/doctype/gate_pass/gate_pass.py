@@ -19,6 +19,9 @@ class GatePass(Document):
 	def on_submit(self):
 		self.update_container_status()
 
+	def before_cancel(self):
+		self.update_container_status("At Payments")
+
 	def validate_pending_payments(self):
 		"""Validate the pending payments for the Gate Pass"""
 
@@ -151,16 +154,14 @@ class GatePass(Document):
 		
 		return msg
 
-	def update_container_status(self):
+	def update_container_status(self, status="Delivered"):
 		if not self.container_id:
 			return
 		
-		frappe.db.set_value(
-			"Container",
-			self.container_id,
-			"status",
-			"Delivered"
-		)
+		container_doc = frappe.get_cached_doc("Container", self.container_id)
+		container_doc.status = status
+		container_doc.save(ignore_permissions=True)
+		container_doc.reload()
 
 	def update_submitted_info(self):
 		self.submitted_by = get_fullname(frappe.session.user)

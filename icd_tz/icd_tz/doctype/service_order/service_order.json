@@ -221,9 +221,8 @@
   },
   {
    "fieldname": "get_pass",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "label": "Get Pass",
-   "options": "Gate Pass",
    "read_only": 1
   },
   {
@@ -326,7 +325,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-04-21 14:08:50.967888",
+ "modified": "2025-04-23 16:11:25.602160",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "Service Order",
