@@ -81,6 +81,12 @@ def get_columns():
             "label": _("Vessel"),
             "fieldtype": "Data",
             "width": 120
+        },
+        {
+            "fieldname": "transporter",
+            "label": _("Transporter"),
+            "fieldtype": "Data",
+            "width": 120
         }
     ]
 
@@ -105,7 +111,8 @@ def get_data(filters):
             c.cargo_description AS description_of_goods,
             c.sline AS shipping_line,
             cr.cargo_type,
-            cr.ship AS vessel
+            cr.ship AS vessel,
+            cr.transporter
         FROM 
             `tabContainer` c
         LEFT JOIN `tabContainer Reception` cr ON c.container_reception = cr.name            
