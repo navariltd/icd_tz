@@ -39,7 +39,7 @@ def get_columns():
             "fieldname": "seal",
             "label": _("Seal"),
             "fieldtype": "Data",
-            "width": 360
+            "width": 250
         },
         {
             "fieldname": "posting_datetime",
@@ -105,7 +105,7 @@ def get_data(filters):
 			cb.container_size,
 			cb.c_and_f_company,
 			cb.posting_datetime,
-			CONCAT_WS(', ', c.seal_no_1, c.seal_no_2, c.seal_no_3) AS seal,
+			CONCAT_WS(', ', NULLIF(TRIM(c.seal_no_1), ''), NULLIF(TRIM(c.seal_no_2), ''), NULLIF(TRIM(c.seal_no_3), '')) AS seal,
 			cr.transporter,
 			cr.truck,
 			cr.trailer,
