@@ -27,8 +27,14 @@ def get_columns():
     """
     return [
         {
-            "fieldname": "bl_no",
+            "fieldname": "m_bl_no",
             "label": _("M B/L No"),
+            "fieldtype": "Data", 
+            "width": 120
+        },
+        {
+            "fieldname": "h_bl_no",
+            "label": _("H B/L No"),
             "fieldtype": "Data", 
             "width": 120
         },
@@ -39,7 +45,7 @@ def get_columns():
             "width": 120
         },
         {
-            "fieldname": "type_of_container",
+            "fieldname": "cargo_type",
             "label": _("Cargo Type"),
             "fieldtype": "Data",
             "width": 100
@@ -69,7 +75,7 @@ def get_columns():
             "width": 150
         },
         {
-            "fieldname": "consignee_name",
+            "fieldname": "consignee",
             "label": _("Consignee Name"),
             "fieldtype": "Data",
             "width": 200
@@ -107,13 +113,15 @@ def get_data(filters):
         
     query = f"""
         SELECT
-            c.m_bl_no as bl_no,
+            c.m_bl_no,
+            c.h_bl_no,
             c.container_no,
+            c.cargo_type,
             c.received_date,
             c.arrival_date,
             gp.submitted_date,
             c.port_of_destination,
-            IFNULL(c.consignee, gp.consignee) as consignee_name,
+            IFNULL(c.consignee, gp.consignee),
             IFNULL(gp.goods_description, c.cargo_description) as goods_description,
             IFNULL(c.sline, gp.sline) as shipping_line,
             gp.vessel_name
