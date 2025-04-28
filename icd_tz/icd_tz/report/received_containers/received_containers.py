@@ -27,13 +27,13 @@ def get_columns():
             "width": 120
         },
         {
-            "fieldname": "discharge_date",
+            "fieldname": "arrival_date",
             "label": _("Discharge Date"),
             "fieldtype": "Date",
             "width": 100
         },
         {
-            "fieldname": "port_operator",
+            "fieldname": "port_of_destination",
             "label": _("Port Operator"),
             "fieldtype": "Data",
             "width": 120
@@ -71,13 +71,13 @@ def get_columns():
             "width": 200
         },
         {
-            "fieldname": "shipping_line",
+            "fieldname": "sline",
             "label": _("Shipping Line"),
             "fieldtype": "Data",
             "width": 120
         },
         {
-            "fieldname": "vessel",
+            "fieldname": "ship",
             "label": _("Vessel"),
             "fieldtype": "Data",
             "width": 120
@@ -102,16 +102,16 @@ def get_data(filters):
 
     query = f"""
         SELECT 
-            cr.ship_dc_date AS discharge_date,
-            cr.port AS port_operator,
+            c.arrival_date,
+            c.port_of_destination,
             c.container_no,
             c.m_bl_no AS bl_no,
             c.size,
             c.consignee AS consignee_name,
             c.cargo_description AS description_of_goods,
-            c.sline AS shipping_line,
-            cr.cargo_type,
-            cr.ship AS vessel,
+            c.sline,
+            c.cargo_type,
+            c.ship,
             cr.transporter
         FROM 
             `tabContainer` c
