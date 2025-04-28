@@ -15,9 +15,9 @@ def get_columns(filters):
     
     base_columns = [
         {"label": "M B/L Number", "fieldname": "bl_no", "fieldtype": "Data", "width": 150},
+        {"label": "H B/L No", "fieldname": "h_bl_no", "fieldtype": "Data", "width": 150},
         {"label": "Discharge Date", "fieldname": "arrival_date", "fieldtype": "Date", "width": 120},
-        {"label": "Carry In Date", "fieldname": "carry_in_date", "fieldtype": "Date", "width": 120},
-        {"label": "Stripped Date", "fieldname": "last_inspection_date", "fieldtype": "Date", "width": 120},
+        {"label": "Carry In Date", "fieldname": "received_date", "fieldtype": "Date", "width": 120},
         {"label": "Description of Goods", "fieldname": "cargo_description", "fieldtype": "Small Text", "width": 250},
         {"label": "Consignee Name", "fieldname": "consignee", "fieldtype": "Data", "width": 200},
         {"label": "No.of Packages", "fieldname": "no_of_packages", "fieldtype": "Data", "width": 200},
@@ -61,8 +61,9 @@ def get_data(filters):
         query = f"""
             SELECT 
                 c.m_bl_no as bl_no,
+                c.h_bl_no,
                 c.arrival_date,
-                c.last_inspection_date,
+                c.received_date,
                 c.cargo_description,
                 c.consignee,
                 c.no_of_packages,
@@ -76,10 +77,12 @@ def get_data(filters):
         query = f"""
             SELECT 
                 c.m_bl_no as bl_no,
+                c.h_bl_no,
                 c.arrival_date,
-                c.last_inspection_date,
+                c.received_date,
                 c.cargo_description,
                 c.consignee,
+                c.no_of_packages,
                 c.cargo_type,
                 CONCAT(g.submitted_date, ' ', g.submitted_time) as gate_out_date
             FROM `tabContainer` c
@@ -92,10 +95,12 @@ def get_data(filters):
         query = f"""
             SELECT 
                 c.m_bl_no as bl_no,
+                c.h_bl_no,
                 c.arrival_date,
-                c.last_inspection_date,
+                c.received_date,
                 c.cargo_description,
                 c.consignee,
+                c.no_of_packages,
                 c.size,
                 c.container_no,
                 c.cargo_type
