@@ -145,10 +145,12 @@ class ServiceOrder(Document):
 		service_names = [row.get("service") for row in self.get("services")]
 		if reception_details.has_transport_charges == "Yes":
 			transport_item = None
+			transport_paid = True if reception_details.t_sales_invoice else False
 
 			if self.container_status == "LCL":
 				for row in settings_doc.loose_types:
 					if row.service_type == "Transport":
+						transport_paid = False
 						transport_item = row.service_name
 						break
 			elif (
@@ -161,9 +163,10 @@ class ServiceOrder(Document):
 						row.cargo_type == reception_details.cargo_type
 					):
 						transport_item = row.service_name
+						transport_paid = False
 						break
 			
-			if not transport_item:
+			if not transport_item and not transport_paid:
 				frappe.throw("Transport Pricing Criteria is not set in ICD TZ Settings, Please set it to continue")
 			
 			if transport_item and transport_item not in service_names:
@@ -174,6 +177,7 @@ class ServiceOrder(Document):
 		
 		if reception_details.has_shore_handling_charges == "Yes":
 			shore_handling_item = None
+			shore_handling_paid = True if reception_details.s_sales_invoice else False
 
 			if self.container_status == "LCL":
 				for row in settings_doc.loose_types:
@@ -181,6 +185,7 @@ class ServiceOrder(Document):
 						row.service_type == "Shore"
 						and row.cargo_type == reception_details.cargo_type
 					):
+						shore_handling_paid = False
 						shore_handling_item = row.service_name
 						break
 			elif (
@@ -194,17 +199,19 @@ class ServiceOrder(Document):
 						row.port == self.port
 					):
 						if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+							shore_handling_paid = False
 							shore_handling_item = row.service_name
 							break
 
 						elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
+							shore_handling_paid = False
 							shore_handling_item = row.service_name
 							break
 
 						else:
 							continue
 			
-			if not shore_handling_item:
+			if not shore_handling_item and not shore_handling_paid:
 				frappe.throw(
 					f"Shore Handling Pricing Criteria for Size: {self.container_size}, Port: {self.port} and Cargo Type: {reception_details.cargo_type} is not set in ICD TZ Settings, Please set it to continue"
 				)
@@ -231,6 +238,9 @@ class ServiceOrder(Document):
 		strips = []
 		verifications = []
 		for booking in booking_details:
+			stripping_paid = True if booking.s_sales_invoice else False
+			verification_paid = True if booking.cv_sales_invoice else False
+
 			if (
 				not booking.s_sales_invoice and
 				booking.has_stripping_charges == "Yes"
@@ -240,23 +250,26 @@ class ServiceOrder(Document):
 				if self.container_status == "LCL":
 					for row in settings_doc.loose_types:
 						if row.service_type == "Stripping":
+							stripping_paid = False
 							stripping_item = row.service_name
 							break
 				else:
 					for row in settings_doc.service_types:
 						if row.service_type == "Stripping":
 							if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+								stripping_paid = False
 								stripping_item = row.service_name
 								break
 
 							elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
+								stripping_paid = False
 								stripping_item = row.service_name
 								break
 
 							else:
 								continue
 						
-				if not stripping_item:
+				if not stripping_item and not stripping_paid:
 					frappe.throw(f"Stripping Pricing Criteria for Size: {self.container_size} is not set in ICD TZ Settings, Please set it to continue")
 				
 				strips.append(stripping_item)
@@ -269,23 +282,26 @@ class ServiceOrder(Document):
 				if self.container_status == "LCL":
 					for row in settings_doc.loose_types:
 						if row.service_type == "Verification":
+							verification_paid = False
 							verification_item = row.service_name
 							break
 				else:
 					for row in settings_doc.service_types:
 						if row.service_type == "Verification":
 							if "2" in str(row.size)[0] and "2" in str(self.container_size)[0]:
+								verification_paid = False
 								verification_item = row.service_name
 								break
 
 							elif "4" in str(row.size)[0] and "4" in str(self.container_size)[0]:
+								verification_paid = False
 								verification_item = row.service_name
 								break
 
 							else:
 								continue
 						
-				if not verification_item:
+				if not verification_item and not verification_paid:
 					frappe.throw(f"Custom Verification Pricing criteria for Size: {self.container_size} is not set in ICD TZ Settings, Please set it to continue")
 				
 				verifications.append(verification_item)
