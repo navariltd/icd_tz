@@ -19,8 +19,14 @@ def get_columns():
             "width": 120
         },
         {
-            "fieldname": "bl_no",
+            "fieldname": "m_bl_no",
             "label": _("M B/L No."),
+            "fieldtype": "Data",
+            "width": 120
+        },
+        {
+            "fieldname": "h_bl_no",
+            "label": _("H B/L No."),
             "fieldtype": "Data",
             "width": 120
         },
@@ -86,7 +92,7 @@ def get_columns():
             "width": 150
         },
         {
-            "fieldname": "received_date",
+            "fieldname": "submitted_date",
             "label": _("Date Out"),
             "fieldtype": "Date",
             "width": 150
@@ -100,6 +106,7 @@ def get_data(filters=None):
   SELECT 
     gp.container_no,
     gp.m_bl_no,
+    gp.h_bl_no,
     gp.size,
     gp.consignee,
     gp.sline,
