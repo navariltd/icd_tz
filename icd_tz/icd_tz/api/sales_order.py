@@ -370,6 +370,9 @@ def get_service_order_items(
             return [], []
         
         source_doc = frappe.get_cached_doc(doc_type, doc_name)
+        if source_doc.sales_invoice:
+            return [], []
+
         service_docs.append(source_doc)
 
     for doc in service_docs:
@@ -390,7 +393,7 @@ def get_service_orders(m_bl_no=None, h_bl_no=None):
     orders = frappe.db.get_all(
         "Service Order",
         filters=filters,
-        fields=["name", "docstatus"]
+        fields=["name", "docstatus", "sales_invoice"]
     )
     if len(orders) == 0:
         return []
@@ -406,6 +409,9 @@ def get_service_orders(m_bl_no=None, h_bl_no=None):
         frappe.throw(f"Please submit all draft Service Orders for {msg}")
 
     for entry in orders:
+        if entry.sales_invoice:
+            continue
+
         source_doc = frappe.get_cached_doc("Service Order", entry.name)
         service_docs.append(source_doc)
 
