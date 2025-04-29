@@ -16,7 +16,8 @@ class Container(Document):
 			
 			self.posting_date = getdate(self.creation)
 
-			self.save()
+			self.db_update()
+			self.db_update_all()
 	
 	def before_save(self):
 		self.validate_place_of_destination()
