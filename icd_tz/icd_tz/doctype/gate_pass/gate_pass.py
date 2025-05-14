@@ -69,7 +69,10 @@ class GatePass(Document):
 
 		booking_info = frappe.db.get_all(
 			"In Yard Container Booking",
-			{"container_id": self.container_id},
+			{
+				"container_id": self.container_id,
+				"docstatus": ["!=", 2],  # Exclude cancelled bookings
+			},
 			["has_stripping_charges", "s_sales_invoice", "has_custom_verification_charges", "cv_sales_invoice"],
 		)
 		cargo_type = frappe.get_cached_value(
