@@ -109,6 +109,10 @@ class Container(Document):
 				del master_bl_info["parenttype"]
 				del master_bl_info["idx"]
 				del master_bl_info["docstatus"]
+				del master_bl_info["owner"]
+				del master_bl_info["creation"]
+				del master_bl_info["modified"]
+				del master_bl_info["modified_by"]
 
 				place_of_destination = self.place_of_destination
 
@@ -209,6 +213,10 @@ class Container(Document):
 				del house_bl_info["parenttype"]
 				del house_bl_info["idx"]
 				del house_bl_info["docstatus"]
+				del house_bl_info["owner"]
+				del house_bl_info["creation"]
+				del house_bl_info["modified"]
+				del house_bl_info["modified_by"]
 
 				self.update(house_bl_info)
 
