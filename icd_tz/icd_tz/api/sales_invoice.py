@@ -11,7 +11,7 @@ def on_submit(doc, method):
 
 
 def update_sales_references(doc):
-    if not doc.m_bl_no:
+    if not doc.m_bl_no and not doc.h_bl_no:
         return
     
     invoice_id = doc.name
