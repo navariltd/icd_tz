@@ -123,7 +123,8 @@ def get_data(filters=None):
   LEFT JOIN
     `tabContainer` AS c ON gp.container_id = c.name
   WHERE 
-    gp.docstatus = 1 
+    gp.docstatus = 1
+    AND gp.workflow_state = 'Gate Out Confirmed'
     {conditions}
   """
   return frappe.db.sql(query, filters, as_dict=True)
