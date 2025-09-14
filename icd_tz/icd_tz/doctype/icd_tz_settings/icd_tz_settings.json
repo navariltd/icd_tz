@@ -8,6 +8,7 @@
  "engine": "InnoDB",
  "field_order": [
   "default_price_list",
+  "expiry_hours",
   "column_break_8yjq8",
   "enable_signature_validation",
   "corridor_levy_countries_section",
@@ -89,12 +90,18 @@
    "fieldtype": "Table",
    "label": "Criteria",
    "options": "ICD TZ Loose Detail"
+  },
+  {
+   "fieldname": "expiry_hours",
+   "fieldtype": "Data",
+   "label": "Gate Pass Expiry Notice Hours",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-04-19 10:29:28.690302",
+ "modified": "2025-09-08 09:35:04.220132",
  "modified_by": "Administrator",
  "module": "Icd Tz",
  "name": "ICD TZ Settings",
@@ -111,6 +118,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
