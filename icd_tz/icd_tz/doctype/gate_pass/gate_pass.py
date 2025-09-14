@@ -3,8 +3,16 @@
 
 import frappe
 from frappe.model.document import Document
-from frappe.utils import get_fullname, nowdate, nowtime, now_datetime, get_url_to_form, add_to_date
+from frappe.model.workflow import apply_workflow
 from icd_tz.icd_tz.api.utils import validate_cf_agent, validate_draft_doc
+from frappe.utils import (
+    get_fullname,
+	nowdate,
+	nowtime,
+	now_datetime,
+	get_url_to_form,
+	add_to_date
+)
 
 
 class GatePass(Document):
@@ -37,14 +45,13 @@ class GatePass(Document):
 		service_msg += self.validate_reception_charges()
 		service_msg += self.validate_inspection_charges()
 
-		if service_msg and self.workflow_state in ["Approved", "Gate Out Confirmed"]:
+		if service_msg:
 			msg = "<h4 class='text-center'>Pending Payments:</h4><hr>Payment is pending for the following services <ul> " + service_msg + " </ul>"
 
-			frappe.throw(str(msg))
-
-		# Show message if workflow state is not in target states
-		if self.workflow_state not in ["Approved", "Gate Out Confirmed"]:
-			frappe.msgprint("Payment validation is skipped at this stage. It will be checked during the approval or gate-out process.")
+			if self.workflow_state in ["Approved", "Gate Out Confirmed"]:
+				frappe.throw(str(msg))
+			else:
+				frappe.msgprint(str(msg))
 
 	def validate_container_charges(self):
 		"""Validate the storage payments for the Gate Pass"""
@@ -181,10 +188,10 @@ class GatePass(Document):
 		
 	def set_expiry_datetime(self):
 		settings = frappe.get_single("ICD TZ Settings")
-		if not settings.expiry_hours:
+		if not settings.gate_pass_expiry_hours:
 			return
 
-		expiry_hours = int(settings.expiry_hours)
+		expiry_hours = settings.gate_pass_expiry_hours
 
 		# Calculate expiry datetime from current datetime
 		submission_datetime = now_datetime()
@@ -244,18 +251,40 @@ def auto_expire_gate_passes():
 	expired_gate_passes = frappe.get_all("Gate Pass",
 		filters={
 			"docstatus": 1,
-			"workflow_state": ["not in", ["Gate Out Confirmed"]],
-			"expiry_date": ["<", current_datetime]
+			"workflow_state": ["!=", ["Gate Out Confirmed"]],
+			"expiry_date": ["not in ", ["", None]],
+			"expiry_date": ["<=", current_datetime]
 		},
 		fields=["name", "container_no", "expiry_date", "workflow_state"]
 	)
 
+
 	for gp in expired_gate_passes:
-		doc = frappe.get_doc("Gate Pass", gp.name)
+		if not gp.expiry_date:
+			continue
 
-		# Cancel the document
-		doc.cancel()
+		try:
+			doc = frappe.get_doc("Gate Pass", gp.name)
 
-		# Add a comment after cancelling
-		doc.add_comment("Comment",
-			f"Auto-cancelled due to expiry. Gate Pass expired on {gp.expiry_date}. Container was not moved out within the agreed time stored in ICD settings.")
+			# Cancel the document
+			if hasattr(doc, 'workflow_state'):
+				apply_workflow(doc, 'Cancel')
+			else:
+				doc.cancel()
+			
+			doc.reload()
+
+			# Add a comment after cancelling
+			doc.add_comment(
+				"Comment",
+				f"Auto-cancelled due to expiry. Gate Pass expired on <b>{gp.expiry_date}</b>. Container was not moved out within the agreed time settled in ICD TZsettings."
+			)
+		except Exception as e:
+			traceback = frappe.get_traceback()
+			msg = f"Failed to auto-cancel Gate Pass {gp.name}: \n<br>{str(e)}\n\n<br>Traceback:\n<br>{traceback}"
+			frappe.log_error(
+				title=f"GatePass: <b>{gp.name}</b>Auto Expire Error",
+				message=msg,
+				reference_doctype="Gate Pass",
+				reference_name=gp.name
+			)
