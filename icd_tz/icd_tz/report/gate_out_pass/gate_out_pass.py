@@ -92,9 +92,9 @@ def get_columns():
             "width": 150
         },
         {
-            "fieldname": "submitted_date",
-            "label": _("Date Out"),
-            "fieldtype": "Date",
+            "fieldname": "gate_out_date",
+            "label": _("Gate Out Date"),
+            "fieldtype": "Datetime",
             "width": 150
         }
     ]
@@ -117,10 +117,10 @@ def get_data(filters=None):
     c.place_of_destination,
     gp.ship_dc_date,
     c.arrival_date,
-    gp.submitted_date
+    gp.gate_out_date AS gate_out_date
   FROM 
     `tabGate Pass` AS gp
-  LEFT JOIN
+  JOIN
     `tabContainer` AS c ON gp.container_id = c.name
   WHERE 
     gp.docstatus = 1
@@ -131,9 +131,14 @@ def get_data(filters=None):
 
 
 def get_conditions(filters):
+  filters = filters or {}
   conditions = []
   if filters.get("m_bl_no"):
-    conditions.append("gp.bl_no = %(m_bl_no)s")
+    conditions.append("gp.m_bl_no = %(m_bl_no)s")
+  if filters.get("h_bl_no"):
+    conditions.append("gp.h_bl_no = %(h_bl_no)s")
+  if filters.get("from_date"):
+    conditions.append("DATE(gp.gate_out_date) >= %(from_date)s")
+  if filters.get("to_date"):
+    conditions.append("DATE(gp.gate_out_date) <= %(to_date)s")
   return " AND " + " AND ".join(conditions) if conditions else ""
-
-
